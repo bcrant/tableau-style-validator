@@ -28,35 +28,7 @@
   </style>
   <datasources>
     <datasource hasconnection='false' inline='true' name='Parameters' version='18.1'>
-      <aliases enabled='yes' />
-      <column caption='Base Salary' datatype='integer' name='[Base Salary]' param-domain-type='range' role='measure' type='quantitative' value='50000'>
-        <calculation class='tableau' formula='50000' />
-        <range granularity='1000' min='0' />
-      </column>
-      <column caption='Commission Rate' datatype='real' default-format='n#,##0.0&quot;%&quot;;-#,##0.0&quot;%&quot;' name='[Commission Rate]' param-domain-type='range' role='measure' type='quantitative' value='18.400000000000002'>
-        <calculation class='tableau' formula='18.400000000000002' />
-        <range granularity='0.10000000000000001' max='100.0' min='1.0' />
-      </column>
-      <column caption='New Quota' datatype='integer' default-format='c&quot;$&quot;#,##0,K;(&quot;$&quot;#,##0,K)' name='[New Quota]' param-domain-type='range' role='measure' type='quantitative' value='500000'>
-        <calculation class='tableau' formula='500000' />
-        <range granularity='25000' min='100000' />
-      </column>
-      <column caption='Sort by' datatype='string' name='[Parameter 1 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Names&quot;'>
-        <calculation class='tableau' formula='&quot;Names&quot;' />
-        <members>
-          <member value='&quot;\% quota ascending&quot;' />
-          <member value='&quot;\% quota descending&quot;' />
-          <member value='&quot;Names&quot;' />
-        </members>
-      </column>
-      <column caption='New Business Growth' datatype='real' default-format='p0%' name='[Parameter 1]' param-domain-type='range' role='measure' type='quantitative' value='0.59999999999999998'>
-        <calculation class='tableau' formula='0.59999999999999998' />
-        <range granularity='0.01' max='1.0' min='0.0' />
-      </column>
-      <column caption='Churn Rate' datatype='real' default-format='p0.00%' name='[Parameter 2]' param-domain-type='range' role='measure' type='quantitative' value='0.064000000000000001'>
-        <calculation class='tableau' formula='0.064000000000000001' />
-        <range granularity='0.001' max='0.25' min='0.0' />
-      </column>
+      ## TR
     </datasource>
     <datasource caption='Sales Commission' inline='true' name='Sales Planning new' version='18.1'>
       <connection class='federated'>
