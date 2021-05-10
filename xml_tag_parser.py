@@ -1,88 +1,115 @@
 from bs4 import BeautifulSoup
-import re
-import lxml
 import pprint
 
-infile = open('tableau_style_tags.xml', 'r')
-contents = infile.read()
-# # Replace tags with hyphens with underscores before parsing
-# content = re.sub('<(.*?)>', lambda x: x.group(0).replace('style-rule', 'body'), contents)
-soup = BeautifulSoup(contents, 'lxml')   # Optionally use 'lxml' here
 
-#
-# FORMAT CONTAINER 1: WORKSHEETS
-#
-worksheets = soup.find_all('worksheet')
+def parse_tableau_styles():
+    infile = open('tableau_style_tags.xml', 'r')
+    contents = infile.read()
+    soup = BeautifulSoup(contents, 'lxml')
 
-ws = {}
-for worksheet in worksheets:
-    #
-    # WORKSHEETS - Title Formatting
-    #
-    ws['name'] = worksheet['name']
+    style_dict = {
+        **parse_worksheets(soup)
+    }
 
-    ws['title'] = None
-    if worksheet.find('layout-options') is not None:
-        runs = worksheet\
-            .find('layout-options')\
-            .find('title')\
-            .find('formatted-text')\
-            .findAll('run', recursive=False)
-
-        title = []
-        title_font_attributes = []
-        for run in runs:
-            title.append(run.text)
-            title_font_attributes.append({k: v for k, v in run.attrs.items()})
-        ws['title'] = title[0]
-        ws['title_font_attributes'] = list(filter(None, title_font_attributes))
-
-    #
-    # WORKSHEETS - Table Styles
-    #
-    ws['table_styles'] = None
-    if worksheet.find('table') is not None:
-        table_styles = worksheet\
-            .find('table')\
-            .findAll('style', recursive=False)
-        ws['table_styles'] = table_styles
-        ws['table_styles'] = table_styles
-        # Incomplete parsing here... tricky
-
-    #
-    # WORKSHEETS - Pane Styles (Custom Tooltips)
-    #
-    if worksheet.find('table') is not None:
-        pane_styles = worksheet\
-            .find('table')\
-            .find('panes')\
-            .find('pane')\
-            .find('customized-tooltip')\
-            .find('formatted-text')\
-            .findAll('run', recursive=False)
-
-        pane_style_attributes = []
-        for ps in pane_styles:
-            pane_style_attributes.append({k: v for k, v in ps.attrs.items()})
-
-        ws['pane_style_attributes'] = list(filter(None, pane_style_attributes))
-
-    pprint.pprint(ws)
-    print('\n\n')
+    return pprint.pprint(style_dict)
 
 
+def parse_worksheets(xml_soup):
+
+    worksheets = xml_soup.find_all('worksheet')
+
+    all_ws_styles = {}
+
+    for worksheet in worksheets:
+        #
+        # WORKSHEET TITLE STYLES
+        #
+        ws = {}
+        if worksheet.find('layout-options') is not None:
+            runs = worksheet\
+                .find('layout-options')\
+                .find('title')\
+                .find('formatted-text')\
+                .findAll('run', recursive=False)
+
+            title = []
+            title_font_attributes = []
+            for run in runs:
+                title.append(run.text)
+                title_font_attributes.append({k: v for k, v in run.attrs.items()})
+            ws['ws_title'] = title[0]
+            ws['ws_title_font_attributes'] = list(filter(None, title_font_attributes))
+
+        #
+        # WORKSHEET TABLE AND PANE STYLES
+        #
+        if worksheet.find('table') is not None:
+            # Table Styles
+            table_elements = worksheet\
+                .find('table')\
+                .findAll('style', recursive=False)[0]\
+                .contents[0]\
+                .split('<style-rule element=\'')
+
+            element_styles = {}
+            for element in table_elements:
+                for fmt in element.split('\n'):
+                    element_fmt = [
+                        fmt.strip()
+                        for fmt in element.split('\n')
+                    ]
+
+                    element_styles[element_fmt[0].split('\'')[0]] = list(filter(None, element_fmt[1:]))
+
+            # Pane Styles - Customized Tooltips
+            pane_tooltip_styles = worksheet\
+                .find('table')\
+                .find('panes')\
+                .find('pane')\
+                .find('customized-tooltip')
+
+            if pane_tooltip_styles is not None:
+                ws['ws_pane_tooltip_attributes'] = get_pane_styles_from_dict(pane_tooltip_styles)
+
+            # Pane Styles - Customized Labels
+            pane_label_styles = worksheet\
+                .find('table')\
+                .find('panes')\
+                .find('pane')\
+                .find('customized-label')
+
+            if pane_label_styles is not None:
+                ws['ws_pane_label_attributes'] = get_pane_styles_from_dict(pane_label_styles)
+
+        all_ws_styles[worksheet['name']] = ws
+
+    return all_ws_styles
 
 
+def get_pane_styles_from_dict(pane_styles_soup):
+    # Get formatted text styles from customized label or tooltip
+    pane_styles_fmt = pane_styles_soup\
+        .find('formatted-text')\
+        .findAll('run', recursive=False)
+
+    pane_style_attribute_list = []
+    for pane_style in pane_styles_fmt:
+        pane_style_attribute_list.append({k: v for k, v in pane_style.attrs.items()})
+
+    return list(filter(None, pane_style_attribute_list))
+
+
+if __name__ == "__main__":
+    parse_tableau_styles()
 
 # # PATHS WE WANT
 # #
 # # WORKSHEET <workbook><worksheets><worksheet>
 # ...<worksheet name=""> # Worksheet Name
 # ...<layout-options><title><formatted-text>  # Worksheet Title Formatting
-# ...<table><style>
 # ...<table><style><style-rule element=""><format attr="">  # Axis, Header, Label, refline, legend
-# ...<table><panes>
 # ...<table><panes><pane><customized-tooltip><formatted-text><run # fontcolor, fontname, fontsize
+# ...<table><panes><pane><customized-label><formatted-text><run # fontcolor, fontname, fontsize
 #
 # # DASHBOARD <workbook><dashboards><dashboard>
 # ...<dashboard name=""> # Dashboard Name
