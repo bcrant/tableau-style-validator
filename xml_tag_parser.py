@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import xmltodict
 import pprint
 
 
@@ -8,11 +9,11 @@ def parse_tableau_styles():
     soup = BeautifulSoup(contents, 'lxml')
 
     style_dict = {
-        **parse_worksheets(soup),
+        # **parse_worksheets(soup),
         **parse_dashboards(soup)
     }
 
-    return pprint.pprint(style_dict)
+    # return pprint.pprint(style_dict)
 
 
 def parse_worksheets(xml_soup):
@@ -137,15 +138,28 @@ def parse_dashboards(xml_soup):
                 .contents[0]\
                 .split('<style-rule element=\'')
 
+            zz = dashboard\
+                .findAll('style', recursive=False)[0]\
+                .contents[0]
+            print(type(zz), zz.strip())
+
             element_styles = {}
             for element in table_elements:
+                xml_fmt_list = []
                 for fmt in element.split('\n'):
                     if bool(fmt.strip()):
-                        element_fmt = [
-                            fmt.strip()
-                            for fmt in element.split('\n')
-                        ]
-                        element_styles[element_fmt[0].split('\'')[0]] = list(filter(None, element_fmt[1:]))
+                        bs = BeautifulSoup(fmt.strip(), 'lxml')
+
+                        # print('fmtstrip', type(fmt.strip()), fmt.strip())
+
+
+                        # element_fmt = [
+                        #     x.strip()
+                        #     for x in element.split('\n')
+                        # ]
+                        # print('element', element_fmt)
+                        # element_styles['db_element_type'] = element_styles[element_fmt[0].split('\'')[0]]
+                        # fmts_list = list(filter(None, element_fmt[1:]))
 
             db['db_element_styles'] = element_styles
             # # Pane Styles - Customized Tooltips
