@@ -1,8 +1,6 @@
-from bs4 import BeautifulSoup
-import xmltodict
-import pprint
-import json
 import re
+import pprint
+from bs4 import BeautifulSoup
 
 
 def parse_tableau_styles():
