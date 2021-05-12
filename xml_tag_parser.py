@@ -26,9 +26,15 @@ def parse_worksheets(xml_soup):
 
     for worksheet in worksheets:
         #
+        # WORKSHEET NAME
+        #
+        ws = {
+            'ws_name': worksheet['name']
+        }
+
+        #
         # WORKSHEET TITLE STYLES
         #
-        ws = {'ws_name': worksheet['name']}
         if worksheet.find('layout-options') is not None:
             runs = worksheet\
                 .find('layout-options')\
@@ -112,9 +118,16 @@ def parse_dashboards(xml_soup):
 
     for dashboard in dashboards:
         #
+        # DASHBOARD NAME AND SIZE
+        #
+        db = {
+            'db_name': dashboard['name'],
+            'db_size': dashboard.find('size').attrs
+        }
+
+        #
         # DASHBOARD TITLE STYLES
         #
-        db = {'db_name': dashboard['name']}
         if dashboard.find('layout-options') is not None:
             runs = dashboard\
                 .find('layout-options')\
@@ -159,16 +172,6 @@ def parse_dashboards(xml_soup):
 
             db[element_name] = element_style_dict
 
-            # # Pane Styles - Customized Tooltips
-            # pane_tooltip_styles = dashboard\
-            #     .find('table')\
-            #     .find('panes')\
-            #     .find('pane')\
-            #     .find('customized-tooltip')
-            #
-            # if pane_tooltip_styles is not None:
-            #     db['db_pane_tooltip_attributes'] = get_pane_styles_from_dict(pane_tooltip_styles)
-
         all_db_styles[dashboard['name']] = db
 
     return all_db_styles
@@ -192,4 +195,5 @@ if __name__ == "__main__":
 # ...<table><style><style-rule element=""><format attr="">  # Axis, Header, Label, refline, legend
 # ...<table><panes><pane><customized-tooltip><formatted-text><run # fontcolor, fontname, fontsize
 # ...<table><panes><pane><customized-label><formatted-text><run # fontcolor, fontname, fontsize
-#
+
+
