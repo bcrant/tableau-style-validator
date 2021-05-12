@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import xmltodict
 import pprint
+import json
+import re
 
 
 def parse_tableau_styles():
@@ -9,11 +11,11 @@ def parse_tableau_styles():
     soup = BeautifulSoup(contents, 'lxml')
 
     style_dict = {
-        # **parse_worksheets(soup),
+        **parse_worksheets(soup),
         **parse_dashboards(soup)
     }
 
-    # return pprint.pprint(style_dict)
+    return pprint.pprint(style_dict)
 
 
 def parse_worksheets(xml_soup):
@@ -26,7 +28,7 @@ def parse_worksheets(xml_soup):
         #
         # WORKSHEET TITLE STYLES
         #
-        ws = {}
+        ws = {'ws_name': worksheet['name']}
         if worksheet.find('layout-options') is not None:
             runs = worksheet\
                 .find('layout-options')\
@@ -39,6 +41,7 @@ def parse_worksheets(xml_soup):
             for run in runs:
                 title.append(run.text)
                 title_font_attributes.append({k: v for k, v in run.attrs.items()})
+
             ws['ws_title'] = title[0]
             ws['ws_title_font_attributes'] = list(filter(None, title_font_attributes))
 
@@ -71,7 +74,7 @@ def parse_worksheets(xml_soup):
                 .find('customized-tooltip')
 
             if pane_tooltip_styles is not None:
-                ws['ws_pane_tooltip_attributes'] = get_pane_styles_from_dict(pane_tooltip_styles)
+                ws['ws_tooltips'] = get_pane_styles_from_dict(pane_tooltip_styles)
 
             # Pane Styles - Customized Labels
             pane_label_styles = worksheet\
@@ -81,7 +84,7 @@ def parse_worksheets(xml_soup):
                 .find('customized-label')
 
             if pane_label_styles is not None:
-                ws['ws_pane_label_attributes'] = get_pane_styles_from_dict(pane_label_styles)
+                ws['ws_labels'] = get_pane_styles_from_dict(pane_label_styles)
 
         all_ws_styles[worksheet['name']] = ws
 
@@ -124,44 +127,38 @@ def parse_dashboards(xml_soup):
             for run in runs:
                 title.append(run.text)
                 title_font_attributes.append({k: v for k, v in run.attrs.items()})
+
             db['db_title'] = title[0]
             db['db_title_font_attributes'] = list(filter(None, title_font_attributes))
 
         #
-        # DASHBOARD ELEMENT STYLES
+        # DASHBOARD ELEMENT STYLES (EXCLUDING ZONES)
         #
         if dashboard.find('style') is not None:
-
             # Dashboard Element Styles
             table_elements = dashboard\
                 .findAll('style', recursive=False)[0]\
                 .contents[0]\
                 .split('<style-rule element=\'')
 
-            zz = dashboard\
-                .findAll('style', recursive=False)[0]\
-                .contents[0]
-            print(type(zz), zz.strip())
+            list_elements = [i.strip() for i in table_elements if i.strip()]
+            element_name = list_elements[0].split('\'')[0]
 
-            element_styles = {}
-            for element in table_elements:
-                xml_fmt_list = []
-                for fmt in element.split('\n'):
-                    if bool(fmt.strip()):
-                        bs = BeautifulSoup(fmt.strip(), 'lxml')
+            element_style = [i.strip() for i in list_elements[0].split('\n')][1:]
+            element_style_dict = {}
+            for s in element_style:
+                s_attrs = s.split(' ')[1:-1]
+                tmp_dict = {}
+                for item in s_attrs:
+                    pairs = re.sub("\'", '', item).split('=')
+                    it = iter(pairs)
+                    pair_dict = dict(zip(it, it))
+                    for k, v in pair_dict.items():
+                        tmp_dict[k] = v
+                element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
 
-                        # print('fmtstrip', type(fmt.strip()), fmt.strip())
+            db[element_name] = element_style_dict
 
-
-                        # element_fmt = [
-                        #     x.strip()
-                        #     for x in element.split('\n')
-                        # ]
-                        # print('element', element_fmt)
-                        # element_styles['db_element_type'] = element_styles[element_fmt[0].split('\'')[0]]
-                        # fmts_list = list(filter(None, element_fmt[1:]))
-
-            db['db_element_styles'] = element_styles
             # # Pane Styles - Customized Tooltips
             # pane_tooltip_styles = dashboard\
             #     .find('table')\
@@ -171,17 +168,6 @@ def parse_dashboards(xml_soup):
             #
             # if pane_tooltip_styles is not None:
             #     db['db_pane_tooltip_attributes'] = get_pane_styles_from_dict(pane_tooltip_styles)
-            #
-            # # Pane Styles - Customized Labels
-            # pane_label_styles = dashboard\
-            #     .find('table')\
-            #     .find('panes')\
-            #     .find('pane')\
-            #     .find('customized-label')
-            #
-            # if pane_label_styles is not None:
-            #     db['db_pane_label_attributes'] = get_pane_styles_from_dict(pane_label_styles)
-
 
         all_db_styles[dashboard['name']] = db
 
