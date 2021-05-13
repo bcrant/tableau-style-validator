@@ -4,16 +4,54 @@ from bs4 import BeautifulSoup
 
 
 def parse_tableau_styles():
-    infile = open('tableau_style_tags.xml', 'r')
+    infile = open('example_style_guide.xml', 'r')
     contents = infile.read()
     soup = BeautifulSoup(contents, 'lxml')
 
+    parse_workbook_style(soup)
+
     style_dict = {
+        **parse_workbook_style(soup),
         **parse_worksheets(soup),
         **parse_dashboards(soup)
     }
 
     return pprint.pprint(style_dict)
+
+
+def parse_workbook_style(xml_soup):
+
+    workbook_style = xml_soup.find('style')
+
+    wb = {}
+
+    if workbook_style is not None:
+        wb_style = workbook_style\
+            .contents[0]\
+            .split('<style-rule element=\'')
+
+        list_elements = [i.strip() for i in wb_style if i.strip()]
+
+        for element in list_elements:
+            element_name = element.split('\'')[0]
+            element_style = [i.strip() for i in element.split('\n')][1:]
+
+            element_style_dict = {}
+            for s in element_style:
+                s_attrs = s.strip('<format').strip(' />').split(' ', 1)
+
+                tmp_dict = {}
+                for item in s_attrs:
+                    pairs = re.sub("\'", '', item).split('=')
+                    it = iter(pairs)
+                    pair_dict = dict(zip(it, it))
+                    for k, v in pair_dict.items():
+                        tmp_dict[k] = v
+                element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
+
+            wb[element_name] = element_style_dict
+
+    return {'workbook_styles': wb}
 
 
 def parse_worksheets(xml_soup):
@@ -31,81 +69,92 @@ def parse_worksheets(xml_soup):
         }
 
         #
-        # WORKSHEET TITLE STYLES
+        # WORKSHEET TITLE OR SUBTITLE STYLES
         #
         if worksheet.find('layout-options') is not None:
-            runs = worksheet\
+            title_styles = worksheet\
                 .find('layout-options')\
-                .find('title')\
+                .find('title')
+
+            if title_styles is not None:
+                title_styles_list = get_styles_from_dict(title_styles)
+                if bool(title_styles_list):
+                    ws['ws_title_styles'] = title_styles_list
+
+            title = title_styles\
                 .find('formatted-text')\
-                .findAll('run', recursive=False)
+                .findAll('run')
 
-            title = []
-            title_font_attributes = []
-            for run in runs:
-                title.append(run.text)
-                title_font_attributes.append({k: v for k, v in run.attrs.items()})
-
-            ws['ws_title'] = title[0]
-            ws['ws_title_font_attributes'] = list(filter(None, title_font_attributes))
+            for t in title:
+                if bool(t.text):
+                    ws['ws_title'] = t.text.strip()
 
         #
         # WORKSHEET TABLE AND PANE STYLES
         #
         if worksheet.find('table') is not None:
-            # Table Styles
-            table_elements = worksheet\
-                .find('table')\
-                .findAll('style', recursive=False)[0]\
-                .contents[0]\
-                .split('<style-rule element=\'')
+            # # Table Styles
+            # table_elements = worksheet\
+            #     .find('table')\
+            #     .findAll('style', recursive=False)[0]\
+            #     .contents[0]\
+            #     .split('<style-rule element=\'')
+            #
+            # element_styles = {}
+            # for element in table_elements:
+            #     element_fmt = [
+            #         fmt.strip()
+            #         for fmt in element.split('\n')
+            #     ]
+            #
+            #     element_styles[element_fmt[0].split('\'')[0]] = list(filter(None, element_fmt[1:]))
 
-            element_styles = {}
-            for element in table_elements:
-                for fmt in element.split('\n'):
-                    element_fmt = [
-                        fmt.strip()
-                        for fmt in element.split('\n')
-                    ]
-
-                    element_styles[element_fmt[0].split('\'')[0]] = list(filter(None, element_fmt[1:]))
-
-            # Pane Styles - Customized Tooltips
-            pane_tooltip_styles = worksheet\
+            #
+            # CUSTOMIZED TOOLTIPS
+            #
+            tooltip_styles = worksheet\
                 .find('table')\
                 .find('panes')\
                 .find('pane')\
                 .find('customized-tooltip')
 
-            if pane_tooltip_styles is not None:
-                ws['ws_tooltips'] = get_pane_styles_from_dict(pane_tooltip_styles)
+            if tooltip_styles is not None:
+                tooltip_styles_list = get_styles_from_dict(tooltip_styles)
+                if bool(tooltip_styles_list):
+                    ws['ws_tooltip_styles'] = tooltip_styles_list
 
-            # Pane Styles - Customized Labels
-            pane_label_styles = worksheet\
+            #
+            # CUSTOMIZED LABELS
+            #
+            label_styles = worksheet\
                 .find('table')\
                 .find('panes')\
                 .find('pane')\
                 .find('customized-label')
 
-            if pane_label_styles is not None:
-                ws['ws_labels'] = get_pane_styles_from_dict(pane_label_styles)
+            if label_styles is not None:
+                label_styles_list = get_styles_from_dict(label_styles)
+                if bool(label_styles_list):
+                    ws['ws_labels'] = label_styles_list
 
         all_ws_styles[worksheet['name']] = ws
 
     return all_ws_styles
 
 
-def get_pane_styles_from_dict(pane_styles_soup):
+def get_styles_from_dict(styles_soup):
     # Get formatted text styles from customized label or tooltip
-    pane_styles_fmt = pane_styles_soup\
+    style_runs = styles_soup\
         .find('formatted-text')\
-        .findAll('run', recursive=False)
+        .findAll('run')
 
-    pane_style_attribute_list = []
-    for pane_style in pane_styles_fmt:
-        pane_style_attribute_list.append({k: v for k, v in pane_style.attrs.items()})
+    styles_list = [
+        style_run.attrs
+        for style_run in style_runs
+        if bool(style_run.attrs)
+    ]
 
-    return list(filter(None, pane_style_attribute_list))
+    return styles_list
 
 
 def parse_dashboards(xml_soup):
