@@ -4995,6 +4995,1290 @@
   <dashboards>
     <dashboard name='DashboardStyle'>
       <repository-location derived-from='https://tableau.Companyapps-dev.net/workbooks/Company_StyleGuideTemplate/DashboardStyle?rev=' id='DashboardStyle' path='/workbooks/Company_StyleGuideTemplate' revision='' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontalignment='0'>Sales Commission Model</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <style>
+        <style-rule element='dash-title'>
+          <format attr='font-family' value='Tableau Medium' />
+        </style-rule>
+        <style-rule element='dash-subtitle'>
+          <format attr='font-family' value='Tableau Medium' />
+        </style-rule>
+        <style-rule element='dash-text'>
+          <format attr='font-size' value='11' />
+        </style-rule>
+      </style>
+      <size maxheight='8000' maxwidth='1512' minheight='6000' minwidth='1000' sizing-mode='range' />
+      <datasources>
+        <datasource name='Sample - Superstore' />
+      </datasources>
+      <datasource-dependencies datasource='Sample - Superstore'>
+        <column datatype='string' name='[Customer Name]' role='dimension' type='nominal' />
+        <column aggregate-role-from='[State]' datatype='string' name='[Region]' role='dimension' type='nominal' />
+        <column datatype='string' name='[Ship Mode]' role='dimension' type='nominal' />
+        <column datatype='string' name='[State]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+        <column-instance column='[Customer Name]' derivation='None' name='[none:Customer Name:nk]' pivot='key' type='nominal' />
+        <column-instance column='[Region]' derivation='None' name='[none:Region:nk]' pivot='key' type='nominal' />
+        <column-instance column='[Ship Mode]' derivation='None' name='[none:Ship Mode:nk]' pivot='key' type='nominal' />
+        <column-instance column='[State]' derivation='None' name='[none:State:nk]' pivot='key' type='nominal' />
+      </datasource-dependencies>
+      <zones>
+        <zone h='103350' id='19' type='empty' w='34392' x='66138' y='0'>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='background-color' value='#e6e6e6' />
+          </zone-style>
+        </zone>
+        <zone friendly-name='STYLE GUIDES' h='94042' id='20' param='vert' type='layout-flow' w='33069' x='66138' y='0'>
+          <zone forceUpdate='true' h='683' id='222' type='text' w='33069' x='66138' y='0'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='18'>GLOBAL RULES</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='7483' id='219' type='text' w='33069' x='66138' y='683'>
+            <formatted-text>
+              <run fontname='Tableau Medium'>TEXT COLOR</run>
+              <run>&#10;• #333333 for ALL text&#10;&#10;</run>
+              <run fontname='Tableau Medium'>DASHBOARD SIZE</run>
+              <run>&#10;• Dynamic Sizing:&#10;• Min Width 1000px&#10;• Max Width 1512px&#10;• Height always dependant on content&#10;&#10;</run>
+              <run fontname='Tableau Medium'>DASHBOARD PADDING</run>
+              <run>&#10;• No Left/Right Padding on any outer elements&#10;• In multi-element dashboards, 40px vertical spacing&#10;&#10;</run>
+              <run fontname='Tableau Medium'>DASHBOARD TITLE &amp; PADDING</run>
+              <run>&#10;• Dashboard Title | Tableau Bold 18&#10;</run>
+              <run bold='true'>• </run>
+              <run>This has No Padding (8px Default)&#10;• Floating elements are 20px padded here for</run>
+              <run underline='true'> demonstration only </run>
+              <run>&#10;• No left / right padding&#10;• Title Element has default 4px Outer Padding&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='6083' id='240' type='text' w='33069' x='66138' y='8166'>
+            <formatted-text>
+              <run fontname='Tableau Medium'>FILTERS</run>
+              <run>&#10;• Filter Title | Tableau Medium 11&#10;• Filter Body | Tableau Book 11&#10;• Below title, above any elements, sometimes left bar&#10;• Horizontal Container | Distribute Contents Evenly&#10;• Multi Drop Down Filters&#10;    • Show Apply Button &#10;    • Show &quot;All&quot;&#10;    • Hide View Controls&#10;&#10;</run>
+              <run fontname='Tableau Medium'>TOOLTIPS</run>
+              <run>&#10;• Tooltip Heading | Tableau Bold 12pt (H3)&#10;• Tooltip Body Simple (Key: Value) | Tableau Book 11pt &#10;• Tooltip Body Explainer Text | Tableau Book 11pt Italic&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='1283' id='223' type='text' w='33069' x='66138' y='14249'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='18'>CHART SPECIFIC STYLES</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='3283' id='26' type='text' w='33069' x='66138' y='15532'>
+            <formatted-text>
+              <run fontname='Tableau Medium'>KPI TILES / CARDS BAR</run>
+              <run>&#10;• Below title, above any elements, sometimes left bar&#10;• KPI Label | Tableau Medium 14pt&#10;• KPI Num  |  Tableau Bold 28pt&#10;• Horizontal Container &#10;    • Distribute Contents Evenly&#10;• Border | 1px #CBCBCB&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='2933' id='28' type='text' w='33069' x='66138' y='18815'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Use Company Dark Color Scheme (No text on bars)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar labels at the end of bar</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Border | Column Divider | Pane Only 1px #CBCBCB (right border)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Axis Rulers | 1 px #CBCBCB</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Rest same as below</run>
+              <run>Æ&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='6083' id='195' type='text' w='33069' x='66138' y='21748'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS (with Progress Bar)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Use Company Light Color Scheme (Text on bars)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar labels at the beginning of bar</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Chart Titles | Tableau Bold 14</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Chart Subtitles | Tableau Book 11pt Italics</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Dimension Name | Tableau Medium 11pt (ex. State)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Dimension Value | Tableau Book 11pt (ex. AL, AR, DE)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar Labels | Left Aligned | Tableau Medium 11pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Borders   | #B3B3B3 (Should we keep all of these?)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Line |  #B3B3B3 </run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar Border | #333 | Top bar only if bar on bar</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar Color | #81DAD5 |  Turqoise </run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Bar on Bar Background Bar Shade | #E6E6E6 | Light Gray</run>
+              <run>Æ&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8533' id='46' type='text' w='33069' x='66138' y='27831'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>TEXT TABLES</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Dimension Name | Tableau Medium 11pt (ex. Customer Name)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Dimension Value | Tableau Book 11pt (ex. A. Bergman, A. Hawkins)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Row Alternating Shade | #F5F5F5</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Row Border | 1pt #CBCBCB</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8533' id='43' type='text' w='33069' x='66138' y='36364'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>PIE CHARTS </run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Dark outline slices | #333</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Ask about size and headings of Color Legend</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Pie Slices | Tableau Medium 11</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8949' id='82' type='text' w='33069' x='66138' y='44897'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (Discrete)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Better for static displays of line charts</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Reference Line | 1px #CBCBCB</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8949' id='196' type='text' w='33069' x='66138' y='53846'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (Discrete ) (with Circles)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Better for use with actions</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Synchronize Dual Axis </run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Hide Axis Title</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension) orient vertical </run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Abbreviate Date Month names</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Color Legend above chart, below title w/ automatic arrangement</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>(Legend pinned to 40px to keep on auto but encourage a single row)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Color Legend Labels | Tableau Book 9pt</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8949' id='208' type='text' w='33069' x='66138' y='62795'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (CONTINUOUS)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Abbreviate Date Month names</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Light zero line</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8949' id='113' type='text' w='33069' x='66138' y='71744'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>STACKED BAR CHARTS</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Hide all axis headers when possible</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Abbreviate Date Month names</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Light zero line</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='8949' id='197' type='text' w='33069' x='66138' y='80693'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>SIDE BY SIDE BAR CHARTS</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Hide all axis headers when possible</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Abbreviate Date Month names</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Light zero line</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+              <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='3983' id='177' type='text' w='33069' x='66138' y='89642'>
+            <formatted-text>
+              <run fontname='Tableau Medium' fontsize='11'>AREA CHARTS</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Company Dark (no text on area)</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Colors 100% opacity</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Abbreviate Date Month names</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Sheet Lines | Rows | Axis Rulers | 1 px #CBCBCB</run>
+              <run>Æ&#10;</run>
+              <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+              <run>Æ&#10;&#10;&#10;</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone h='417' id='13' name='ManyFilters' w='33069' x='66138' y='93625'>
+            <layout-cache cell-count-h='1' fixed-size-w='357' non-cell-size-h='15' type-h='cell' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+        </zone>
+        <zone friendly-name='BarChart, TextTable, PieChart' h='95600' id='58' param='vert' type='layout-flow' w='59524' x='1323' y='7000'>
+          <zone fixed-size='412' h='7534' id='146' is-fixed='true' name='BarChart' w='59524' x='1323' y='7000'>
+            <layout-cache type-h='fixed' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='420' h='7667' id='27' is-fixed='true' name='BarChartwProgress' w='59524' x='1323' y='14534'>
+            <layout-cache type-h='fixed' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='380' h='7000' id='37' is-fixed='true' name='TextTable' w='59524' x='1323' y='22201'>
+            <layout-cache type-h='fixed' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='380' h='7000' id='59' is-fixed='true' param='horz' type='layout-flow' w='59524' x='1323' y='29201'>
+            <zone fixed-size='700' h='6333' id='53' is-fixed='true' name='PieChart' w='42238' x='1323' y='29868'>
+              <layout-cache cell-count-h='1' non-cell-size-h='48' type-h='cell' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='0' />
+              </zone-style>
+            </zone>
+            <zone fixed-size='192' h='6333' id='54' is-fixed='true' name='PieChart' pane-specification-id='0' param='[Sample - Superstore].[none:Sub-Category:nk]' type='color' w='17286' x='43561' y='29868'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='1217' id='132' type='text' w='59524' x='1323' y='36201'>
+            <formatted-text>
+              <run fontname='Tableau Bold' fontsize='18'>Line Chart (Discrete)</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='32' h='666' id='133' is-fixed='true' name='MultiLineChart' pane-specification-id='1' param='[Sample - Superstore].[none:Segment:nk]' show-title='false' type='color' w='59524' x='1323' y='37418'>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='412' h='6867' id='130' is-fixed='true' name='MultiLineChart' w='59524' x='1323' y='38084'>
+            <layout-cache minheight='158' type-h='scalable' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='0' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='1217' id='93' type='text' w='59524' x='1323' y='44951'>
+            <formatted-text>
+              <run fontname='Tableau Bold' fontsize='18'>Line Chart (Discrete w/ Circles)</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+              <format attr='margin-bottom' value='0' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='32' h='666' id='92' is-fixed='true' name='MultiLineChartwCircles' pane-specification-id='1' param='[Sample - Superstore].[none:Segment:nk]' show-title='false' type='color' w='59524' x='1323' y='46168'>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='380' h='6333' id='83' is-fixed='true' name='MultiLineChartwCircles' w='59524' x='1323' y='46834'>
+            <layout-cache minheight='158' type-h='scalable' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='0' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='412' h='7534' id='206' is-fixed='true' name='SingleLineChart' w='59524' x='1323' y='53167'>
+            <layout-cache minheight='205' type-h='scalable' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='380' h='7000' id='112' is-fixed='true' param='horz' type='layout-flow' w='59524' x='1323' y='60701'>
+            <zone fixed-size='542' h='6333' id='110' is-fixed='true' name='StackedBarChart' w='46560' x='1323' y='61368'>
+              <layout-cache minheight='170' type-h='scalable' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone fixed-size='142' h='6333' id='111' is-fixed='true' name='StackedBarChart' pane-specification-id='0' param='[Sample - Superstore].[none:Ship Mode:nk]' type='color' w='12964' x='47883' y='61368'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone forceUpdate='true' h='1217' id='186' type='text' w='59524' x='1323' y='67701'>
+            <formatted-text>
+              <run fontname='Tableau Bold' fontsize='18'>Side By Side Bar Chart</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='32' h='666' id='185' is-fixed='true' name='SideBySideBarChart' pane-specification-id='0' param='[Sample - Superstore].[yr:Order Date:ok]' show-title='false' type='color' w='59524' x='1323' y='68918'>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='380' h='6333' id='184' is-fixed='true' name='SideBySideBarChart' show-title='false' w='59524' x='1323' y='69584'>
+            <layout-cache minheight='143' type-h='scalable' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='0' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='412' h='7534' id='168' is-fixed='true' name='AreaChart' w='59524' x='1323' y='75917'>
+            <layout-cache minheight='170' type-h='scalable' type-w='fixed' />
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+              <format attr='margin-top' value='40' />
+            </zone-style>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='0' />
+            <format attr='margin-top' value='0' />
+          </zone-style>
+        </zone>
+        <zone friendly-name='Header, Filters, KPIs' h='6667' id='57' param='vert' type='layout-flow' w='59524' x='1323' y='333'>
+          <zone fixed-size='92' forceUpdate='true' h='1666' id='7' is-fixed='true' type='text' w='59524' x='1323' y='333'>
+            <formatted-text>
+              <run fontname='Tableau Bold' fontsize='18'>Company Dashboard Style Guide Template</run>
+            </formatted-text>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='92' h='1666' id='12' is-fixed='true' layout-strategy-id='distribute-evenly' param='horz' type='layout-flow' w='59524' x='1323' y='1999'>
+            <zone h='1533' id='16' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Customer Name:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='database' w='14780' x='1642' y='2067'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='1533' id='17' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Region:nk]' show-apply='true' show-exclude='false' show-mode='false' type='filter' values='cascading' w='14693' x='16422' y='2067'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='1533' id='18' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:State:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='cascading' w='14693' x='31115' y='2067'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='1533' id='22' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Ship Mode:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='database' w='14693' x='45808' y='2067'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='4' />
+            </zone-style>
+          </zone>
+          <zone fixed-size='200' h='3333' id='8' is-fixed='true' layout-strategy-id='distribute-evenly' param='horz' type='layout-flow' w='59524' x='1323' y='3665'>
+            <zone h='3333' id='9' name='HighlightKPI' show-title='false' w='19879' x='1296' y='3667'>
+              <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#c0c0c0' />
+                <format attr='border-style' value='solid' />
+                <format attr='border-width' value='1' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='3333' id='10' name='HighlightKPI_Specs' show-title='false' w='19879' x='21175' y='3667'>
+              <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#c0c0c0' />
+                <format attr='border-style' value='solid' />
+                <format attr='border-width' value='1' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone h='3333' id='11' name='HighlightKPI_Foo' show-title='false' w='19793' x='41054' y='3667'>
+              <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+              <zone-style>
+                <format attr='border-color' value='#c0c0c0' />
+                <format attr='border-style' value='solid' />
+                <format attr='border-width' value='1' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+            <zone-style>
+              <format attr='border-color' value='#000000' />
+              <format attr='border-style' value='none' />
+              <format attr='border-width' value='0' />
+              <format attr='margin' value='0' />
+            </zone-style>
+          </zone>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='5600' minheight='5600' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='254' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='99734' id='253' param='vert' type='layout-flow' w='98618' x='691' y='133'>
+                <zone forceUpdate='true' h='683' id='222' type='text' w='33069' x='66138' y='0'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='18'>GLOBAL RULES</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='92' forceUpdate='true' h='1666' id='7' type='text' w='59524' x='1323' y='333'>
+                  <formatted-text>
+                    <run fontname='Tableau Bold' fontsize='18'>Company Dashboard Style Guide Template</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='7483' id='219' type='text' w='33069' x='66138' y='683'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium'>TEXT COLOR</run>
+                    <run>&#10;• #333333 for ALL text&#10;&#10;</run>
+                    <run fontname='Tableau Medium'>DASHBOARD SIZE</run>
+                    <run>&#10;• Dynamic Sizing:&#10;• Min Width 1000px&#10;• Max Width 1512px&#10;• Height always dependant on content&#10;&#10;</run>
+                    <run fontname='Tableau Medium'>DASHBOARD PADDING</run>
+                    <run>&#10;• No Left/Right Padding on any outer elements&#10;• In multi-element dashboards, 40px vertical spacing&#10;&#10;</run>
+                    <run fontname='Tableau Medium'>DASHBOARD TITLE &amp; PADDING</run>
+                    <run>&#10;• Dashboard Title | Tableau Bold 18&#10;</run>
+                    <run bold='true'>• </run>
+                    <run>This has No Padding (8px Default)&#10;• Floating elements are 20px padded here for</run>
+                    <run underline='true'> demonstration only </run>
+                    <run>&#10;• No left / right padding&#10;• Title Element has default 4px Outer Padding&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='257' h='3333' id='9' is-fixed='true' name='HighlightKPI' show-title='false' w='19879' x='1296' y='3667'>
+                  <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#c0c0c0' />
+                    <format attr='border-style' value='solid' />
+                    <format attr='border-width' value='1' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='257' h='3333' id='10' is-fixed='true' name='HighlightKPI_Specs' show-title='false' w='19879' x='21175' y='3667'>
+                  <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#c0c0c0' />
+                    <format attr='border-style' value='solid' />
+                    <format attr='border-width' value='1' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='257' h='3333' id='11' is-fixed='true' name='HighlightKPI_Foo' show-title='false' w='19793' x='41054' y='3667'>
+                  <layout-cache cell-count-h='1' type-h='cell' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#c0c0c0' />
+                    <format attr='border-style' value='solid' />
+                    <format attr='border-width' value='1' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='7534' id='146' is-fixed='true' name='BarChart' w='59524' x='1323' y='7000'>
+                  <layout-cache type-h='fixed' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='6083' id='240' type='text' w='33069' x='66138' y='8166'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium'>FILTERS</run>
+                    <run>&#10;• Filter Title | Tableau Medium 11&#10;• Filter Body | Tableau Book 11&#10;• Below title, above any elements, sometimes left bar&#10;• Horizontal Container | Distribute Contents Evenly&#10;• Multi Drop Down Filters&#10;    • Show Apply Button &#10;    • Show &quot;All&quot;&#10;    • Hide View Controls&#10;&#10;</run>
+                    <run fontname='Tableau Medium'>TOOLTIPS</run>
+                    <run>&#10;• Tooltip Heading | Tableau Bold 12pt (H3)&#10;• Tooltip Body Simple (Key: Value) | Tableau Book 11pt &#10;• Tooltip Body Explainer Text | Tableau Book 11pt Italic&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='1283' id='223' type='text' w='33069' x='66138' y='14249'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='18'>CHART SPECIFIC STYLES</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='7667' id='27' is-fixed='true' name='BarChartwProgress' w='59524' x='1323' y='14534'>
+                  <layout-cache type-h='fixed' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='3283' id='26' type='text' w='33069' x='66138' y='15532'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium'>KPI TILES / CARDS BAR</run>
+                    <run>&#10;• Below title, above any elements, sometimes left bar&#10;• KPI Label | Tableau Medium 14pt&#10;• KPI Num  |  Tableau Bold 28pt&#10;• Horizontal Container &#10;    • Distribute Contents Evenly&#10;• Border | 1px #CBCBCB&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='2933' id='28' type='text' w='33069' x='66138' y='18815'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Use Company Dark Color Scheme (No text on bars)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar labels at the end of bar</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Border | Column Divider | Pane Only 1px #CBCBCB (right border)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Axis Rulers | 1 px #CBCBCB</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Rest same as below</run>
+                    <run>Æ&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='6083' id='195' type='text' w='33069' x='66138' y='21748'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS (with Progress Bar)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Use Company Light Color Scheme (Text on bars)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar labels at the beginning of bar</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Chart Titles | Tableau Bold 14</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Chart Subtitles | Tableau Book 11pt Italics</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Dimension Name | Tableau Medium 11pt (ex. State)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Dimension Value | Tableau Book 11pt (ex. AL, AR, DE)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar Labels | Left Aligned | Tableau Medium 11pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Borders   | #B3B3B3 (Should we keep all of these?)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Line |  #B3B3B3 </run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar Border | #333 | Top bar only if bar on bar</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar Color | #81DAD5 |  Turqoise </run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Bar on Bar Background Bar Shade | #E6E6E6 | Light Gray</run>
+                    <run>Æ&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='7000' id='37' is-fixed='true' name='TextTable' w='59524' x='1323' y='22201'>
+                  <layout-cache type-h='fixed' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8533' id='46' type='text' w='33069' x='66138' y='27831'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>TEXT TABLES</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Dimension Name | Tableau Medium 11pt (ex. Customer Name)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Dimension Value | Tableau Book 11pt (ex. A. Bergman, A. Hawkins)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Row Alternating Shade | #F5F5F5</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Row Border | 1pt #CBCBCB</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='6333' id='53' is-fixed='true' name='PieChart' w='42238' x='1323' y='29868'>
+                  <layout-cache cell-count-h='1' non-cell-size-h='48' type-h='cell' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='192' h='6333' id='54' name='PieChart' pane-specification-id='0' param='[Sample - Superstore].[none:Sub-Category:nk]' type='color' w='17286' x='43561' y='29868'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='1217' id='132' type='text' w='59524' x='1323' y='36201'>
+                  <formatted-text>
+                    <run fontname='Tableau Bold' fontsize='18'>Line Chart (Discrete)</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8533' id='43' type='text' w='33069' x='66138' y='36364'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>PIE CHARTS </run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Dark outline slices | #333</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Ask about size and headings of Color Legend</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Pie Slices | Tableau Medium 11</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='6867' id='130' is-fixed='true' name='MultiLineChart' w='59524' x='1323' y='38084'>
+                  <layout-cache minheight='158' type-h='scalable' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='32' h='666' id='133' name='MultiLineChart' pane-specification-id='1' param='[Sample - Superstore].[none:Segment:nk]' show-title='false' type='color' w='59524' x='1323' y='37418'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8949' id='82' type='text' w='33069' x='66138' y='44897'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (Discrete)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Better for static displays of line charts</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Reference Line | 1px #CBCBCB</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='1217' id='93' type='text' w='59524' x='1323' y='44951'>
+                  <formatted-text>
+                    <run fontname='Tableau Bold' fontsize='18'>Line Chart (Discrete w/ Circles)</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='6333' id='83' is-fixed='true' name='MultiLineChartwCircles' w='59524' x='1323' y='46834'>
+                  <layout-cache minheight='158' type-h='scalable' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='32' h='666' id='92' name='MultiLineChartwCircles' pane-specification-id='1' param='[Sample - Superstore].[none:Segment:nk]' show-title='false' type='color' w='59524' x='1323' y='46168'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='7534' id='206' is-fixed='true' name='SingleLineChart' w='59524' x='1323' y='53167'>
+                  <layout-cache minheight='205' type-h='scalable' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8949' id='196' type='text' w='33069' x='66138' y='53846'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (Discrete ) (with Circles)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Better for use with actions</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Synchronize Dual Axis </run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Hide Axis Title</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension) orient vertical </run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Abbreviate Date Month names</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Color Legend above chart, below title w/ automatic arrangement</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>(Legend pinned to 40px to keep on auto but encourage a single row)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Color Legend Labels | Tableau Book 9pt</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='6333' id='110' is-fixed='true' name='StackedBarChart' w='46560' x='1323' y='61368'>
+                  <layout-cache minheight='170' type-h='scalable' type-w='cell' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='142' h='6333' id='111' name='StackedBarChart' pane-specification-id='0' param='[Sample - Superstore].[none:Ship Mode:nk]' type='color' w='12964' x='47883' y='61368'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8949' id='208' type='text' w='33069' x='66138' y='62795'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>LINE CHARTS (CONTINUOUS)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Abbreviate Date Month names</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Light zero line</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='1217' id='186' type='text' w='59524' x='1323' y='67701'>
+                  <formatted-text>
+                    <run fontname='Tableau Bold' fontsize='18'>Side By Side Bar Chart</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='6333' id='184' is-fixed='true' name='SideBySideBarChart' show-title='false' w='59524' x='1323' y='69584'>
+                  <layout-cache minheight='143' type-h='scalable' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='32' h='666' id='185' name='SideBySideBarChart' pane-specification-id='0' param='[Sample - Superstore].[yr:Order Date:ok]' show-title='false' type='color' w='59524' x='1323' y='68918'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8949' id='113' type='text' w='33069' x='66138' y='71744'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>STACKED BAR CHARTS</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Hide all axis headers when possible</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Abbreviate Date Month names</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Light zero line</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='7534' id='168' is-fixed='true' name='AreaChart' w='59524' x='1323' y='75917'>
+                  <layout-cache minheight='170' type-h='scalable' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='8949' id='197' type='text' w='33069' x='66138' y='80693'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>SIDE BY SIDE BAR CHARTS</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Hide all axis headers when possible</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Abbreviate Date Month names</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Row Reference line | 1 px #CBCBCB</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Light zero line</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+                    <run>Æ&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone forceUpdate='true' h='3983' id='177' type='text' w='33069' x='66138' y='89642'>
+                  <formatted-text>
+                    <run fontname='Tableau Medium' fontsize='11'>AREA CHARTS</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Company Dark (no text on area)</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Colors 100% opacity</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Measures) | Tableau Book 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Axis Labels (Dimension Values in Tooltip) | Tableau Medium 10pt</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Abbreviate Date Month names</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Sheet Lines | Rows | Axis Rulers | 1 px #CBCBCB</run>
+                    <run>Æ&#10;</run>
+                    <run fontsize='11'>• Color Legend same as normal Bar Chart</run>
+                    <run>Æ&#10;&#10;&#10;</run>
+                  </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='1533' id='16' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Customer Name:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='database' w='14780' x='1642' y='2067'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='1533' id='17' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Region:nk]' show-apply='true' show-exclude='false' show-mode='false' type='filter' values='cascading' w='14693' x='16422' y='2067'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='1533' id='18' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:State:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='cascading' w='14693' x='31115' y='2067'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='1533' id='22' mode='checkdropdown' name='ManyFilters' param='[Sample - Superstore].[none:Ship Mode:nk]' show-apply='true' show-exclude='false' show-filter-state='false' show-mode='false' type='filter' values='database' w='14693' x='45808' y='2067'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='25' h='417' id='13' is-fixed='true' name='ManyFilters' w='33069' x='66138' y='93625'>
+                  <layout-cache cell-count-h='1' fixed-size-w='357' non-cell-size-h='15' type-h='cell' type-w='fixed' />
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{FE47A262-779A-4A79-A5AD-E958DED43602}' />
+    </dashboard>
+    <dashboard name='CopyOfDashboardStyle'>
+      <repository-location derived-from='https://tableau.Companyapps-dev.net/workbooks/Company_StyleGuideTemplate/DashboardStyle?rev=' id='DashboardStyle' path='/workbooks/Company_StyleGuideTemplate' revision='' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontalignment='0'>Sales Commission Model</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <style>
         <style-rule element='dash-title'>
           <format attr='font-family' value='Tableau Medium' />
