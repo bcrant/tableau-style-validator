@@ -11,8 +11,8 @@ def parse_tableau_styles():
     parse_workbook_style(soup)
 
     style_dict = {
-        **parse_workbook_style(soup),
-        **parse_worksheets(soup),
+        # **parse_workbook_style(soup),
+        # **parse_worksheets(soup),
         **parse_dashboards(soup)
     }
 
@@ -142,25 +142,6 @@ def parse_worksheets(xml_soup):
     return all_ws_styles
 
 
-def get_styles_from_dict(styles_soup):
-    # Get formatted text styles from customized label or tooltip
-    style_runs = styles_soup\
-        .find('formatted-text')\
-        .findAll('run')
-
-    styles_list = [
-        style_run.attrs
-        for style_run in style_runs
-        if bool(style_run.attrs)
-    ]
-
-    return styles_list
-
-
-def get_distinct_styles(style_dicts_list):
-    return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
-
-
 def parse_dashboards(xml_soup):
 
     dashboards = xml_soup.find_all('dashboard')
@@ -226,6 +207,25 @@ def parse_dashboards(xml_soup):
         all_db_styles[dashboard['name']] = db
 
     return all_db_styles
+
+
+def get_styles_from_dict(styles_soup):
+    # Get formatted text styles from customized label or tooltip
+    style_runs = styles_soup\
+        .find('formatted-text')\
+        .findAll('run')
+
+    styles_list = [
+        style_run.attrs
+        for style_run in style_runs
+        if bool(style_run.attrs)
+    ]
+
+    return styles_list
+
+
+def get_distinct_styles(style_dicts_list):
+    return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
 <!-- build 20201.21.0412.1141                               -->
-<workbook original-version='18.1' source-build='2020.1.16 (20201.21.0412.1141)' source-platform='mac' version='18.1' xml:base='https://tableau.everfiapps-dev.net' xmlns:user='http://www.tableausoftware.com/xml/user'>
+<workbook original-version='18.1' source-build='2020.1.16 (20201.21.0412.1141)' source-platform='mac' version='18.1' xml:base='https://tableau.Companyapps-dev.net' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
     <AutoCreateAndUpdateDSDPhoneLayouts />
     <CascadingFilters />
@@ -15,13 +15,13 @@
     <ZoneBackgroundTransparency />
     <ZoneFriendlyName />
   </document-format-change-manifest>
-  <repository-location derived-from='https://tableau.everfiapps-dev.net/workbooks/EVERFI_StyleGuideTemplate?rev=1.6' id='EVERFI_StyleGuideTemplate' path='/workbooks' revision='2.2' />
+  <repository-location derived-from='https://tableau.Companyapps-dev.net/workbooks/Company_StyleGuideTemplate?rev=1.6' id='Company_StyleGuideTemplate' path='/workbooks' revision='2.2' />
   <preferences>
     <preference name='connection.receive.timeout' value='1800000' />
     <preference name='connection.send.timeout' value='1800000' />
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
-    <color-palette custom='true' name='EVERFI DARK' type='regular'>
+    <color-palette custom='true' name='Company DARK' type='regular'>
       <color>#20c3b9</color>
       <color>#fc8440</color>
       <color>#ffd154</color>
@@ -2780,7 +2780,7 @@
         </drill-path>
       </drill-paths>
       <extract count='-1' enabled='true' units='records'>
-        <connection authentication='auth-none' author-locale='en_US' class='hyper' dbname='/Users/bcrant/Workspace/everfi_style_guide.twb Files/Data/Extracts/Sample _ Superstore.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='05/06/2021 08:44:25 PM' username='tableau_internal_user'>
+        <connection authentication='auth-none' author-locale='en_US' class='hyper' dbname='/Users/bcrant/Workspace/Company_style_guide.twb Files/Data/Extracts/Sample _ Superstore.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='05/06/2021 08:44:25 PM' username='tableau_internal_user'>
           <relation name='Extract' table='[Extract].[Extract]' type='table' />
           <refresh>
             <refresh-event add-from-file-path='Sample - Superstore' increment-value='%null%' refresh-type='create' rows-inserted='9994' timestamp-start='2021-05-06 20:44:25.010' />
@@ -3037,7 +3037,7 @@
       <layout dim-ordering='alphabetic' dim-percentage='0.614308' group-percentage='0.0388802' measure-ordering='alphabetic' measure-percentage='0.275272' parameter-percentage='0.0715397' show-structure='true' />
       <style>
         <style-rule element='mark'>
-          <encoding attr='color' field='[none:Segment:nk]' palette='EVERFI DARK' type='palette'>
+          <encoding attr='color' field='[none:Segment:nk]' palette='Company DARK' type='palette'>
             <map to='#20c3b9'>
               <bucket>&quot;Consumer&quot;</bucket>
             </map>
@@ -3048,7 +3048,7 @@
               <bucket>&quot;Home Office&quot;</bucket>
             </map>
           </encoding>
-          <encoding attr='color' field='[none:Sub-Category:nk]' palette='EVERFI DARK' type='palette'>
+          <encoding attr='color' field='[none:Sub-Category:nk]' palette='Company DARK' type='palette'>
             <map to='#20c3b9'>
               <bucket>&quot;Phones&quot;</bucket>
             </map>
@@ -3101,7 +3101,7 @@
               <bucket>&quot;Storage&quot;</bucket>
             </map>
           </encoding>
-          <encoding attr='color' field='[yr:Order Date:ok]' palette='EVERFI DARK' type='palette'>
+          <encoding attr='color' field='[yr:Order Date:ok]' palette='Company DARK' type='palette'>
             <map to='#20c3b9'>
               <bucket>2018</bucket>
             </map>
@@ -3115,7 +3115,7 @@
               <bucket>2020</bucket>
             </map>
           </encoding>
-          <encoding attr='color' field='[:Measure Names]' palette='EVERFI DARK' type='palette'>
+          <encoding attr='color' field='[:Measure Names]' palette='Company DARK' type='palette'>
             <map to='#20c3b9'>
               <bucket>&quot;[Sample - Superstore].[avg:Discount (copy)_2442921364501970944:qk]&quot;</bucket>
             </map>
@@ -3216,7 +3216,7 @@
               <bucket>&quot;[Sample - Superstore].[sum:Quantity:qk]&quot;</bucket>
             </map>
           </encoding>
-          <encoding attr='color' field='[none:Ship Mode:nk]' palette='EVERFI DARK' type='palette'>
+          <encoding attr='color' field='[none:Ship Mode:nk]' palette='Company DARK' type='palette'>
             <map to='#20c3b9'>
               <bucket>&quot;First Class&quot;</bucket>
             </map>
@@ -4994,7 +4994,7 @@
   </worksheets>
   <dashboards>
     <dashboard name='DashboardStyle'>
-      <repository-location derived-from='https://tableau.everfiapps-dev.net/workbooks/EVERFI_StyleGuideTemplate/DashboardStyle?rev=' id='DashboardStyle' path='/workbooks/EVERFI_StyleGuideTemplate' revision='' />
+      <repository-location derived-from='https://tableau.Companyapps-dev.net/workbooks/Company_StyleGuideTemplate/DashboardStyle?rev=' id='DashboardStyle' path='/workbooks/Company_StyleGuideTemplate' revision='' />
       <style>
         <style-rule element='dash-title'>
           <format attr='font-family' value='Tableau Medium' />
@@ -5105,7 +5105,7 @@
             <formatted-text>
               <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS</run>
               <run>Æ&#10;</run>
-              <run fontsize='11'>• Use EVERFI Dark Color Scheme (No text on bars)</run>
+              <run fontsize='11'>• Use Company Dark Color Scheme (No text on bars)</run>
               <run>Æ&#10;</run>
               <run fontsize='11'>• Bar labels at the end of bar</run>
               <run>Æ&#10;</run>
@@ -5127,7 +5127,7 @@
             <formatted-text>
               <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS (with Progress Bar)</run>
               <run>Æ&#10;</run>
-              <run fontsize='11'>• Use EVERFI Light Color Scheme (Text on bars)</run>
+              <run fontsize='11'>• Use Company Light Color Scheme (Text on bars)</run>
               <run>Æ&#10;</run>
               <run fontsize='11'>• Bar labels at the beginning of bar</run>
               <run>Æ&#10;</run>
@@ -5323,7 +5323,7 @@
             <formatted-text>
               <run fontname='Tableau Medium' fontsize='11'>AREA CHARTS</run>
               <run>Æ&#10;</run>
-              <run fontsize='11'>• EVERFI Dark (no text on area)</run>
+              <run fontsize='11'>• Company Dark (no text on area)</run>
               <run>Æ&#10;</run>
               <run fontsize='11'>• Colors 100% opacity</run>
               <run>Æ&#10;</run>
@@ -5560,7 +5560,7 @@
         <zone friendly-name='Header, Filters, KPIs' h='6667' id='57' param='vert' type='layout-flow' w='59524' x='1323' y='333'>
           <zone fixed-size='92' forceUpdate='true' h='1666' id='7' is-fixed='true' type='text' w='59524' x='1323' y='333'>
             <formatted-text>
-              <run fontname='Tableau Bold' fontsize='18'>EVERFI Dashboard Style Guide Template</run>
+              <run fontname='Tableau Bold' fontsize='18'>Company Dashboard Style Guide Template</run>
             </formatted-text>
             <zone-style>
               <format attr='border-color' value='#000000' />
@@ -5666,7 +5666,7 @@
                 </zone>
                 <zone fixed-size='92' forceUpdate='true' h='1666' id='7' type='text' w='59524' x='1323' y='333'>
                   <formatted-text>
-                    <run fontname='Tableau Bold' fontsize='18'>EVERFI Dashboard Style Guide Template</run>
+                    <run fontname='Tableau Bold' fontsize='18'>Company Dashboard Style Guide Template</run>
                   </formatted-text>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -5793,7 +5793,7 @@
                   <formatted-text>
                     <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS</run>
                     <run>Æ&#10;</run>
-                    <run fontsize='11'>• Use EVERFI Dark Color Scheme (No text on bars)</run>
+                    <run fontsize='11'>• Use Company Dark Color Scheme (No text on bars)</run>
                     <run>Æ&#10;</run>
                     <run fontsize='11'>• Bar labels at the end of bar</run>
                     <run>Æ&#10;</run>
@@ -5816,7 +5816,7 @@
                   <formatted-text>
                     <run fontname='Tableau Medium' fontsize='11'>BAR CHARTS (with Progress Bar)</run>
                     <run>Æ&#10;</run>
-                    <run fontsize='11'>• Use EVERFI Light Color Scheme (Text on bars)</run>
+                    <run fontsize='11'>• Use Company Light Color Scheme (Text on bars)</run>
                     <run>Æ&#10;</run>
                     <run fontsize='11'>• Bar labels at the beginning of bar</run>
                     <run>Æ&#10;</run>
@@ -6181,7 +6181,7 @@
                   <formatted-text>
                     <run fontname='Tableau Medium' fontsize='11'>AREA CHARTS</run>
                     <run>Æ&#10;</run>
-                    <run fontsize='11'>• EVERFI Dark (no text on area)</run>
+                    <run fontsize='11'>• Company Dark (no text on area)</run>
                     <run>Æ&#10;</run>
                     <run fontsize='11'>• Colors 100% opacity</run>
                     <run>Æ&#10;</run>
