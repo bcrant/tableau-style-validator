@@ -121,7 +121,7 @@ def parse_worksheets(xml_soup):
             if tooltip_styles is not None:
                 tooltip_styles_list = get_styles_from_dict(tooltip_styles)
                 if bool(tooltip_styles_list):
-                    ws['ws_tooltip_styles'] = tooltip_styles_list
+                    ws['ws_tooltip_styles'] = get_distinct_styles(tooltip_styles_list)
 
             #
             # CUSTOMIZED LABELS
@@ -135,7 +135,7 @@ def parse_worksheets(xml_soup):
             if label_styles is not None:
                 label_styles_list = get_styles_from_dict(label_styles)
                 if bool(label_styles_list):
-                    ws['ws_labels'] = label_styles_list
+                    ws['ws_labels'] = get_distinct_styles(label_styles_list)
 
         all_ws_styles[worksheet['name']] = ws
 
@@ -155,6 +155,10 @@ def get_styles_from_dict(styles_soup):
     ]
 
     return styles_list
+
+
+def get_distinct_styles(style_dicts_list):
+    return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
 
 
 def parse_dashboards(xml_soup):
@@ -242,5 +246,3 @@ if __name__ == "__main__":
 # ...<table><style><style-rule element=""><format attr="">  # Axis, Header, Label, refline, legend
 # ...<table><panes><pane><customized-tooltip><formatted-text><run # fontcolor, fontname, fontsize
 # ...<table><panes><pane><customized-label><formatted-text><run # fontcolor, fontname, fontsize
-
-
