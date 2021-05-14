@@ -1,14 +1,21 @@
+import os
 import re
 import pprint
 from bs4 import BeautifulSoup
 
 
 def parse_tableau_styles():
+    # # Convert local .twb to XML
+    # tableau_file_path = 'example_style_guide_two.twb'
+    # base = os.path.splitext(tableau_file)[0]
+    # os.rename(tableau_file, base + '.xml')
+
+    # Read file and create Beautiful Soup object
     infile = open('example_style_guide.xml', 'r')
     contents = infile.read()
     soup = BeautifulSoup(contents, 'lxml')
 
-    parse_workbook_style(soup)
+    parse_all_colors(soup)
 
     style_dict = {
         **parse_workbook_style(soup),
@@ -17,6 +24,20 @@ def parse_tableau_styles():
     }
 
     return pprint.pprint(style_dict)
+
+
+def parse_all_colors(xml_soup):
+
+    colors_used = []
+    all_styles_list = xml_soup.findAll('style', recursive=True)
+    for s in all_styles_list:
+        for line in s.string.split('\n'):
+            if '#' in line.strip():
+                hex_num = line.split('#')[1][:6]
+                if hex_num not in colors_used and hex_num.isalnum():
+                    colors_used.append(hex_num)
+
+    return colors_used
 
 
 def parse_workbook_style(xml_soup):
