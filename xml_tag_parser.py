@@ -15,8 +15,6 @@ def parse_tableau_styles():
     contents = infile.read()
     soup = BeautifulSoup(contents, 'lxml')
 
-    parse_all_colors(soup)
-
     style_dict = {
         **parse_workbook_style(soup),
         **parse_worksheets(soup),
@@ -24,20 +22,6 @@ def parse_tableau_styles():
     }
 
     return pprint.pprint(style_dict)
-
-
-def parse_all_colors(xml_soup):
-
-    colors_used = []
-    all_styles_list = xml_soup.findAll('style', recursive=True)
-    for s in all_styles_list:
-        for line in s.string.split('\n'):
-            if '#' in line.strip():
-                hex_num = line.split('#')[1][:6]
-                if hex_num not in colors_used and hex_num.isalnum():
-                    colors_used.append(hex_num)
-
-    return colors_used
 
 
 def parse_workbook_style(xml_soup):
@@ -54,6 +38,11 @@ def parse_workbook_style(xml_soup):
 
         for k, v in wb_style_rules.items():
             wb[k] = v
+
+    #
+    # ALL COLORS IN WORKBOOK
+    #
+    wb['all_colors'] = parse_all_colors(xml_soup)
 
     return {'workbook_styles': wb}
 
@@ -245,6 +234,21 @@ def get_style_rules(parent_node_soup):
         node_dict[element_name] = element_style_dict
 
     return node_dict
+
+
+def parse_all_colors(xml_soup):
+    colors_used = []
+    all_styles_list = xml_soup.findAll('style', recursive=True)
+    for s in all_styles_list:
+        for line in s.string.split('\n'):
+            if '#' in line.strip():
+                hex_num = line.split('#')[1][:6]
+                if hex_num not in colors_used and hex_num.isalnum():
+                    colors_used.append(hex_num)
+
+    hex_colors_used = ['#' + h for h in colors_used]
+
+    return hex_colors_used
 
 
 if __name__ == "__main__":
