@@ -3,6 +3,14 @@ import re
 import pprint
 from bs4 import BeautifulSoup
 
+# TODO:
+# MVP: Font Name (fontname), Font Size (fontsize), Font Color (fontcolor)
+#
+# V2: Test Colors. Separate colors loaded in Preferences (color palettes). Test against Mark colors (zones?)...
+# ... Table Axis, Labels, Shading, etc colors
+#
+# V3: Test Font combos (Tableau Medium 11pt) (Tableau Book 11pt Italic)
+
 
 def parse_tableau_styles():
     # # Convert local .twb to XML
@@ -21,7 +29,7 @@ def parse_tableau_styles():
         **parse_dashboards(soup)
     }
 
-    return pprint.pprint(style_dict)
+    # return pprint.pprint(style_dict)
 
 
 def parse_workbook_style(xml_soup):
@@ -191,6 +199,8 @@ def get_styles_from_dict(styles_soup):
     style_runs = styles_soup\
         .find('formatted-text')\
         .findAll('run')
+
+    print(style_runs)
 
     styles_list = [
         style_run.attrs

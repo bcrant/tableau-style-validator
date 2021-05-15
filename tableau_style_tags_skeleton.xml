@@ -11,16 +11,16 @@
             <table>
                 <style>
                       <style-rule element='axis'>
-                        <format attr='title' class='0' field='[Sales Planning new].[Multiple Values]' scope='cols' value='Compensation ($)' />
-                        <format attr='subtitle' class='0' field='[Sales Planning new].[Multiple Values]' scope='cols' value='' />
-                        <format attr='auto-subtitle' class='0' field='[Sales Planning new].[Multiple Values]' scope='cols' value='true' />
+                        <format attr='title' class='0' field='' scope='cols' value='Compensation ($)' />
+                        <format attr='subtitle' class='0' field='' scope='cols' value='' />
+                        <format attr='auto-subtitle' class='0' field='' scope='cols' value='true' />
                       </style-rule>
                       <style-rule element='header'>
-                        <format attr='width' field='[Sales Planning new].[none:Sales Person:nk]' value='136' />
+                        <format attr='width' field='' value='136' />
                       </style-rule>
                       <style-rule element='label'>
-                        <format attr='display' field='[Sales Planning new].[usr:Calculation_4120925132203686:ok]' value='false' />
-                        <format attr='text-format' field='[Sales Planning new].[sum:Achievement (copy):qk]' value='n#,##0,K;-#,##0,K' />
+                        <format attr='display' field='' value='false' />
+                        <format attr='text-format' field='' value='n#,##0,K;-#,##0,K' />
                       </style-rule>
                       <style-rule element='worksheet'>
                         <format attr='display-field-labels' scope='rows' value='false' />
@@ -34,10 +34,10 @@
                       </style-rule>
                       <style-rule element='legend'>
                         <format attr='background-color' value='#ffffff' />
-                        <format attr='col-width' field='[Sales Planning new].[:Measure Names]' value='240' />
+                        <format attr='col-width' field='' value='240' />
                       </style-rule>
                       <style-rule element='legend-title-text'>
-                        <format attr='color' field='[Sales Planning new].[:Measure Names]' value=''>
+                        <format attr='color' field='' value=''>
                           <formatted-text />
                         </format>
                       </style-rule>
@@ -46,15 +46,15 @@
                         <pane>
                             <customized-tooltip>
                               <formatted-text>
-                                <run fontcolor='#d3872a' fontname='Tableau Bold' fontsize='11'>&lt;[Sales Planning new].[none:Sales Person:nk]&gt;</run>
-                                <run fontcolor='#666666' fontname='Tableau Medium' fontsize='9'>&#10;&lt;[Sales Planning new].[usr:Achievement (variable) (copy):nk]&gt; Quota Achieved</run>
+                                <run fontcolor='#d3872a' fontname='Tableau Bold' fontsize='11'></run>
+                                <run fontcolor='#666666' fontname='Tableau Medium' fontsize='9'></run>
                                 <run fontcolor='#000000' fontsize='9'>Æ </run>
-                                <run fontcolor='#666666' fontsize='9'>&#10;Total Sales: </run>
-                                <run fontcolor='#000000' fontsize='9'>Æ        </run>
-                                <run fontcolor='#000000' fontname='Tableau Semibold' fontsize='9'>&lt;[Sales Planning new].[sum:Achievement (copy):qk]&gt;</run>
-                                <run fontcolor='#555555' fontsize='9'>&#10;Compensation:</run>
-                                <run fontcolor='#000000' fontsize='9'>Æ </run>
-                                <run fontcolor='#000000' fontname='Tableau Semibold' fontsize='9'>&lt;[Sales Planning new].[usr:Total Compensation:qk]&gt;</run>
+                                <run fontcolor='#666666' fontsize='9'></run>
+                                <run fontcolor='#000000' fontsize='9'></run>
+                                <run fontcolor='#000000' fontname='Tableau Semibold' fontsize='9'></run>
+                                <run fontcolor='#555555' fontsize='9'></run>
+                                <run fontcolor='#000000' fontsize='9'></run>
+                                <run fontcolor='#000000' fontname='Tableau Semibold' fontsize='9'></run>
                               </formatted-text>
                             </customized-tooltip>
                             <style>
