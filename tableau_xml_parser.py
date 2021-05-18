@@ -1,23 +1,45 @@
-import re
-import json
-import pprint
 from bs4 import BeautifulSoup
+from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
+from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
 
-def parse_tableau_styles():
-    # Read file and create Beautiful Soup object
-    infile = open('tests/c.twb', 'rw')
+def validate_tableau_styles():
+    #
+    # Get input from command line arguments
+    #
+    input_files = get_cli_input()
 
-    contents = infile.read()
-    soup = BeautifulSoup(contents, 'lxml')
+    # Style Guide
+    sg_json = ingest_style_guide(input_files)
 
+    # Tableau Workbook
+    wb_file = ingest_tableau_workbook(input_files)
+    # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
+    wb_xml = BeautifulSoup(wb_file, 'lxml')
+    # (If we ever write style changes back to .twb we will want to remove this)
+    wb_xml.find('thumbnails').decompose()
+
+    #
+    # Call parsing functions and create new dictionary
+    #
     style_dict = {
-        **parse_workbook_style(soup),
-        **parse_worksheets(soup),
-        **parse_dashboards(soup)
+        **parse_workbook_style(wb_xml),
+        **parse_worksheets(wb_xml),
+        **parse_dashboards(wb_xml)
     }
 
-    return pprint.pprint(style_dict)
+    return \
+        print('''
+PARSED WORKBOOK STYLES:
+{}
+
+
+----------------------------------------------------------------
+
+
+STYLE GUIDE RULES:
+{}
+'''.format(pp(style_dict), pp(sg_json)))
 
 
 def parse_workbook_style(xml_soup):
@@ -38,7 +60,7 @@ def parse_workbook_style(xml_soup):
     #
     # ALL COLORS IN WORKBOOK
     #
-    wb['all_colors'] = parse_all_colors(xml_soup)
+    wb['all_colors'] = get_all_colors(xml_soup)
 
     return {'workbook_styles': wb}
 
@@ -182,78 +204,5 @@ def parse_dashboards(xml_soup):
     return {'dashboard_styles': all_db_styles}
 
 
-def get_styles_from_dict(styles_soup):
-    # Get formatted text styles from customized label or tooltip
-    style_runs = styles_soup\
-        .find('formatted-text')\
-        .findAll('run')
-
-    styles_list = [
-        style_run.attrs
-        for style_run in style_runs
-        if bool(style_run.attrs)
-    ]
-
-    return styles_list
-
-
-def get_distinct_styles(style_dicts_list):
-    return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
-
-
-def get_style_rules(parent_node_soup):
-    node_dict = {}
-
-    node_styles = parent_node_soup\
-        .contents[0]\
-        .split('<style-rule element=\'')
-
-    list_elements = [i.strip() for i in node_styles if i.strip()]
-
-    for element in list_elements:
-        element_name = element.split('\'')[0]
-        element_style = [i.strip() for i in element.split('\n')][1:]
-
-        element_style_dict = {}
-        for s in element_style:
-            s_attrs = s.strip('<format').strip(' />').split(' ', 1)
-
-            tmp_dict = {}
-            for item in s_attrs:
-                pairs = re.sub("\'", '', item).split('=')
-                it = iter(pairs)
-                pair_dict = dict(zip(it, it))
-                for k, v in pair_dict.items():
-                    tmp_dict[k] = v
-            element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
-
-        node_dict[element_name] = element_style_dict
-
-    return node_dict
-
-
-def parse_all_colors(xml_soup):
-    colors_used = []
-    all_styles_list = xml_soup.findAll('style', recursive=True)
-    for s in all_styles_list:
-        for line in s.string.split('\n'):
-            if '#' in line.strip():
-                hex_num = line.split('#')[1][:6]
-                if hex_num not in colors_used and hex_num.isalnum():
-                    colors_used.append(hex_num)
-
-    hex_colors_used = ['#' + h for h in colors_used]
-
-    return hex_colors_used
-
-
-# def convert_filetype():
-#     """Convert local .twb to .xml file extension"""
-#     # (This function does not appear to be necessary, commenting out for now)
-#     tableau_file_path = 'example_style_guide_two.twb'
-#     base = os.path.splitext(tableau_file)[0]
-#     os.rename(tableau_file, base + '.xml')
-
-
 if __name__ == "__main__":
-    parse_tableau_styles()
+    validate_tableau_styles()

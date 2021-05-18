@@ -1,14 +1,13 @@
 import json
-import pprint
 import argparse
 
 
-def parser_cli():
+def get_cli_input():
     """
     Accept input JSON and TWB files from the command line.
 
     Usage:
-    $ python cli_input_parser.py --style-guide './company_style_rules.json' --tableau-workbook './fancy_graphs.twb'
+    $ python tableau_xml_parser.py --style-guide './tests/sg_example.json' --tableau-workbook './tests/wb_example.twb'
 
     """
 
@@ -19,33 +18,44 @@ def parser_cli():
                         required=True,
                         help='''
                         JSON Style Guide (.json) filepath containing style standards to test against Tableau file.
-                        See alksdfjal;skdfja;lsdkfj
                         ''',
                         type=str)
 
     # Tableau Workbook
     parser.add_argument('-w', '--tableau-workbook',
-                        required=False,
+                        required=True,
                         help="Tableau Workbook (.twb) file to test for style guide compliance.",
-                        type=argparse.FileType('r'))
+                        type=str)
 
     arguments = parser.parse_args()
 
+    return arguments
+
+
+def ingest_style_guide(args):
+    """Ingest JSON style guide file (~/foo.json) from command line arguments."""
+
     # Test Style Guide input for valid JSON
-    with open(arguments.style_guide) as json_style_guide:
+    with open(args.style_guide) as style_guide_infile:
         try:
-            sg = json.load(json_style_guide)
+            style_guide_json = json.load(style_guide_infile)
 
         except json.JSONDecodeError:
             print('Invalid JSON format. \n'
                   'Check for double quotes and matching brackets.')
 
-    pprint.pprint(sg)
-    # print(type(sg))
-    # datboi = json.dumps(sg, indent=4, sort_keys=True)
+    return style_guide_json
 
-    return
+
+def ingest_tableau_workbook(args):
+    """Ingest Tableau Workbook file (~/foo.twb) from command line arguments."""
+
+    # Pass Tableau Workbook to parser as open file
+    with open(args.tableau_workbook) as tableau_workbook_infile:
+        tableau_workbook_file = tableau_workbook_infile.read()
+
+    return tableau_workbook_file
 
 
 if __name__ == '__main__':
-    parser_cli()
+    get_cli_input()
