@@ -29,7 +29,7 @@ def parse_tableau_styles():
         **parse_dashboards(soup)
     }
 
-    # return pprint.pprint(style_dict)
+    return pprint.pprint(style_dict)
 
 
 def parse_workbook_style(xml_soup):
@@ -123,7 +123,7 @@ def parse_worksheets(xml_soup):
                     ws['ws_labels'] = get_distinct_styles(label_styles_list)
 
             # #
-            # # (Disregard for now) TABLE STYLES
+            # # (Excluding until later iterations) TABLE STYLES
             # #
             # table_elements = worksheet\
             #     .find('table')\
