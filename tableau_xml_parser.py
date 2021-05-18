@@ -1,16 +1,13 @@
 import re
 import json
+import pprint
 from bs4 import BeautifulSoup
 
 
 def parse_tableau_styles():
-    # # Convert local .twb to XML
-    # tableau_file_path = 'example_style_guide_two.twb'
-    # base = os.path.splitext(tableau_file)[0]
-    # os.rename(tableau_file, base + '.xml')
-
     # Read file and create Beautiful Soup object
-    infile = open('tests/example_style_guide.twb', 'r')
+    infile = open('tests/c.twb', 'rw')
+
     contents = infile.read()
     soup = BeautifulSoup(contents, 'lxml')
 
@@ -20,7 +17,7 @@ def parse_tableau_styles():
         **parse_dashboards(soup)
     }
 
-    return json.dumps(style_dict, indent=4, sort_keys=True)
+    return pprint.pprint(style_dict)
 
 
 def parse_workbook_style(xml_soup):
@@ -191,8 +188,6 @@ def get_styles_from_dict(styles_soup):
         .find('formatted-text')\
         .findAll('run')
 
-    print(style_runs)
-
     styles_list = [
         style_run.attrs
         for style_run in style_runs
@@ -252,21 +247,13 @@ def parse_all_colors(xml_soup):
     return hex_colors_used
 
 
+# def convert_filetype():
+#     """Convert local .twb to .xml file extension"""
+#     # (This function does not appear to be necessary, commenting out for now)
+#     tableau_file_path = 'example_style_guide_two.twb'
+#     base = os.path.splitext(tableau_file)[0]
+#     os.rename(tableau_file, base + '.xml')
+
+
 if __name__ == "__main__":
     parse_tableau_styles()
-
-# # PATHS WE WANT
-# #
-# # DASHBOARD <workbook><dashboards><dashboard>
-# ...<dashboard name=""> # Dashboard Name
-# ...<layout-options><title><formatted-text><run # Title stuff
-# ...<style><style-rule element=""> # dash-subtitle, dash-container
-# ...<style><style-rule element=""><format attr=""> # font-size, background-color, border-style
-# ...<size minheight='620' minwidth='1000' />
-# #
-# # WORKSHEET <workbook><worksheets><worksheet>
-# ...<worksheet name=""> # Worksheet Name
-# ...<layout-options><title><formatted-text>  # Worksheet Title Formatting
-# ...<table><style><style-rule element=""><format attr="">  # Axis, Header, Label, refline, legend
-# ...<table><panes><pane><customized-tooltip><formatted-text><run # fontcolor, fontname, fontsize
-# ...<table><panes><pane><customized-label><formatted-text><run # fontcolor, fontname, fontsize

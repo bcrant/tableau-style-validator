@@ -90,3 +90,20 @@
         # Ignore for now
     </windows>
 </workbook>
+
+
+# # PATHS WE WANT
+# #
+# # DASHBOARD <workbook><dashboards><dashboard>
+# ...<dashboard name=""> # Dashboard Name
+# ...<layout-options><title><formatted-text><run # Title stuff
+# ...<style><style-rule element=""> # dash-subtitle, dash-container
+# ...<style><style-rule element=""><format attr=""> # font-size, background-color, border-style
+# ...<size minheight='620' minwidth='1000' />
+# #
+# # WORKSHEET <workbook><worksheets><worksheet>
+# ...<worksheet name=""> # Worksheet Name
+# ...<layout-options><title><formatted-text>  # Worksheet Title Formatting
+# ...<table><style><style-rule element=""><format attr="">  # Axis, Header, Label, refline, legend
+# ...<table><panes><pane><customized-tooltip><formatted-text><run # fontcolor, fontname, fontsize
+# ...<table><panes><pane><customized-label><formatted-text><run # fontcolor, fontname, fontsize
