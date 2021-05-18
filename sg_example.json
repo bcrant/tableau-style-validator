@@ -1,0 +1,38 @@
+{
+    "fonts": ["Tableau Book", "Tableau Medium", "Tableau Bold"],
+    "font-sizes": [28, 18, 14, 12, 11, 10],
+    "font-colors": "#333333",
+    "all-colors": {
+        "COMPANY LIKERT": [
+            "#EF8800",
+            "#FFA609",
+            "#F6B94D",
+            "#979494",
+            "#5CA9E4",
+            "#338BCF",
+            "#0A6EBA"
+        ],
+        "COMPANY LIGHT": [
+            "#81DAD5",
+            "#FFBFA0",
+            "#FFD57B",
+            "#88DA8B",
+            "#8EC8FF",
+            "#FFA6DA",
+            "#B9A6FF",
+            "#FFA6A6",
+            "#9FBDE2"
+        ],
+        "COMPANY DARK": [
+            "#20C3B9",
+            "#FC8440",
+            "#FFD154",
+            "#5FC57B",
+            "#42A5F5",
+            "#F949B5",
+            "#8769E3",
+            "#EC1F69",
+            "#2A71C5"
+        ]
+    }
+}

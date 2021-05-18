@@ -1,15 +1,6 @@
-import os
 import re
-import pprint
+import json
 from bs4 import BeautifulSoup
-
-# TODO:
-# MVP: Font Name (fontname), Font Size (fontsize), Font Color (fontcolor)
-#
-# V2: Test Colors. Separate colors loaded in Preferences (color palettes). Test against Mark colors (zones?)...
-# ... Table Axis, Labels, Shading, etc colors
-#
-# V3: Test Font combos (Tableau Medium 11pt) (Tableau Book 11pt Italic)
 
 
 def parse_tableau_styles():
@@ -19,7 +10,7 @@ def parse_tableau_styles():
     # os.rename(tableau_file, base + '.xml')
 
     # Read file and create Beautiful Soup object
-    infile = open('example_style_guide.xml', 'r')
+    infile = open('tests/example_style_guide.twb', 'r')
     contents = infile.read()
     soup = BeautifulSoup(contents, 'lxml')
 
@@ -29,7 +20,7 @@ def parse_tableau_styles():
         **parse_dashboards(soup)
     }
 
-    return pprint.pprint(style_dict)
+    return json.dumps(style_dict, indent=4, sort_keys=True)
 
 
 def parse_workbook_style(xml_soup):
