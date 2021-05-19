@@ -5,7 +5,7 @@ import json
 
 def pp(json_dict):
     # I prefer this to pprint
-    return json.dumps(json_dict, indent=4, sort_keys=True)
+    return print(json.dumps(json_dict, indent=4, sort_keys=True))
 
 
 def get_styles_from_dict(styles_soup):

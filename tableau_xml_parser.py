@@ -1,19 +1,57 @@
+import json
 from bs4 import BeautifulSoup
 from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
+# def validate_tableau_styles():
+#     #
+#     # Get input from command line arguments
+#     #
+#     input_files = get_cli_input()
+#
+#     # Style Guide
+#     sg_json = ingest_style_guide(input_files)
+#
+#     # Tableau Workbook
+#     wb_file = ingest_tableau_workbook(input_files)
+#     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
+#     wb_xml = BeautifulSoup(wb_file, 'lxml')
+#     # (If we ever write style changes back to .twb we will want to remove this)
+#     wb_xml.find('thumbnails').decompose()
+#
+#     #
+#     # Call parsing functions and create new dictionary
+#     #
+#     style_dict = {
+#         **parse_workbook_style(wb_xml),
+#         **parse_worksheets(wb_xml),
+#         **parse_dashboards(wb_xml)
+#     }
+#
+#     return \
+#         print('''
+# PARSED WORKBOOK STYLES:
+# {}
+#
+#
+# ----------------------------------------------------------------
+#
+#
+# STYLE GUIDE RULES:
+# {}
+# '''.format(pp(style_dict), pp(sg_json)))
 
-def validate_tableau_styles():
+
+def get_tableau_styles():
     #
     # Get input from command line arguments
     #
-    input_files = get_cli_input()
 
     # Style Guide
-    sg_json = ingest_style_guide(input_files)
+    sg_json = json.load(open('./tests/sg_example.json', 'r'))
 
     # Tableau Workbook
-    wb_file = ingest_tableau_workbook(input_files)
+    wb_file = open('./tests/wb_example.twb', 'r').read()
     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
     wb_xml = BeautifulSoup(wb_file, 'lxml')
     # (If we ever write style changes back to .twb we will want to remove this)
@@ -28,18 +66,7 @@ def validate_tableau_styles():
         **parse_dashboards(wb_xml)
     }
 
-    return \
-        print('''
-PARSED WORKBOOK STYLES:
-{}
-
-
-----------------------------------------------------------------
-
-
-STYLE GUIDE RULES:
-{}
-'''.format(pp(style_dict), pp(sg_json)))
+    return style_dict
 
 
 def parse_workbook_style(xml_soup):
@@ -57,10 +84,10 @@ def parse_workbook_style(xml_soup):
         for k, v in wb_style_rules.items():
             wb[k] = v
 
-    #
-    # ALL COLORS IN WORKBOOK
-    #
-    wb['all_colors'] = get_all_colors(xml_soup)
+    # #
+    # # ALL COLORS IN WORKBOOK
+    # #
+    # wb['all_colors'] = get_all_colors(xml_soup)
 
     return {'workbook_styles': wb}
 
@@ -205,4 +232,4 @@ def parse_dashboards(xml_soup):
 
 
 if __name__ == "__main__":
-    validate_tableau_styles()
+    get_tableau_styles()
