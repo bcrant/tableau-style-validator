@@ -15,13 +15,13 @@ def validate_styles():
     #
     styles = get_tableau_styles()
 
-    # # Workbook styles
-    # wb_styles = styles.get('workbook_styles')
-    # test_workbook(wb_styles, sg_json)
-    #
-    # # Dashboard styles
-    # db_styles = styles.get('dashboard_styles')
-    # test_dashboards(db_styles, sg_json)
+    # Workbook styles
+    wb_styles = styles.get('workbook_styles')
+    test_workbook(wb_styles, sg_json)
+
+    # Dashboard styles
+    db_styles = styles.get('dashboard_styles')
+    test_dashboards(db_styles, sg_json)
 
     # Worksheet styles
     ws_styles = styles.get('worksheet_styles')
@@ -80,30 +80,30 @@ def test_worksheets(worksheet_styles, sg):
     print()
     print('Validating each worksheet in workbook...\n')
 
-    for worksheet in worksheet_styles:
-        worksheet_style = worksheet_styles.get(worksheet)
-        ws_name = worksheet
-        for style in worksheet_style:
-            items = worksheet_style.get(style)
-            if isinstance(items, list):
-                for item in items:
-                    if isinstance(item, dict):
-                        for style in item:
-                            s = item.get(style)
-                            if 'font-size' in style:
+    for worksheet_style in worksheet_styles:
+        worksheet = worksheet_styles.get(worksheet_style)
+        ws_name = worksheet_style
+        for item in worksheet:
+            styles = worksheet.get(item)
+            if isinstance(styles, list):
+                for style_dict in styles:
+                    if isinstance(style_dict, dict):
+                        for style in style_dict:
+                            s = style_dict.get(style)
+                            if 'fontsize' in style:
                                 if s not in sg.get('font-sizes'):
                                     print(
-                                        f'{Alerts.FONT_SIZE} "{s}pt" found in {item.upper()} of dashboard "{db_name}".')
+                                        f'{Alerts.FONT_SIZE} "{s}pt" found in {item.upper()} of worksheet "{ws_name}".')
 
-                            if 'font-family' in style:
+                            if 'fontname' in style:
                                 if s not in sg.get('fonts'):
                                     print(
-                                        f'{Alerts.FONT_TYPE} "{s}" found in {item.upper()} of dashboard "{db_name}".')
+                                        f'{Alerts.FONT_TYPE} "{s}" found in {item.upper()} of worksheet "{ws_name}".')
 
-                            if 'color' in style:
+                            if 'fontcolor' in style:
                                 if s not in sg.get('font-colors'):
                                     print(
-                                        f'{Alerts.FONT_COLOR} "{s}" found in {item.upper()} of dashboard "{db_name}".')
+                                        f'{Alerts.FONT_COLOR} "{s}" found in {item.upper()} of worksheet "{ws_name}".')
 
 
 if __name__ == "__main__":
