@@ -1,11 +1,6 @@
 import json
-import unittest
 from tableau_xml_parser import get_tableau_styles
 from helpers import pp
-
-
-# class StyleTests(unittest.TestCase):
-#     """Tests for tableau_xml_parser."""
 
 
 def validate_styles():
@@ -36,12 +31,10 @@ def validate_styles():
 def test_workbook(workbook_styles, sg):
     for s in workbook_styles:
         item = workbook_styles.get(s)
-        print()
         for i in item:
             x = item.get(i)
             if 'font-size' in i:
                 if x not in sg.get('font-sizes'):
-                    self.assert()
                     print('Wrong font size mothafucka!!')
                     print(f'BAD STYLE. Font Size {x} found in {s.upper()}.')
 
