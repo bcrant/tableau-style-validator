@@ -29,21 +29,21 @@ def validate_styles():
 
 
 def test_workbook(workbook_styles, sg):
-    for s in workbook_styles:
-        item = workbook_styles.get(s)
-        for i in item:
-            x = item.get(i)
-            if 'font-size' in i:
-                if x not in sg.get('font-sizes'):
-                    print(f'{Alerts.FONT_SIZE} {x}pt found in {s.upper()}.')
+    for component in workbook_styles:
+        styles = workbook_styles.get(component)
+        for style in styles:
+            s = styles.get(style)
+            if 'font-size' in style:
+                if s not in sg.get('font-sizes'):
+                    print(f'{Alerts.FONT_SIZE} "{s}pt" found in {component.upper()}.')
 
-            if 'font-family' in i:
-                if x not in sg.get('fonts'):
-                    print(f'{Alerts.FONT_TYPE} "{x}" found in {s.upper()}.')
+            if 'font-family' in style:
+                if s not in sg.get('fonts'):
+                    print(f'{Alerts.FONT_TYPE} "{s}" found in {component.upper()}.')
 
-            if 'color' in i:
-                if x not in sg.get('font-colors'):
-                    print(f'{Alerts.FONT_COLOR} {x} found in {s.upper()}.')
+            if 'color' in style:
+                if s not in sg.get('font-colors'):
+                    print(f'{Alerts.FONT_COLOR} "{s}" found in {component.upper()}.')
 
 
 if __name__ == "__main__":
