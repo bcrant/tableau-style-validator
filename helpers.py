@@ -1,6 +1,13 @@
 import re
 import json
-# from bs4 import BeautifulSoup
+from colorama import Fore, Back, Style
+from bs4 import BeautifulSoup
+
+
+class Alerts:
+    FONT_TYPE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Type ' + Style.RESET_ALL)
+    FONT_SIZE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Size ' + Style.RESET_ALL)
+    FONT_COLOR = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Color' + Style.RESET_ALL)
 
 
 def pp(json_dict):

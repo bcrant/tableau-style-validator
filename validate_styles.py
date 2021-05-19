@@ -1,6 +1,6 @@
 import json
 from tableau_xml_parser import get_tableau_styles
-from helpers import pp
+from helpers import pp, Alerts
 
 
 def validate_styles():
@@ -35,18 +35,15 @@ def test_workbook(workbook_styles, sg):
             x = item.get(i)
             if 'font-size' in i:
                 if x not in sg.get('font-sizes'):
-                    print('Wrong font size mothafucka!!')
-                    print(f'BAD STYLE. Font Size {x} found in {s.upper()}.')
+                    print(f'{Alerts.FONT_SIZE} {x}pt found in {s.upper()}.')
 
             if 'font-family' in i:
                 if x not in sg.get('fonts'):
-                    print('The fuck you think this is??? YOU CANT USE THAT FONT BRUH')
-                    print(f'BAD STYLE. Font family {x} found in {s.upper()}.')
+                    print(f'{Alerts.FONT_TYPE} "{x}" found in {s.upper()}.')
 
             if 'color' in i:
                 if x not in sg.get('font-colors'):
-                    print('Who the fuck told you to paint outside the lines??')
-                    print(f'BAD STYLE. Font color {x} found in {s.upper()}.')
+                    print(f'{Alerts.FONT_COLOR} {x} found in {s.upper()}.')
 
 
 if __name__ == "__main__":

@@ -185,8 +185,6 @@ def parse_dashboards(xml_soup):
 
     dashboards = xml_soup.find_all('dashboard')
 
-    all_db_styles = {}
-
     for dashboard in dashboards:
         #
         # DASHBOARD NAME AND SIZE
@@ -226,9 +224,7 @@ def parse_dashboards(xml_soup):
             for k, v in db_style_rules.items():
                 db[k] = v
 
-        all_db_styles[db['db_name']] = db
-
-    return {'dashboard_styles': all_db_styles}
+    return {'dashboard_styles': db}
 
 
 if __name__ == "__main__":
