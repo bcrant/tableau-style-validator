@@ -1,19 +1,55 @@
 import json
 from bs4 import BeautifulSoup
-from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
-# def validate_tableau_styles():
+
+#
+# RUN PROGRAM ON COMMAND LINE
+#
+def get_tableau_styles(workbook_file):
+
+    # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
+    wb_xml = BeautifulSoup(workbook_file, 'lxml')
+    # (If we ever write style changes back to .twb we will want to remove this)
+    wb_xml.find('thumbnails').decompose()
+
+    #
+    # Call parsing functions and create new dictionary
+    #
+    style_dict = {
+        **parse_workbook_style(wb_xml),
+        **parse_worksheets(wb_xml),
+        **parse_dashboards(wb_xml)
+    }
+
+    return style_dict
+
+#     return \
+#         print('''
+# PARSED WORKBOOK STYLES:
+# {}
+#
+#
+# ----------------------------------------------------------------
+#
+#
+# STYLE GUIDE RULES:
+# {}
+# '''.format(pp(style_dict), pp(sg_json)))
+
+# #
+# # LOCAL TESTING USING RUN CONFIG (Hard coded file paths)
+# #
+# def get_tableau_styles():
 #     #
 #     # Get input from command line arguments
 #     #
-#     input_files = get_cli_input()
 #
 #     # Style Guide
-#     sg_json = ingest_style_guide(input_files)
+#     sg_json = json.load(open('./tests/sg_example.json', 'r'))
 #
 #     # Tableau Workbook
-#     wb_file = ingest_tableau_workbook(input_files)
+#     wb_file = open('./tests/wb_example.twb', 'r').read()
 #     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
 #     wb_xml = BeautifulSoup(wb_file, 'lxml')
 #     # (If we ever write style changes back to .twb we will want to remove this)
@@ -28,45 +64,7 @@ from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styl
 #         **parse_dashboards(wb_xml)
 #     }
 #
-#     return \
-#         print('''
-# PARSED WORKBOOK STYLES:
-# {}
-#
-#
-# ----------------------------------------------------------------
-#
-#
-# STYLE GUIDE RULES:
-# {}
-# '''.format(pp(style_dict), pp(sg_json)))
-
-
-def get_tableau_styles():
-    #
-    # Get input from command line arguments
-    #
-
-    # Style Guide
-    sg_json = json.load(open('./tests/sg_example.json', 'r'))
-
-    # Tableau Workbook
-    wb_file = open('./tests/wb_example.twb', 'r').read()
-    # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
-    wb_xml = BeautifulSoup(wb_file, 'lxml')
-    # (If we ever write style changes back to .twb we will want to remove this)
-    wb_xml.find('thumbnails').decompose()
-
-    #
-    # Call parsing functions and create new dictionary
-    #
-    style_dict = {
-        **parse_workbook_style(wb_xml),
-        **parse_worksheets(wb_xml),
-        **parse_dashboards(wb_xml)
-    }
-
-    return style_dict
+#     return style_dict
 
 
 def parse_workbook_style(xml_soup):
@@ -231,5 +229,5 @@ def parse_dashboards(xml_soup):
     return {'dashboard_styles': all_db_styles}
 
 
-if __name__ == "__main__":
-    get_tableau_styles()
+# if __name__ == "__main__":
+#     get_tableau_styles()

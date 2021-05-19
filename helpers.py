@@ -5,14 +5,14 @@ from bs4 import BeautifulSoup
 
 
 class Alerts:
-    FONT_TYPE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Type ' + Style.RESET_ALL)
-    FONT_SIZE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Size ' + Style.RESET_ALL)
-    FONT_COLOR = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ALERT ' + Style.NORMAL + Fore.RESET + 'Font Color' + Style.RESET_ALL)
+    FONT_TYPE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Type ' + Style.RESET_ALL)
+    FONT_SIZE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Size ' + Style.RESET_ALL)
+    FONT_COLOR = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Color' + Style.RESET_ALL)
 
 
 def pp(json_dict):
     # I prefer this to pprint
-    return print(json.dumps(json_dict, indent=4, sort_keys=True))
+    return json.dumps(json_dict, indent=4, sort_keys=True)
 
 
 def get_styles_from_dict(styles_soup):
