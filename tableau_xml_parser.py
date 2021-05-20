@@ -3,9 +3,6 @@ from bs4 import BeautifulSoup
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
 
-#
-# RUN PROGRAM ON COMMAND LINE
-#
 def get_tableau_styles(workbook_file):
 
     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
@@ -23,48 +20,6 @@ def get_tableau_styles(workbook_file):
     }
 
     return style_dict
-
-#     return \
-#         print('''
-# PARSED WORKBOOK STYLES:
-# {}
-#
-#
-# ----------------------------------------------------------------
-#
-#
-# STYLE GUIDE RULES:
-# {}
-# '''.format(pp(style_dict), pp(sg_json)))
-
-# #
-# # LOCAL TESTING USING RUN CONFIG (Hard coded file paths)
-# #
-# def get_tableau_styles():
-#     #
-#     # Get input from command line arguments
-#     #
-#
-#     # Style Guide
-#     sg_json = json.load(open('./tests/sg_example.json', 'r'))
-#
-#     # Tableau Workbook
-#     wb_file = open('./tests/wb_example.twb', 'r').read()
-#     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
-#     wb_xml = BeautifulSoup(wb_file, 'lxml')
-#     # (If we ever write style changes back to .twb we will want to remove this)
-#     wb_xml.find('thumbnails').decompose()
-#
-#     #
-#     # Call parsing functions and create new dictionary
-#     #
-#     style_dict = {
-#         **parse_workbook_style(wb_xml),
-#         **parse_worksheets(wb_xml),
-#         **parse_dashboards(wb_xml)
-#     }
-#
-#     return style_dict
 
 
 def parse_workbook_style(xml_soup):

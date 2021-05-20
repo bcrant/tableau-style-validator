@@ -6,6 +6,15 @@ from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
 
 
 def validate_styles():
+    """
+    DIFFERENT WAYS TO RUN THIS PROGRAM LOCALLY:
+    Run as Command Line Interface
+    $ python validate_styles.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
+
+    Run in PyCharm: PyCharm Run Config Parameters
+    Script Path: ~/tableau-style-guide-linter/validate_styles.py
+    Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
+    """
     #
     # Get input from command line arguments
     #
