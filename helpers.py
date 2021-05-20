@@ -5,9 +5,18 @@ from bs4 import BeautifulSoup
 
 
 class Alerts:
-    FONT_TYPE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Type ' + Style.RESET_ALL)
-    FONT_SIZE = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Size ' + Style.RESET_ALL)
-    FONT_COLOR = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ⚠️ ALERT ' + Style.NORMAL + Fore.RESET + 'Font Color' + Style.RESET_ALL)
+    FONT_TYPE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Type  ' + Style.RESET_ALL)
+    FONT_SIZE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Size  ' + Style.RESET_ALL)
+    FONT_COLOR = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Color ' + Style.RESET_ALL)
+    PASS_TESTS = str(Back.BLACK + Fore.GREEN + Style.BRIGHT + ' ✅\tVALID STYLES   ' + Style.RESET_ALL)
+    FAIL_TESTS = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ❌\tINVALID STYLES   ' + Style.RESET_ALL)
+
+
+def err_msg(count):
+    if count == 0:
+        return print(f'{Alerts.PASS_TESTS}')
+    else:
+        return print(f'{Alerts.FAIL_TESTS} {count} styles need revision.')
 
 
 def pp(json_dict):
