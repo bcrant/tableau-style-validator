@@ -1,0 +1,15 @@
+beautifulsoup4
+bs4
+certifi
+chardet
+colorama
+greenlet
+idna
+lxml
+python-dotenv
+requests
+six
+soupsieve
+tableauserverclient
+urllib3
+xmltodict

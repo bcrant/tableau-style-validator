@@ -8,7 +8,7 @@ class StyleTests(unittest.TestCase):
     #
     # Load Style Guide
     #
-    sg_json = json.load(open('./tests/sg_example.json', 'r'))
+    sg_json = json.load(open('sg_example.json', 'r'))
     sg_json.pop('_README')
 
     def test_fonts(self):
