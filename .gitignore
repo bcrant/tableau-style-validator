@@ -2,3 +2,5 @@
 envs/.env
 __pycache__/
 .idea/
+/lambda-deps/python/
+lambda-deps/*.zip
