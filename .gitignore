@@ -4,3 +4,5 @@ __pycache__/
 .idea/
 /lambda-deps/python/
 lambda-deps/*.zip
+/lambda-code/python/
+lambda-code/*.zip
