@@ -1,0 +1,2 @@
+## requirements-code.txt
+## Reserved for transient or lightweight deps to be packaged alongside code.

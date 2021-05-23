@@ -8,5 +8,4 @@ aws --profile ${AWS_PROFILE_NAME} lambda create-function \
   --runtime ${PYTHON_VERSION} \
   --code S3Bucket=${S3_BUCKET},S3Key=code.zip \
   --handler ${LAMBDA_HANDLER} \
-  --role arn:aws:iam::${IAM_ACCOUNT}:role/${IAM_LAMBDA_ROLE} \
-  --vpc-config SubnetIds=${LAMBDA_SUBNET_IDS},SecurityGroupIds=${VPC_SECURITY_GROUP_IDS}
+  --role arn:aws:iam::${IAM_ACCOUNT}:role/${IAM_LAMBDA_ROLE}
