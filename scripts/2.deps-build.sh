@@ -13,4 +13,4 @@ docker run --rm -v $(pwd):/tmp -w /tmp lambci/lambda:build-${PYTHON_VERSION} bas
 echo -e "ZIPPING LAYER ARTIFACTS..."
 zip -q -r alldeps.zip . -x "*.pyc" "*.git" "*.sh" env.env out.json .DS_Store
 
-rm -rf python
+#rm -rf python

@@ -13,4 +13,4 @@ docker run --rm -v $(pwd):/tmp -w /tmp lambci/lambda:build-${PYTHON_VERSION} bas
 echo -e "ZIPPING CODE..."
 zip -q -r code.zip . -x "*.pyc" "*.git" "*.sh" env.env out.json .DS_Store
 
-rm -rf python
+#rm -rf python

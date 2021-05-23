@@ -1,8 +1,8 @@
 .DS_Store
 envs/.env
 __pycache__/
-.idea/
-/lambda-deps/python/
-lambda-deps/*.zip
-/lambda-code/python/
-lambda-code/*.zip
+.idea
+.python-version
+lambda-*/*.zip
+lambda-*/python/**
+**/pip-**
