@@ -66,106 +66,20 @@ def authenticate_tableau():
         wb = server.workbooks.get_by_id(TABLEAU_RESOURCE_LUID)
 
         print(f'Downloading {wb.name} from {SERVER_URL}/{SITE_NAME}')
-        wb_file = server.workbooks.download(wb.id)
-        #
-        # with open(wb_file, 'wb') as f:
-        zip = zipfile.ZipFile(wb_file)
-        for z in zip.namelist():
+        wb_file = server.workbooks.download(wb.id, include_extract=False)
+
+        # Files download as twbx in zipped form...
+        print(wb_file)
+        zipped_twbx = zipfile.ZipFile(wb_file)
+        print(zipped_twbx.namelist())
+        print(zipped_twbx.infolist())
+
+        for z in zipped_twbx.namelist():
+            print(z)
             if '.twb' in z:
                 print(z)
-                zip.extract(z)
-        zip.close()
-
-            #         os.remove(workbook)
-            #
-            # # else file is twb
-            # elif ct == "application/xml":
-            #     with open(workbook, 'w') as file:
-            #         file.write(response.text)
-            #         file.close()
-
-
-
-
-                    # with open(wb_file, 'r', encoding='ascii') as f:
-        #     print(f.read())
-            # f.write(wb_file)
-            # print(f.encoding)
-            # print(f.readable())
-            # print(f.readlines())
-
-        # with open('./wb.xml', "wb") as xml_file:
-        #             xml_file.write(wb.workbook)
-
-        # # Gets all workbook items
-        # all_workbooks, pagination_item = server.workbooks.get()
-        # print("\nThere are {} workbooks on site: ".format(pagination_item.total_available))
-        # print([workbook.name for workbook in all_workbooks])
-        #
-        # if all_workbooks:
-        #     # Pick one workbook from the list
-        #     sample_workbook = all_workbooks[-1]
-        #
-        #     print(sample_workbook)
-
-        # # Gets all webhook items
-        # all_webhooks, pagination_item = server.webhooks.get()
-        # print("\nThere are {} webhooks on site: ".format(pagination_item.total_available))
-        # print([webhook for webhook in all_webhooks])
-        #
-        # if all_webhooks:
-        #     # Pick one webhook from the list and delete it
-        #     sample_webhook = all_webhooks[0]
-        #     # sample_webhook.delete()
-        #     print("+++" + sample_webhook.name)
-        #
-        #     print("Deleting webhook " + sample_webhook.name)
-        #     server.webhooks.delete(sample_webhook.id)
-
-    #     server.use_server_version()
-    #     req_option = TSC.RequestOptions()
-    #     print(req_option)
-
-#         req_option.filter.add(TSC.Filter(TSC.RequestOptions.Field.Name,
-#                                          TSC.RequestOptions.Operator.Equals, tabView))
-#         all_views, pagination_item = server.views.get(req_option)
-#         # Error catching for bad View names
-#         if not all_views:
-#             raise LookupError("View with the specified name was not found.")
-#         view_item = all_views[0]
-#         # Force refresh of screenshot if cached image more than one hour old
-#         max_age = '1'
-#         if not max_age:
-#             max_age = '1'
-#         image_req_option = TSC.ImageRequestOptions(imageresolution=TSC.ImageRequestOptions.Resolution.High,
-#                                                    maxage=max_age)
-#         server.views.populate_image(view_item, image_req_option)
-#         # Save bytes as image
-#         with open(tabPath, "wb") as image_file:
-#             image_file.write(view_item.image)
-#         print("Tableau image successfully saved to {0}".format(tabPath), '\n')
-#
-#
-# def download(server, auth_token, site_id, workbook_id):
-#     """
-#     Downloads the desired workbook from the server (temp-file).
-#
-#     'server'        specified server address
-#     'auth_token'    authentication token that grants user access to API calls
-#     'site_id'       ID of the site that the user is signed into
-#     'workbook_id'   ID of the workbook to download
-#     Returns the filename of the workbook downloaded.
-#     """
-#     print("\tDownloading workbook to a temp file")
-#     url = server + "/api/{0}/sites/{1}/workbooks/{2}/content".format(VERSION, site_id, workbook_id)
-#     server_response = requests.get(url, headers={'x-tableau-auth': auth_token})
-#     _check_status(server_response, 200)
-#
-#     # Header format: Content-Disposition: name="tableau_workbook"; filename="workbook-filename"
-#     filename = re.findall(r'filename="(.*)"', server_response.headers['Content-Disposition'])[0]
-#     with open(filename, 'wb') as f:
-#         f.write(server_response.content)
-#     return filename
+        #         zipped_twbx.extract(z)
+        # zipped_twbx.close()
 
 
 if __name__ == "__main__":
