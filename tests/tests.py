@@ -1,5 +1,5 @@
 import unittest
-from validate_styles import test_workbook
+from lib.validate_styles import test_workbook
 
 
 class StyleTests(unittest.TestCase):

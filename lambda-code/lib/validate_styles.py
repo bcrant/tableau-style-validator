@@ -20,6 +20,8 @@ def validate_styles():
     #
     input_files = get_cli_input()
 
+    print(input_files)
+
     # Style Guide
     sg_json = ingest_style_guide(input_files)
     sg_json.pop('_README')

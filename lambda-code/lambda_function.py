@@ -1,5 +1,4 @@
-import os
-from tableau_download_twb import download_workbook
+from lib.tableau_download_twb import download_workbook
 
 
 def lambda_handler(event, context):

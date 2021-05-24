@@ -1,4 +1,5 @@
 import json
+import lxml
 from bs4 import BeautifulSoup
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
@@ -184,5 +185,5 @@ def parse_dashboards(xml_soup):
     return {'dashboard_styles': all_db_styles}
 
 
-# if __name__ == "__main__":
-#     get_tableau_styles()
+if __name__ == "__main__":
+    get_tableau_styles()
