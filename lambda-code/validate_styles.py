@@ -30,7 +30,8 @@ from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
 #     wb_file = ingest_tableau_workbook(input_files)
 
 
-def validate_styles(style_guide_json, workbook_file): 
+def validate_styles(style_guide_json, workbook_file):
+
     #
     # Parse styles from Tableau Workbook file
     #
