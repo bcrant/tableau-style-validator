@@ -5,46 +5,48 @@ from helpers import pp, Alerts, err_msg
 from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
 
 
-def validate_styles():
-    """
-    DIFFERENT WAYS TO RUN THIS PROGRAM LOCALLY:
-    Run as Command Line Interface
-    $ python validate_styles.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
+# def validate_styles():
+#     """
+#     DIFFERENT WAYS TO RUN THIS PROGRAM LOCALLY:
+#     Run as Command Line Interface
+#     $ python validate_styles.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
+# 
+#     Run in PyCharm: PyCharm Run Config Parameters
+#     Script Path: ~/tableau-style-guide-linter/validate_styles.py
+#     Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
+#     """
+#     #
+#     # Get input from command line arguments
+#     #
+#     input_files = get_cli_input()
+# 
+#     print(input_files)
+# 
+#     # Style Guide
+#     sg_json = ingest_style_guide(input_files)
+#     sg_json.pop('_README')
+# 
+#     # Tableau Workbook
+#     wb_file = ingest_tableau_workbook(input_files)
 
-    Run in PyCharm: PyCharm Run Config Parameters
-    Script Path: ~/tableau-style-guide-linter/validate_styles.py
-    Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
-    """
-    #
-    # Get input from command line arguments
-    #
-    input_files = get_cli_input()
 
-    print(input_files)
-
-    # Style Guide
-    sg_json = ingest_style_guide(input_files)
-    sg_json.pop('_README')
-
-    # Tableau Workbook
-    wb_file = ingest_tableau_workbook(input_files)
-
+def validate_styles(style_guide_json, workbook_file): 
     #
     # Parse styles from Tableau Workbook file
     #
-    styles = get_tableau_styles(wb_file)
+    styles = get_tableau_styles(workbook_file)
 
     # Workbook styles
     wb_styles = styles.get('workbook_styles')
-    test_workbook(wb_styles, sg_json)
+    test_workbook(wb_styles, style_guide_json)
 
     # Dashboard styles
     db_styles = styles.get('dashboard_styles')
-    test_dashboards(db_styles, sg_json)
+    test_dashboards(db_styles, style_guide_json)
 
     # Worksheet styles
     ws_styles = styles.get('worksheet_styles')
-    test_worksheets(ws_styles, sg_json)
+    test_worksheets(ws_styles, style_guide_json)
 
     return
 

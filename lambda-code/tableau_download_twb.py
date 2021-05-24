@@ -1,19 +1,9 @@
 import os
 import zipfile
-from dotenv import load_dotenv
 import tableauserverclient as TSC
 
 
-def init_env():
-    if os.getenv('AWS_EXECUTION_ENV') is None:
-        print('Operating in local dev context, loading ./envs/.env file...')
-        load_dotenv('./envs/.env')
-    else:
-        print('Operating in Lambda context...')
-
-
 def download_workbook():
-    init_env()
     #
     # Import Tableau environment variables
     # For further explanation of Tableau environment variables visit:
@@ -79,8 +69,6 @@ def check_webhooks_for_wb_created(tsc_webhook_items):
 
 
 def create_webhook_for_wb_created(tsc_server_obj):
-    init_env()
-
     # Create webhook for Workbook Created events
     c_webhook = TSC.WebhookItem()
     c_webhook.name = os.getenv('WB_CREATED_WEBHOOK_NAME')
@@ -99,8 +87,6 @@ def check_webhooks_for_wb_updated(tsc_webhook_items):
 
 
 def create_webhook_for_wb_updated(tsc_server_obj):
-    init_env()
-
     # Create webhook for Workbook Updated events
     u_webhook = TSC.WebhookItem()
     u_webhook.name = os.getenv('WB_UPDATED_WEBHOOK_NAME')

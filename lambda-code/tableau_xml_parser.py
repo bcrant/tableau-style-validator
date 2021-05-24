@@ -5,7 +5,6 @@ from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styl
 
 
 def get_tableau_styles(workbook_file):
-
     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
     wb_xml = BeautifulSoup(workbook_file, 'lxml')
     # (If we ever write style changes back to .twb we will want to remove this)
