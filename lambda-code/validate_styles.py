@@ -63,20 +63,22 @@ def test_workbook(workbook_styles, sg):
         styles = workbook_styles.get(component)
         for style in styles:
             s = styles.get(style)
-            if 'font-size' in style:
-                if s not in sg.get('font-sizes'):
-                    print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {str(component + ".")}')
-                    wb_err_count += 1
+            if s is not None:
+                if 'font-size' in style:
+                    if s not in sg.get('font-sizes'):
+                        print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {str(component + ".")}')
+                        wb_err_count += 1
 
-            if 'font-family' in style:
-                if s not in sg.get('fonts'):
-                    print(f'{Alerts.FONT_TYPE} {s:20s} found in {str(component + ".")}')
-                    wb_err_count += 1
+                if 'font-family' in style:
+                    if s not in sg.get('fonts'):
+                        print(f'{Alerts.FONT_TYPE} {s:20s} found in {str(component + ".")}')
+                        wb_err_count += 1
 
-            if 'color' in style:
-                if s not in sg.get('font-colors'):
-                    print(f'{Alerts.FONT_COLOR} {s:20s} found in {str(component + ".")}')
-                    wb_err_count += 1
+                if 'color' in style:
+                    if s not in sg.get('font-colors'):
+                        print('WEEE ', s, component)
+                        print(f'{Alerts.FONT_COLOR} {s:20s} found in {str(component + ".")}')
+                        wb_err_count += 1
 
     err_msg(wb_err_count)
 
@@ -96,20 +98,21 @@ def test_dashboards(dashboard_styles, sg):
             if isinstance(styles, dict):
                 for style in styles:
                     s = styles.get(style)
-                    if 'font-size' in style:
-                        if s not in sg.get('font-sizes'):
-                            print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {item:20s} of dashboard {db_name}.')
-                            db_err_count += 1
+                    if s is not None:
+                        if 'font-size' in style:
+                            if s not in sg.get('font-sizes'):
+                                print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {item:20s} of dashboard {db_name}.')
+                                db_err_count += 1
 
-                    if 'font-family' in style:
-                        if s not in sg.get('fonts'):
-                            print(f'{Alerts.FONT_TYPE} {s:20s} found in {item:20s} of dashboard {db_name}.')
-                            db_err_count += 1
+                        if 'font-family' in style:
+                            if s not in sg.get('fonts'):
+                                print(f'{Alerts.FONT_TYPE} {s:20s} found in {item:20s} of dashboard {db_name}.')
+                                db_err_count += 1
 
-                    if 'color' in style:
-                        if s not in sg.get('font-colors'):
-                            print(f'{Alerts.FONT_COLOR} {s:20s} found in {item:20s} of dashboard {db_name}.')
-                            db_err_count += 1
+                        if 'color' in style:
+                            if s not in sg.get('font-colors'):
+                                print(f'{Alerts.FONT_COLOR} {s:20s} found in {item:20s} of dashboard {db_name}.')
+                                db_err_count += 1
 
     err_msg(db_err_count)
 
@@ -131,20 +134,21 @@ def test_worksheets(worksheet_styles, sg):
                     if isinstance(style_dict, dict):
                         for style in style_dict:
                             s = style_dict.get(style)
-                            if 'fontsize' in style:
-                                if s not in sg.get('font-sizes'):
-                                    print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {item:20s} of worksheet {ws_name}.')
-                                    ws_err_count += 1
+                            if s is not None:
+                                if 'fontsize' in style:
+                                    if s not in sg.get('font-sizes'):
+                                        print(f'{Alerts.FONT_SIZE} {str(s + "pt"):20s} found in {item:20s} of worksheet {ws_name}.')
+                                        ws_err_count += 1
 
-                            if 'fontname' in style:
-                                if s not in sg.get('fonts'):
-                                    print(f'{Alerts.FONT_TYPE} {s:20s} found in {item:20s} of worksheet {ws_name}.')
-                                    ws_err_count += 1
+                                if 'fontname' in style:
+                                    if s not in sg.get('fonts'):
+                                        print(f'{Alerts.FONT_TYPE} {s:20s} found in {item:20s} of worksheet {ws_name}.')
+                                        ws_err_count += 1
 
-                            if 'fontcolor' in style:
-                                if s not in sg.get('font-colors'):
-                                    print(f'{Alerts.FONT_COLOR} {s:20s} found in {item:20s} of worksheet {ws_name}.')
-                                    ws_err_count += 1
+                                if 'fontcolor' in style:
+                                    if s not in sg.get('font-colors'):
+                                        print(f'{Alerts.FONT_COLOR} {s:20s} found in {item:20s} of worksheet {ws_name}.')
+                                        ws_err_count += 1
 
     err_msg(ws_err_count)
 

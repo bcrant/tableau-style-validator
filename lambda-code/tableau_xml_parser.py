@@ -1,5 +1,3 @@
-import json
-import lxml
 from bs4 import BeautifulSoup
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
@@ -7,8 +5,6 @@ from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styl
 def get_tableau_styles(workbook_file):
     # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
     wb_xml = BeautifulSoup(workbook_file, 'lxml')
-    # (If we ever write style changes back to .twb we will want to remove this)
-    wb_xml.find('thumbnails').decompose()
 
     #
     # Call parsing functions and create new dictionary
@@ -55,6 +51,7 @@ def parse_worksheets(xml_soup):
         #
         # WORKSHEET NAME
         #
+
         ws = {
             'ws_name': worksheet['name']
         }
@@ -137,7 +134,6 @@ def parse_worksheets(xml_soup):
 def parse_dashboards(xml_soup):
 
     dashboards = xml_soup.find_all('dashboard')
-
     all_db_styles = {}
 
     for dashboard in dashboards:
@@ -173,9 +169,11 @@ def parse_dashboards(xml_soup):
         #
         # DASHBOARD ELEMENT STYLES (EXCLUDING ZONES)
         #
-        if dashboard.find('style') is not None:
+        # TODO: Need to parse Dashboard Zones to get all titles / text...
+        #       consider using foo.findAll('formatted-text') or wb_xml.findAll('run')
+        #       to search the entire document and make sure none are missed
+        if dashboard.find('style') is not None and bool(dashboard.find('style').contents):
             db_style_rules = get_style_rules(dashboard.find('style'))
-
             for k, v in db_style_rules.items():
                 db[k] = v
 

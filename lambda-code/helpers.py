@@ -44,6 +44,7 @@ def get_distinct_styles(style_dicts_list):
 
 
 def get_style_rules(parent_node_soup):
+    # Make sure not empty <style></style>
     node_dict = {}
 
     node_styles = parent_node_soup\
@@ -54,24 +55,27 @@ def get_style_rules(parent_node_soup):
 
     for element in list_elements:
         element_name = element.split('\'')[0]
-        element_style = [i.strip() for i in element.split('\n')][1:]
 
-        element_style_dict = {}
-        for s in element_style:
-            s_attrs = s.strip('<format').strip(' />').split(' ', 1)
+        # TODO: Add support for Mark colors
+        if 'mark' not in element_name:
+            element_style = [i.strip() for i in element.split('\n')][1:]
 
-            tmp_dict = {}
-            for item in s_attrs:
-                pairs = re.sub("\'", '', item).split('=')
-                it = iter(pairs)
-                pair_dict = dict(zip(it, it))
-                for k, v in pair_dict.items():
-                    tmp_dict[k] = v
-            element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
+            element_style_dict = {}
+            for s in element_style:
+                s_attrs = s.strip('<format').strip(' />').split(' ', 1)
 
-        node_dict[element_name] = element_style_dict
+                tmp_dict = {}
+                for item in s_attrs:
+                    pairs = re.sub("\'", '', item).split('=')
+                    it = iter(pairs)
+                    pair_dict = dict(zip(it, it))
+                    for k, v in pair_dict.items():
+                        tmp_dict[k] = v
+                element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
 
-    return node_dict
+            node_dict[element_name] = element_style_dict
+
+        return node_dict
 
 
 def get_all_colors(xml_soup):
