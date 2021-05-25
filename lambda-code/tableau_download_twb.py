@@ -40,7 +40,7 @@ def download_workbook():
         #
         wb = server.workbooks.get_by_id(TABLEAU_RESOURCE_LUID)
 
-        print(f'Downloading "{wb.name}" from Tableau Server.')
+        print(f'Downloading "{wb.name}" from Tableau Server...')
         zipped_wb_path = server.workbooks.download(wb.id, filepath='./lambda-code/', include_extract=True)
 
         # Packaged Workbook (.twbx) files are zipped archives. Here we extract the Workbook (.twb) only.
@@ -49,9 +49,9 @@ def download_workbook():
             for wb_file in packaged_workbook.namelist():
                 if '.twb' in wb_file:
                     unzipped_wb_path = packaged_workbook.extract(wb_file, './lambda-code/')
-                    print(f'Extracting "{wb_file}" from {wb.name}.')
+                    print(f'Extracting "{wb_file}" from "{wb.name}"...')
                 else:
-                    print(f'No Tableau Workbook file found in {wb.name}')
+                    print(f'No Tableau Workbook file found in "{wb.name}".')
 
         # Pass Tableau Workbook to parser as open file
         with open(unzipped_wb_path) as f:

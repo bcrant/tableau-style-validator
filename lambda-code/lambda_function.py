@@ -1,6 +1,5 @@
 import os
 import json
-import pprint
 from dotenv import load_dotenv
 from tableau_download_twb import download_workbook
 from validate_styles import validate_styles

@@ -2,36 +2,9 @@ import json
 from textwrap import dedent
 from tableau_xml_parser import get_tableau_styles
 from helpers import pp, Alerts, err_msg
-from inputs import get_cli_input, ingest_style_guide, ingest_tableau_workbook
-
-
-# def validate_styles():
-#     """
-#     DIFFERENT WAYS TO RUN THIS PROGRAM LOCALLY:
-#     Run as Command Line Interface
-#     $ python validate_styles.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
-# 
-#     Run in PyCharm: PyCharm Run Config Parameters
-#     Script Path: ~/tableau-style-guide-linter/validate_styles.py
-#     Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
-#     """
-#     #
-#     # Get input from command line arguments
-#     #
-#     input_files = get_cli_input()
-# 
-#     print(input_files)
-# 
-#     # Style Guide
-#     sg_json = ingest_style_guide(input_files)
-#     sg_json.pop('_README')
-# 
-#     # Tableau Workbook
-#     wb_file = ingest_tableau_workbook(input_files)
 
 
 def validate_styles(style_guide_json, workbook_file):
-
     #
     # Parse styles from Tableau Workbook file
     #
@@ -53,6 +26,7 @@ def validate_styles(style_guide_json, workbook_file):
 
 
 def test_workbook(workbook_styles, sg):
+    # print('Workbook Styles at time of testing:\n', pp(workbook_styles))
     print(dedent('''
     
         Validating all top-level WORKBOOK styles...
@@ -76,7 +50,6 @@ def test_workbook(workbook_styles, sg):
 
                 if 'color' in style:
                     if s not in sg.get('font-colors'):
-                        print('WEEE ', s, component)
                         print(f'{Alerts.FONT_COLOR} {s:20s} found in {str(component + ".")}')
                         wb_err_count += 1
 
@@ -84,6 +57,7 @@ def test_workbook(workbook_styles, sg):
 
 
 def test_dashboards(dashboard_styles, sg):
+    # print('Dashboard Styles at time of testing:\n', pp(dashboard_styles))
     print(dedent('''
 
     Validating each DASHBOARD in workbook...
@@ -118,6 +92,7 @@ def test_dashboards(dashboard_styles, sg):
 
 
 def test_worksheets(worksheet_styles, sg):
+    # print('Worksheet Styles at time of testing:\n', pp(worksheet_styles))
     print(dedent('''
 
     Validating each WORKSHEET in workbook...

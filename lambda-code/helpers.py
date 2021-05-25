@@ -35,11 +35,16 @@ def get_styles_from_dict(styles_soup):
         for style_run in style_runs
         if bool(style_run.attrs)
     ]
-
+    # print('Getting styles from dict...')
+    # print('Input: ', styles_soup)
+    # print('Output: ', styles_list)
     return styles_list
 
 
 def get_distinct_styles(style_dicts_list):
+    # print('Getting distinct styles...')
+    # print('Input: ', style_dicts_list)
+    # print('Output: ', [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}])
     return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
 
 
@@ -55,11 +60,9 @@ def get_style_rules(parent_node_soup):
 
     for element in list_elements:
         element_name = element.split('\'')[0]
-
         # TODO: Add support for Mark colors
         if 'mark' not in element_name:
             element_style = [i.strip() for i in element.split('\n')][1:]
-
             element_style_dict = {}
             for s in element_style:
                 s_attrs = s.strip('<format').strip(' />').split(' ', 1)
@@ -75,7 +78,10 @@ def get_style_rules(parent_node_soup):
 
             node_dict[element_name] = element_style_dict
 
-        return node_dict
+    # print('Getting style rules...')
+    # print('Input: ', parent_node_soup)
+    # print('Output: ', node_dict)
+    return node_dict
 
 
 def get_all_colors(xml_soup):

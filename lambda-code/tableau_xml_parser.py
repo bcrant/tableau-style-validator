@@ -3,7 +3,7 @@ from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styl
 
 
 def get_tableau_styles(workbook_file):
-    # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
+    # Create Beautiful Soup XML object from .twb file
     wb_xml = BeautifulSoup(workbook_file, 'lxml')
 
     #
@@ -28,8 +28,10 @@ def parse_workbook_style(xml_soup):
     # WORKBOOK STYLE
     #
     if workbook_style is not None:
+        # print('Workbook Styles', workbook_style)
         wb_style_rules = get_style_rules(workbook_style)
-
+        # print('Workbook Style Rules', wb_style_rules)
+        # print('Workbook Style Rules Items', wb_style_rules.items())
         for k, v in wb_style_rules.items():
             wb[k] = v
 

@@ -1,5 +1,33 @@
 import json
 import argparse
+from validate_styles import validate_styles
+
+
+def validate_styles_local_cli():
+    """
+    HOW TO RUN STYLE VALIDATOR AD HOC WITH LOCAL FILES (INSTEAD OF USING AWS LAMBDA DEPLOYMENT):
+
+    Run as Command Line Interface
+    $ python validate_local_files_cli.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
+
+    Run in PyCharm: PyCharm Run Config Parameters
+    Script Path: ~/tableau-style-guide-linter/validate_local_files_cli.py
+    Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
+    """
+    #
+    # Get input from command line arguments
+    #
+    input_files = get_cli_input()
+
+    # Style Guide
+    sg_json = ingest_style_guide(input_files)
+    sg_json.pop('_README')
+
+    # Tableau Workbook
+    wb_file = ingest_tableau_workbook(input_files)
+
+    # Run Tableau Style Validator from command line inputs
+    validate_styles(sg_json, wb_file)
 
 
 def get_cli_input():
@@ -58,4 +86,4 @@ def ingest_tableau_workbook(args):
 
 
 if __name__ == '__main__':
-    get_cli_input()
+    validate_styles_local_cli()
