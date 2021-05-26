@@ -25,20 +25,23 @@ def pp(json_dict):
 
 
 def get_styles_from_dict(styles_soup):
-    # Get formatted text styles from customized label or tooltip
-    style_runs = styles_soup\
-        .find('formatted-text')\
-        .findAll('run')
 
-    styles_list = [
-        style_run.attrs
-        for style_run in style_runs
-        if bool(style_run.attrs)
-    ]
-    # print('Getting styles from dict...')
-    # print('Input: ', styles_soup)
-    # print('Output: ', styles_list)
-    return styles_list
+    if styles_soup.find('formatted-text') is not None:
+
+        # Get formatted text styles from customized label or tooltip
+        style_runs = styles_soup\
+            .find('formatted-text')\
+            .findAll('run')
+
+        styles_list = [
+            style_run.attrs
+            for style_run in style_runs
+            if bool(style_run.attrs)
+        ]
+        # print('Getting styles from dict...')
+        # print('Input: ', styles_soup)
+        # print('Output: ', styles_list)
+        return styles_list
 
 
 def get_distinct_styles(style_dicts_list):

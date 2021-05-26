@@ -10,17 +10,17 @@ def validate_styles(style_guide_json, workbook_file):
     #
     styles = get_tableau_styles(workbook_file)
 
-    # Workbook styles
-    wb_styles = styles.get('workbook_styles')
-    test_workbook(wb_styles, style_guide_json)
+    # # Workbook styles
+    # wb_styles = styles.get('workbook_styles')
+    # test_workbook(wb_styles, style_guide_json)
 
     # Dashboard styles
     db_styles = styles.get('dashboard_styles')
     test_dashboards(db_styles, style_guide_json)
-
-    # Worksheet styles
-    ws_styles = styles.get('worksheet_styles')
-    test_worksheets(ws_styles, style_guide_json)
+    #
+    # # Worksheet styles
+    # ws_styles = styles.get('worksheet_styles')
+    # test_worksheets(ws_styles, style_guide_json)
 
     return
 

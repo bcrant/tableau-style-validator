@@ -139,6 +139,8 @@ def parse_dashboards(xml_soup):
     all_db_styles = {}
 
     for dashboard in dashboards:
+        # print(type(dashboard), '\n\n', dashboard.prettify())
+
         #
         # DASHBOARD NAME AND SIZE
         #
@@ -171,13 +173,38 @@ def parse_dashboards(xml_soup):
         #
         # DASHBOARD ELEMENT STYLES (EXCLUDING ZONES)
         #
-        # TODO: Need to parse Dashboard Zones to get all titles / text...
-        #       consider using foo.findAll('formatted-text') or wb_xml.findAll('run')
-        #       to search the entire document and make sure none are missed
         if dashboard.find('style') is not None and bool(dashboard.find('style').contents):
             db_style_rules = get_style_rules(dashboard.find('style'))
             for k, v in db_style_rules.items():
                 db[k] = v
+
+        #
+        # DASHBOARD ZONES
+        #
+        if dashboard.find('zones') is not None:
+            db_zones = dashboard.findAll('zones')
+
+            # Formatted Text Items
+            db_zones_text_styles = []
+            for z_text in db_zones:
+                db_text_style_attrs = get_styles_from_dict(z_text)
+                if bool(db_text_style_attrs):
+                    db_zones_text_styles += get_distinct_styles(db_text_style_attrs)
+            db['db_text_styles'] = db_zones_text_styles
+
+            # Zone Style Items
+            db_zone_styles = []
+            for z_style in db_zones:
+                z_style_list = [e.findAll('format') for e in z_style.findAll('zone-style')]
+                for z_list in z_style_list:
+                    db_zone_styles.extend([f.attrs for f in z_list])
+
+            # TODO: Make sure the get distinct styles here is working correctly.
+            distinct_db_zone_styles = get_distinct_styles(db_zone_styles)
+            tmp_style_dict = {}
+            for distinct_style in distinct_db_zone_styles:
+                tmp_style_dict[distinct_style.get('attr')] = distinct_style.get('value')
+            db['db_zone_styles'] = tmp_style_dict
 
         all_db_styles[db['db_name']] = db
 
