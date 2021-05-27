@@ -1,7 +1,21 @@
 import re
+import os
 import json
+from dotenv import load_dotenv
 from colorama import Fore, Back, Style
 from bs4 import BeautifulSoup
+
+
+def init_env(lambda_event):
+    # Determine whether running in remotely in AWS Lambda or locally. Load environment variables.
+    if os.getenv('AWS_EXECUTION_ENV') is None:
+        print('Operating in local dev context, loading ./envs/.env file...')
+        load_dotenv('./envs/.env')
+    else:
+        print('Operating in Lambda context...')
+        os.environ['TABLEAU_PATH'] = '/tmp/'
+        if lambda_event.get('RESOURCE_LUID'):
+            os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
 
 
 class Alerts:

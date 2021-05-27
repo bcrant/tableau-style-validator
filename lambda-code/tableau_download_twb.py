@@ -13,9 +13,8 @@ def download_workbook():
     PASS = os.getenv('TABLEAU_PASS')                # password
     SITE_NAME = os.getenv('TABLEAU_SITE_NAME')      # site-name AKA content-url
     SERVER_URL = os.getenv('TABLEAU_SERVER_URL')    # https://10ay.online.tableau.com
-
-    # (For local testing... will need to get this from the Zapier Webhook invocation JSON Payload)
-    TABLEAU_RESOURCE_LUID = os.getenv('RESOURCE_LUID')
+    RESOURCE_LUID = os.getenv('RESOURCE_LUID')      # Hard coded for local, get from Webhook payload remote Lambda)
+    FPATH = os.getenv('TABLEAU_PATH')               # filepath to write workbook. (must be /tmp/ for remote Lambda)
 
     print('Signing into Tableau Server...')
     tableau_auth = TSC.TableauAuth(USERNAME, PASS, SITE_NAME)
@@ -38,17 +37,17 @@ def download_workbook():
         #
         # Select specific workbook with Resource LUID from Webhook payload
         #
-        wb = server.workbooks.get_by_id(TABLEAU_RESOURCE_LUID)
+        wb = server.workbooks.get_by_id(RESOURCE_LUID)
 
         print(f'Downloading "{wb.name}" from Tableau Server...')
-        zipped_wb_path = server.workbooks.download(wb.id, filepath='./lambda-code/', include_extract=True)
+        zipped_wb_path = server.workbooks.download(wb.id, filepath=FPATH, include_extract=True)
 
         # Packaged Workbook (.twbx) files are zipped archives. Here we extract the Workbook (.twb) only.
         unzipped_wb_path = None
         with zipfile.ZipFile(zipped_wb_path) as packaged_workbook:
             for wb_file in packaged_workbook.namelist():
                 if '.twb' in wb_file:
-                    unzipped_wb_path = packaged_workbook.extract(wb_file, './lambda-code/')
+                    unzipped_wb_path = packaged_workbook.extract(wb_file, FPATH)
                     print(f'Extracting "{wb_file}" from "{wb.name}"...')
                 else:
                     print(f'No Tableau Workbook file found in "{wb.name}".')
