@@ -6,3 +6,4 @@ __pycache__/
 lambda-*/*.zip
 lambda-*/python/**
 **/pip-**
+scratch
