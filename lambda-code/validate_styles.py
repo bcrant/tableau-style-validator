@@ -1,6 +1,7 @@
 from textwrap import dedent
-from tableau_xml_parser import get_tableau_styles
-from helpers import Alerts, err_msg, one_to_many_dict
+from parse_xml import get_tableau_styles
+from helpers import one_to_many_dict, pp
+from alerts import Alerts, err_msg
 
 
 def validate_styles(style_guide_json, workbook_file):
@@ -13,13 +14,13 @@ def validate_styles(style_guide_json, workbook_file):
     wb_styles = styles.get('workbook_styles')
     test_workbook(wb_styles, style_guide_json)
 
-    # Dashboard styles
-    db_styles = styles.get('dashboard_styles')
-    test_dashboards(db_styles, style_guide_json)
-
-    # Worksheet styles
-    ws_styles = styles.get('worksheet_styles')
-    test_worksheets(ws_styles, style_guide_json)
+    # # Dashboard styles
+    # db_styles = styles.get('dashboard_styles')
+    # test_dashboards(db_styles, style_guide_json)
+    #
+    # # Worksheet styles
+    # ws_styles = styles.get('worksheet_styles')
+    # test_worksheets(ws_styles, style_guide_json)
 
     return
 
@@ -36,37 +37,42 @@ def test_workbook(workbook_styles, sg):
 
     for item in workbook_styles:
         styles = workbook_styles.get(item)
-        print('STYLES', styles)
-        for style in styles:
-            s = styles.get(style)
-            if s is not None:
-                if 'font-size' in style:
-                    if s not in sg.get('font-sizes'):
-                        print(f'{Alerts.INVALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
-                        wb_err_count += 1
-                    else:
-                        print(f'{Alerts.VALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append({'font-size': str(s + "pt")})
+        # Test all colors in workbook before specific items
+        if 'all_colors_in_wb' in item:
+            print(item, styles)
+            # for color in styles
 
-                if 'font-family' in style:
-                    if s not in sg.get('fonts'):
-                        print(f'{Alerts.INVALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
-                        wb_err_count += 1
-                    else:
-                        print(f'{Alerts.VALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append({'font-type': str(s)})
+        if isinstance(styles, dict):
+            for style in styles:
+                s = styles.get(style)
+                if s is not None:
+                    if 'font-size' in style:
+                        if s not in sg.get('font-sizes'):
+                            print(f'{Alerts.INVALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
+                            wb_err_count += 1
+                        else:
+                            print(f'{Alerts.VALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
+                            valid_wb_styles_list.append({'font-size': str(s + "pt")})
 
-                if 'color' in style:
-                    if s.upper() not in sg.get('font-colors'):
-                        print(f'{Alerts.INVALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                        wb_err_count += 1
-                    else:
-                        print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append({'font-color': str(s.upper())})
+                    if 'font-family' in style:
+                        if s not in sg.get('fonts'):
+                            print(f'{Alerts.INVALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
+                            wb_err_count += 1
+                        else:
+                            print(f'{Alerts.VALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
+                            valid_wb_styles_list.append({'font-type': str(s)})
+
+                    if 'color' in style:
+                        if s.upper() not in sg.get('font-colors'):
+                            print(f'{Alerts.INVALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
+                            wb_err_count += 1
+                        else:
+                            print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
+                            valid_wb_styles_list.append({'font-color': str(s.upper())})
 
     err_msg(wb_err_count)
 
-    return print(one_to_many_dict(valid_wb_styles_list))
+    return print(pp(one_to_many_dict(valid_wb_styles_list)))
 
 
 def test_dashboards(dashboard_styles, sg):
@@ -83,7 +89,6 @@ def test_dashboards(dashboard_styles, sg):
         db_name = dashboard_style.get('db_name')
         for item in dashboard_style:
             styles = dashboard_style.get(item)
-            print('STYLES', styles)
             if isinstance(styles, dict):
                 for style in styles:
                     s = styles.get(style)
@@ -113,8 +118,12 @@ def test_dashboards(dashboard_styles, sg):
                                 else:
                                     print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
                                     valid_db_styles_list.append({'font-color': str(s.upper())})
-
+                        #
                         # Dashboard Zone styles
+                        #
+
+                        # NOTE: Comment out everything in this else clause
+                        # if you do not wish to test margins, padding, etc.
                         else:
                             # Convert any singular string items to list before validating as lists
                             if isinstance(s, str):
@@ -193,7 +202,7 @@ def test_dashboards(dashboard_styles, sg):
                                         valid_db_styles_list.append({'padding': str(val)})
 
     err_msg(db_err_count)
-    return print(one_to_many_dict(valid_db_styles_list))
+    return print(pp(one_to_many_dict(valid_db_styles_list)))
 
 
 def test_worksheets(worksheet_styles, sg):
@@ -241,8 +250,4 @@ def test_worksheets(worksheet_styles, sg):
 
     err_msg(ws_err_count)
 
-    return print(one_to_many_dict(valid_ws_styles_list))
-
-
-if __name__ == "__main__":
-    validate_styles()
+    return print(pp(one_to_many_dict(valid_ws_styles_list)))

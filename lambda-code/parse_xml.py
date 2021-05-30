@@ -29,17 +29,14 @@ def parse_workbook_style(xml_soup):
     # WORKBOOK STYLE
     #
     if workbook_style is not None:
-        # print('Workbook Styles', workbook_style)
         wb_style_rules = get_style_rules(workbook_style)
-        # print('Workbook Style Rules', wb_style_rules)
-        # print('Workbook Style Rules Items', wb_style_rules.items())
         for k, v in wb_style_rules.items():
             wb[k] = v
 
-    # #
-    # # ALL COLORS IN WORKBOOK
-    # #
-    # wb['all_colors'] = get_all_colors(xml_soup)
+    #
+    # ALL COLORS IN WORKBOOK
+    #
+    wb['all_colors_in_wb'] = get_all_colors(xml_soup)
 
     return {'workbook_styles': wb}
 
@@ -54,7 +51,6 @@ def parse_worksheets(xml_soup):
         #
         # WORKSHEET NAME
         #
-
         ws = {
             'ws_name': worksheet['name']
         }
@@ -113,7 +109,8 @@ def parse_worksheets(xml_soup):
                     ws['ws_labels'] = get_distinct_styles(label_styles_list)
 
             # #
-            # # (Excluding until later iterations) TABLE STYLES
+            # # TABLE STYLES
+            # # (Excluding until later iterations)
             # #
             # table_elements = worksheet\
             #     .find('table')\
@@ -225,7 +222,3 @@ def parse_dashboards(xml_soup):
         all_db_styles[db['db_name']] = db
 
     return {'dashboard_styles': all_db_styles}
-
-
-if __name__ == "__main__":
-    get_tableau_styles()

@@ -8,5 +8,13 @@
         "#0A6EBA", "#81DAD5", "#FFBFA0", "#FFD57B", "#88DA8B", "#8EC8FF",
         "#FFA6DA", "#B9A6FF", "#FFA6A6", "#9FBDE2", "#20C3B9", "#FC8440",
         "#FFD154", "#5FC57B", "#42A5F5", "#F949B5", "#EC1F69", "#2A71C5"
-    ]
+    ],
+    "background-colors": ["#E6E6E6"],
+    "margin": ["0", "4", "8"],
+    "margin-top": ["0"],
+    "margin-bottom": ["0"],
+    "border-style": ["none", "solid"],
+    "border-colors": ["#000000"],
+    "border-width": ["0"],
+    "padding": ["0", "4", "8"]
 }

@@ -4,8 +4,6 @@ import json
 import collections
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from colorama import init, Fore, Back, Style
-init(autoreset=True)
 
 
 def init_env(lambda_event):
@@ -18,73 +16,6 @@ def init_env(lambda_event):
         os.environ['TABLEAU_PATH'] = '/tmp/'
         if lambda_event.get('RESOURCE_LUID'):
             os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
-
-
-#
-# Alert formatting
-#
-rm_fmt = Style.RESET_ALL
-pass_fmt_on = Back.BLACK + Style.BRIGHT
-pass_fmt_off = Style.NORMAL
-fail_fmt_on = Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT
-fail_fmt_off = Style.NORMAL + Fore.RESET
-
-
-class Alerts:
-    #
-    # PASS
-    #
-    PASS_TESTS = str(Back.BLACK + Fore.GREEN + Style.BRIGHT + ' ✅\tVALID STYLES        ' + rm_fmt)
-
-    # Fonts
-    VALID_FONT_TYPE = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Font Type     ' + rm_fmt)
-    VALID_FONT_SIZE = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Font Size     ' + rm_fmt)
-    VALID_FONT_COLOR = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Font Color    ' + rm_fmt)
-
-    # Borders
-    VALID_BORDER_STYLE = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Border Style  ' + rm_fmt)
-    VALID_BORDER_WIDTH = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Border Width  ' + rm_fmt)
-    VALID_BORDER_COLOR = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Border Color  ' + rm_fmt)
-
-    # Margins
-    VALID_MARGIN = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Margin        ' + rm_fmt)
-    VALID_MARGIN_TOP = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Margin Top    ' + rm_fmt)
-    VALID_MARGIN_BOTTOM = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Margin Bottom ' + rm_fmt)
-    VALID_PADDING = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'Padding       ' + rm_fmt)
-
-    # Background Color
-    VALID_BACKGROUND_COLOR = str(pass_fmt_on + ' ✅\tVALID ' + pass_fmt_off + 'BG Color      ' + rm_fmt)
-
-    #
-    # FAIL
-    #
-    FAIL_TESTS = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ❌\tINVALID STYLES      ' + rm_fmt)
-
-    # Fonts
-    INVALID_FONT_TYPE = str(fail_fmt_on + ' ⚠️️\tALERT ' + fail_fmt_off + 'Font Type     ' + rm_fmt)
-    INVALID_FONT_SIZE = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Font Size     ' + rm_fmt)
-    INVALID_FONT_COLOR = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Font Color    ' + rm_fmt)
-
-    # Borders
-    INVALID_BORDER_STYLE = str(fail_fmt_on + ' ⚠️️\tALERT ' + fail_fmt_off + 'Border Style  ' + rm_fmt)
-    INVALID_BORDER_WIDTH = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Border Width  ' + rm_fmt)
-    INVALID_BORDER_COLOR = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Border Color  ' + rm_fmt)
-
-    # Margins
-    INVALID_MARGIN = str(fail_fmt_on + ' ⚠️️\tALERT ' + fail_fmt_off + 'Margin        ' + rm_fmt)
-    INVALID_MARGIN_TOP = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Margin Top    ' + rm_fmt)
-    INVALID_MARGIN_BOTTOM = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Margin Bottom ' + rm_fmt)
-    INVALID_PADDING = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'Padding       ' + rm_fmt)
-
-    # Background Colors
-    INVALID_BACKGROUND_COLOR = str(fail_fmt_on + ' ⚠️\tALERT ' + fail_fmt_off + 'BG Color      ' + rm_fmt)
-
-
-def err_msg(count):
-    if count == 0:
-        return print(f'{Alerts.PASS_TESTS}')
-    else:
-        return print(f'{Alerts.FAIL_TESTS} {count} styles need revision.')
 
 
 def pp(json_dict):
@@ -148,7 +79,6 @@ def get_style_rules(parent_node_soup):
                 element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
 
             node_dict[element_name] = element_style_dict
-
     # print('Getting style rules...')
     # print('Input: ', parent_node_soup)
     # print('Output: ', node_dict)
@@ -175,15 +105,10 @@ def one_to_many_dict(list_of_style_dicts):
     for style_dict in list_of_style_dicts:
         for k, v in style_dict.items():
             out_dict[k].extend([v])
+    many_dict = dict(out_dict.items())
+    for kk, vv in many_dict.items():
+        many_dict[kk] = list(dict.fromkeys(vv))
     # print('Getting valid styles dict...')
     # print('Input: ', list_of_style_dicts)
-    # print('Output: ', dict(out_dict.items()))
-    return dict(out_dict.items())
-
-
-# def convert_filetype():
-#     """Convert local .twb to .xml file extension"""
-#     # (This function does not appear to be necessary, commenting out for now)
-#     tableau_file_path = 'example_style_guide_two.twb'
-#     base = os.path.splitext(tableau_file)[0]
-#     os.rename(tableau_file, base + '.xml')
+    # print('Output: ', many_dict)
+    return many_dict
