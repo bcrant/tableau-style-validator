@@ -1,3 +1,4 @@
+import collections
 from bs4 import BeautifulSoup
 from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
@@ -189,10 +190,13 @@ def parse_dashboards(xml_soup):
             for z_text in db_zones:
                 db_text_style_attrs = get_styles_from_dict(z_text)
                 if bool(db_text_style_attrs):
-                    print(db_text_style_attrs)
                     db_zones_text_styles += get_distinct_styles(db_text_style_attrs)
-            print(db_zones_text_styles)
-            db['db_text_styles'] = db_zones_text_styles
+
+            db_zones_text_styles_dict = collections.defaultdict(list)
+            for d in db_zones_text_styles:
+                for a, b in d.items():
+                    db_zones_text_styles_dict[a].extend([b])
+            db['db_text_styles'] = dict(db_zones_text_styles_dict.items())
 
             # Zone Style Items
             db_zone_styles = []
@@ -201,12 +205,11 @@ def parse_dashboards(xml_soup):
                 for z_list in z_style_list:
                     db_zone_styles.extend([f.attrs for f in z_list])
 
-            # TODO: Make sure the get distinct styles here is working correctly.
-            distinct_db_zone_styles = get_distinct_styles(db_zone_styles)
-            tmp_style_dict = {}
-            for distinct_style in distinct_db_zone_styles:
-                tmp_style_dict[distinct_style.get('attr')] = distinct_style.get('value')
-            db['db_zone_styles'] = tmp_style_dict
+            db_zone_styles_dict = collections.defaultdict(list)
+            for z_style_pair in get_distinct_styles(db_zone_styles):
+                db_zone_styles_dict[z_style_pair.get('attr')].extend([z_style_pair.get('value')])
+
+            db['db_zone_styles'] = dict(db_zone_styles_dict.items())
 
         all_db_styles[db['db_name']] = db
 

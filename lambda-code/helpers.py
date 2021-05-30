@@ -18,18 +18,83 @@ def init_env(lambda_event):
             os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
 
 
-class Alerts:
-    # PASS
-    VALID_FONT_TYPE = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Type  ' + Style.RESET_ALL)
-    VALID_FONT_SIZE = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Size  ' + Style.RESET_ALL)
-    VALID_FONT_COLOR = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Color ' + Style.RESET_ALL)
-    PASS_TESTS = str(Back.BLACK + Fore.GREEN + Style.BRIGHT + ' ✅\tVALID STYLES   ' + Style.RESET_ALL)
+alert_fmt_on = (Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT)
+# alert_fmt_off =  Style.NORMAL + Fore.RESET
 
+class Alerts:
+    #
+    # PASS
+    #
+    PASS_TESTS = str(
+        Back.BLACK + Fore.GREEN + Style.BRIGHT + ' ✅\tVALID STYLES   ' + Style.RESET_ALL)
+
+    # Fonts
+    VALID_FONT_TYPE = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Type' + Style.RESET_ALL)
+    VALID_FONT_SIZE = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Size' + Style.RESET_ALL)
+    VALID_FONT_COLOR = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Color' + Style.RESET_ALL)
+
+    # Borders
+    VALID_BORDER_STYLE = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Border Style  ' + Style.RESET_ALL)
+    VALID_BORDER_WIDTH = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Border Width  ' + Style.RESET_ALL)
+    VALID_BORDER_COLOR = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Border Color  ' + Style.RESET_ALL)
+
+    # Margins
+    VALID_MARGIN = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Margin        ' + Style.RESET_ALL)
+    VALID_MARGIN_TOP = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Margin Top    ' + Style.RESET_ALL)
+    VALID_MARGIN_BOTTOM = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Margin Bottom ' + Style.RESET_ALL)
+    VALID_PADDING = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Padding       ' + Style.RESET_ALL)
+
+    # Background Color
+    VALID_BACKGROUND_COLOR = str(
+        Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'BG Color      ' + Style.RESET_ALL)
+
+    #
     # FAIL
-    INVALID_FONT_TYPE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Type  ' + Style.RESET_ALL)
-    INVALID_FONT_SIZE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Size  ' + Style.RESET_ALL)
-    INVALID_FONT_COLOR = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Color ' + Style.RESET_ALL)
-    FAIL_TESTS = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ❌\tINVALID STYLES   ' + Style.RESET_ALL)
+    #
+    FAIL_TESTS = str(
+        Back.BLACK + Fore.RED + Style.BRIGHT + ' ❌\tINVALID STYLES      ' + Style.RESET_ALL)
+
+    # Fonts
+    INVALID_FONT_TYPE = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Type     ' + Style.RESET_ALL)
+    INVALID_FONT_SIZE = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Size     ' + Style.RESET_ALL)
+    INVALID_FONT_COLOR = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Color    ' + Style.RESET_ALL)
+
+    # Borders
+    alert_fmt = (Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT)
+    INVALID_BORDER_STYLE = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Border Style  ' + Style.RESET_ALL)
+    INVALID_BORDER_WIDTH = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Border Width  ' + Style.RESET_ALL)
+    # INVALID_BORDER_COLOR = str(
+    #     Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Border Color  ' + Style.RESET_ALL)
+    INVALID_BORDER_COLOR = str(alert_fmt + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Border Color  ' + Style.RESET_ALL)
+
+    # Margins
+    INVALID_MARGIN = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Margin        ' + Style.RESET_ALL)
+    INVALID_MARGIN_TOP = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Margin Top    ' + Style.RESET_ALL)
+    INVALID_MARGIN_BOTTOM = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Margin Bottom ' + Style.RESET_ALL)
+    INVALID_PADDING = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Padding       ' + Style.RESET_ALL)
+
+    # Background Colors
+    INVALID_BACKGROUND_COLOR = str(
+        Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'BG Color      ' + Style.RESET_ALL)
 
 
 def err_msg(count):
@@ -68,8 +133,6 @@ def get_distinct_styles(style_dicts_list):
     # print('Getting distinct styles...')
     # print('Input: ', style_dicts_list)
     # print('Output: ', [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}])
-    print('DISTINCT INPUT: ', style_dicts_list)
-    print('DISTINCT OUTPUT: ', [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}])
     return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
 
 
