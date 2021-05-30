@@ -189,7 +189,9 @@ def parse_dashboards(xml_soup):
             for z_text in db_zones:
                 db_text_style_attrs = get_styles_from_dict(z_text)
                 if bool(db_text_style_attrs):
+                    print(db_text_style_attrs)
                     db_zones_text_styles += get_distinct_styles(db_text_style_attrs)
+            print(db_zones_text_styles)
             db['db_text_styles'] = db_zones_text_styles
 
             # Zone Style Items

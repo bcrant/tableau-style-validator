@@ -9,11 +9,11 @@ def validate_styles_local_cli():
     HOW TO RUN STYLE VALIDATOR AD HOC WITH LOCAL FILES (INSTEAD OF USING AWS LAMBDA DEPLOYMENT):
 
     Run as Command Line Interface
-    $ python validate_local_files_cli.py -s ./tests/sg_example.json -w ./tests/wb_example.twb
+    $ python validator_cli.py -s ./tests/example_style_guide.json -w ./tests/example_workbook.twb
 
     Run in PyCharm: PyCharm Run Config Parameters
-    Script Path: ~/tableau-style-guide-linter/validate_local_files_cli.py
-    Parameters: -s"./tests/sg_example.json" -w"./tests/wb_example.twb"
+    Script Path: ~/tableau-style-validator/validator_cli.py
+    Parameters: -s"./tests/example_style_guide.json" -w"./tests/example_workbook.twb"
     """
     #
     # Get input from command line arguments
@@ -36,7 +36,8 @@ def get_cli_input():
     Accept input JSON and TWB files from the command line.
 
     Usage:
-    $ python tableau_xml_parser.py --style-guide './tests/sg_example.json' --tableau-workbook './tests/wb_example.twb'
+    $ python validator_cli.py --style-guide './tests/example_style_guide.json' \
+                              --tableau-workbook './tests/example_workbook.twb'
 
     """
 

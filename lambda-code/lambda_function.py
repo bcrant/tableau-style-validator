@@ -22,7 +22,7 @@ def lambda_handler(event, context):
     # Get path to style guide
     sg_path = os.path.join(
         os.getenv('TABLEAU_PATH')
-        + 'sg_example.json'
+        + 'example_style_guide.json'
     )
 
     # Get style guide

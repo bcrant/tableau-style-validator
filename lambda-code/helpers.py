@@ -19,10 +19,16 @@ def init_env(lambda_event):
 
 
 class Alerts:
-    FONT_TYPE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Type  ' + Style.RESET_ALL)
-    FONT_SIZE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Size  ' + Style.RESET_ALL)
-    FONT_COLOR = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Color ' + Style.RESET_ALL)
+    # PASS
+    VALID_FONT_TYPE = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Type  ' + Style.RESET_ALL)
+    VALID_FONT_SIZE = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Size  ' + Style.RESET_ALL)
+    VALID_FONT_COLOR = str(Back.BLACK + Style.BRIGHT + ' ✅\tVALID ' + Style.NORMAL + 'Font Color ' + Style.RESET_ALL)
     PASS_TESTS = str(Back.BLACK + Fore.GREEN + Style.BRIGHT + ' ✅\tVALID STYLES   ' + Style.RESET_ALL)
+
+    # FAIL
+    INVALID_FONT_TYPE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Type  ' + Style.RESET_ALL)
+    INVALID_FONT_SIZE = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Size  ' + Style.RESET_ALL)
+    INVALID_FONT_COLOR = str(Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT + ' ⚠️\tALERT ' + Style.NORMAL + Fore.RESET + 'Font Color ' + Style.RESET_ALL)
     FAIL_TESTS = str(Back.BLACK + Fore.RED + Style.BRIGHT + ' ❌\tINVALID STYLES   ' + Style.RESET_ALL)
 
 
@@ -62,6 +68,8 @@ def get_distinct_styles(style_dicts_list):
     # print('Getting distinct styles...')
     # print('Input: ', style_dicts_list)
     # print('Output: ', [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}])
+    print('DISTINCT INPUT: ', style_dicts_list)
+    print('DISTINCT OUTPUT: ', [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}])
     return [dict(t) for t in {tuple(d.items()) for d in style_dicts_list}]
 
 
