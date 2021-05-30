@@ -10,7 +10,7 @@
         "#FFD154", "#5FC57B", "#42A5F5", "#F949B5", "#EC1F69", "#2A71C5"
     ],
     "background-colors": ["#E6E6E6"],
-    "margin": ["0", "8"],
+    "margin": ["0", "4", "8"],
     "margin-top": ["0"],
     "margin-bottom": ["0"],
     "border-style": ["none", "solid"],

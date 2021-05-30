@@ -192,11 +192,24 @@ def parse_dashboards(xml_soup):
                 if bool(db_text_style_attrs):
                     db_zones_text_styles += get_distinct_styles(db_text_style_attrs)
 
+            # Get all text item values per unique key
             db_zones_text_styles_dict = collections.defaultdict(list)
             for d in db_zones_text_styles:
                 for a, b in d.items():
                     db_zones_text_styles_dict[a].extend([b])
-            db['db_text_styles'] = dict(db_zones_text_styles_dict.items())
+            db_text_styles = dict(db_zones_text_styles_dict.items())
+            for k, v in db_text_styles.items():
+                db_text_styles[k] = list(dict.fromkeys(v).keys())[0]
+
+            # Normalize the key names for validation
+            if db_text_styles.get('fontname') is not None:
+                db_text_styles['font-family'] = db_text_styles.pop('fontname')
+            if db_text_styles.get('fontsize') is not None:
+                db_text_styles['font-size'] = db_text_styles.pop('fontsize')
+            if db_text_styles.get('fontcolor') is not None:
+                db_text_styles['font-color'] = db_text_styles.pop('fontcolor')
+
+            db['db_text_styles'] = db_text_styles
 
             # Zone Style Items
             db_zone_styles = []

@@ -1,7 +1,6 @@
-import json
 from textwrap import dedent
 from tableau_xml_parser import get_tableau_styles
-from helpers import pp, Alerts, err_msg
+from helpers import Alerts, err_msg
 
 
 def validate_styles(style_guide_json, workbook_file):
@@ -97,7 +96,6 @@ def test_dashboards(dashboard_styles, sg):
                 for style in styles:
                     s = styles.get(style)
                     if s is not None:
-                        # print('STYLES DICT', style, s)
                         if 'font-size' in style:
                             if s not in sg.get('font-sizes'):
                                 print(f'{Alerts.INVALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
@@ -132,97 +130,101 @@ def test_dashboards(dashboard_styles, sg):
 
                         # Dashboard Zone styles
                         else:
-                            if 'border-color' in style:
-                                if s.upper() not in sg.get('border-colors'):
-                                    print(
-                                        f'{Alerts.INVALID_BORDER_COLOR} {str(s.upper()):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_BORDER_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('border-color', str(s.upper()))
-                                    )
-
-                            if 'border-width' in style:
-                                if s not in sg.get('border-width'):
-                                    print(
-                                        f'{Alerts.INVALID_BORDER_WIDTH} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_BORDER_WIDTH} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('border-width', str(s))
-                                    )
-
-                            if 'border-style' in style:
-                                if s not in sg.get('border-style'):
-                                    print(
-                                        f'{Alerts.INVALID_BORDER_STYLE} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_BORDER_STYLE} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('border-style', str(s))
-                                    )
-
-                            if 'margin' in style:
-                                if s not in sg.get('margin'):
-                                    print(
-                                        f'{Alerts.INVALID_MARGIN} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_MARGIN} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('margin', str(s))
-                                    )
-
-                            if 'margin-top' in style:
-                                if s not in sg.get('margin-top'):
-                                    print(
-                                        f'{Alerts.INVALID_MARGIN_TOP} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_MARGIN_TOP} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('margin-top', str(s))
-                                    )
-
-                            if 'margin-bottom' in style:
-                                if s not in sg.get('margin-bottom'):
-                                    print(
-                                        f'{Alerts.INVALID_MARGIN_BOTTOM} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_MARGIN_BOTTOM} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('margin-bottom', str(s))
-                                    )
-
-                            if 'background-color' in style:
-                                if s.upper() not in sg.get('background-colors'):
-                                    print(
-                                        f'{Alerts.INVALID_BACKGROUND_COLOR} {str(s.upper()):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_BACKGROUND_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('background-color', str(s.upper()))
-                                    )
-
-                            if 'padding' in style:
-                                if s not in sg.get('padding'):
-                                    print(
-                                        f'{Alerts.INVALID_PADDING} {str(s):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
-                                    db_err_count += 1
-                                else:
-                                    print(f'{Alerts.VALID_PADDING} {str(s):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('background-color', str(s))
-                                    )
+                            # Convert any singular string items to list before validating as lists
+                            if isinstance(s, str):
+                                s = list(s)
+                            for val in s:
+                                if 'border-color' in style:
+                                    if val.upper() not in sg.get('border-colors'):
+                                        print(
+                                            f'{Alerts.INVALID_BORDER_COLOR} {str(val.upper()):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_BORDER_COLOR} {str(val.upper()):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('border-color', str(val.upper()))
+                                        )
+    
+                                if 'border-width' in style:
+                                    if val not in sg.get('border-width'):
+                                        print(
+                                            f'{Alerts.INVALID_BORDER_WIDTH} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_BORDER_WIDTH} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('border-width', str(val))
+                                        )
+    
+                                if 'border-style' in style:
+                                    if val not in sg.get('border-style'):
+                                        print(
+                                            f'{Alerts.INVALID_BORDER_STYLE} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_BORDER_STYLE} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('border-style', str(val))
+                                        )
+    
+                                if 'margin' in style:
+                                    if val not in sg.get('margin'):
+                                        print(
+                                            f'{Alerts.INVALID_MARGIN} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_MARGIN} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('margin', str(val))
+                                        )
+    
+                                if 'margin-top' in style:
+                                    if val not in sg.get('margin-top'):
+                                        print(
+                                            f'{Alerts.INVALID_MARGIN_TOP} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_MARGIN_TOP} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('margin-top', str(val))
+                                        )
+    
+                                if 'margin-bottom' in style:
+                                    if val not in sg.get('margin-bottom'):
+                                        print(
+                                            f'{Alerts.INVALID_MARGIN_BOTTOM} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_MARGIN_BOTTOM} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('margin-bottom', str(val))
+                                        )
+    
+                                if 'background-color' in style:
+                                    if val.upper() not in sg.get('background-colors'):
+                                        print(
+                                            f'{Alerts.INVALID_BACKGROUND_COLOR} {str(val.upper()):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_BACKGROUND_COLOR} {str(val.upper()):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('background-color', str(val.upper()))
+                                        )
+    
+                                if 'padding' in style:
+                                    if val not in sg.get('padding'):
+                                        print(
+                                            f'{Alerts.INVALID_PADDING} {str(val):20s} found in {str(item):20s} of dashboard {str(db_name)}.')
+                                        db_err_count += 1
+                                    else:
+                                        print(f'{Alerts.VALID_PADDING} {str(val):20s} found in {str(item + ".")}')
+                                        valid_db_styles_list.append(
+                                            ('background-color', str(val))
+                                        )
 
     err_msg(db_err_count)
 
-    # return valid_db_styles_list
+    return print(valid_db_styles_list)
 
 
 def test_worksheets(worksheet_styles, sg):
