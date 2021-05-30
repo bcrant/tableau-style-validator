@@ -140,8 +140,6 @@ def parse_dashboards(xml_soup):
     all_db_styles = {}
 
     for dashboard in dashboards:
-        # print(type(dashboard), '\n\n', dashboard.prettify())
-
         #
         # DASHBOARD NAME AND SIZE
         #

@@ -1,6 +1,6 @@
 from textwrap import dedent
 from tableau_xml_parser import get_tableau_styles
-from helpers import Alerts, err_msg
+from helpers import Alerts, err_msg, one_to_many_dict
 
 
 def validate_styles(style_guide_json, workbook_file):
@@ -17,9 +17,9 @@ def validate_styles(style_guide_json, workbook_file):
     db_styles = styles.get('dashboard_styles')
     test_dashboards(db_styles, style_guide_json)
 
-    # # Worksheet styles
-    # ws_styles = styles.get('worksheet_styles')
-    # test_worksheets(ws_styles, style_guide_json)
+    # Worksheet styles
+    ws_styles = styles.get('worksheet_styles')
+    test_worksheets(ws_styles, style_guide_json)
 
     return
 
@@ -46,9 +46,7 @@ def test_workbook(workbook_styles, sg):
                         wb_err_count += 1
                     else:
                         print(f'{Alerts.VALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append(
-                            ('font-size', str(s + "pt"))
-                        )
+                        valid_wb_styles_list.append({'font-size': str(s + "pt")})
 
                 if 'font-family' in style:
                     if s not in sg.get('fonts'):
@@ -56,9 +54,7 @@ def test_workbook(workbook_styles, sg):
                         wb_err_count += 1
                     else:
                         print(f'{Alerts.VALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append(
-                            ('font-type', str(s))
-                        )
+                        valid_wb_styles_list.append({'font-type': str(s)})
 
                 if 'color' in style:
                     if s.upper() not in sg.get('font-colors'):
@@ -66,13 +62,11 @@ def test_workbook(workbook_styles, sg):
                         wb_err_count += 1
                     else:
                         print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                        valid_wb_styles_list.append(
-                            ('font-color', str(s.upper()))
-                        )
+                        valid_wb_styles_list.append({'font-color': str(s.upper())})
 
     err_msg(wb_err_count)
 
-    return valid_wb_styles_list
+    return print(one_to_many_dict(valid_wb_styles_list))
 
 
 def test_dashboards(dashboard_styles, sg):
@@ -90,8 +84,6 @@ def test_dashboards(dashboard_styles, sg):
         for item in dashboard_style:
             styles = dashboard_style.get(item)
             print('STYLES', styles)
-            if isinstance(styles, list):
-                styles = {}
             if isinstance(styles, dict):
                 for style in styles:
                     s = styles.get(style)
@@ -102,9 +94,7 @@ def test_dashboards(dashboard_styles, sg):
                                 db_err_count += 1
                             else:
                                 print(f'{Alerts.VALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
-                                valid_db_styles_list.append(
-                                    ('font-size', str(s + "pt"))
-                                )
+                                valid_db_styles_list.append({'font-size': str(s + "pt")})
 
                         if 'font-family' in style:
                             if s not in sg.get('fonts'):
@@ -112,9 +102,7 @@ def test_dashboards(dashboard_styles, sg):
                                 db_err_count += 1
                             else:
                                 print(f'{Alerts.VALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
-                                valid_db_styles_list.append(
-                                    ('font-type', str(s))
-                                )
+                                valid_db_styles_list.append({'font-type': str(s)})
 
                         # This excludes dashboard zone styles (background color, border colors) to only get font color.
                         if 'db_zone_styles' not in item:
@@ -124,9 +112,7 @@ def test_dashboards(dashboard_styles, sg):
                                     db_err_count += 1
                                 else:
                                     print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                                    valid_db_styles_list.append(
-                                        ('font-color', str(s.upper()))
-                                    )
+                                    valid_db_styles_list.append({'font-color': str(s.upper())})
 
                         # Dashboard Zone styles
                         else:
@@ -141,9 +127,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_BORDER_COLOR} {str(val.upper()):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('border-color', str(val.upper()))
-                                        )
+                                        valid_db_styles_list.append({'border-color': str(val.upper())})
     
                                 if 'border-width' in style:
                                     if val not in sg.get('border-width'):
@@ -152,9 +136,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_BORDER_WIDTH} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('border-width', str(val))
-                                        )
+                                        valid_db_styles_list.append({'border-width': str(val)})
     
                                 if 'border-style' in style:
                                     if val not in sg.get('border-style'):
@@ -163,9 +145,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_BORDER_STYLE} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('border-style', str(val))
-                                        )
+                                        valid_db_styles_list.append({'border-style': str(val)})
     
                                 if 'margin' in style:
                                     if val not in sg.get('margin'):
@@ -174,9 +154,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_MARGIN} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('margin', str(val))
-                                        )
+                                        valid_db_styles_list.append({'margin': str(val)})
     
                                 if 'margin-top' in style:
                                     if val not in sg.get('margin-top'):
@@ -185,9 +163,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_MARGIN_TOP} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('margin-top', str(val))
-                                        )
+                                        valid_db_styles_list.append({'margin-top': str(val)})
     
                                 if 'margin-bottom' in style:
                                     if val not in sg.get('margin-bottom'):
@@ -196,9 +172,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_MARGIN_BOTTOM} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('margin-bottom', str(val))
-                                        )
+                                        valid_db_styles_list.append({'margin-bottom': str(val)})
     
                                 if 'background-color' in style:
                                     if val.upper() not in sg.get('background-colors'):
@@ -207,9 +181,7 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_BACKGROUND_COLOR} {str(val.upper()):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('background-color', str(val.upper()))
-                                        )
+                                        valid_db_styles_list.append({'background-color': str(val.upper())})
     
                                 if 'padding' in style:
                                     if val not in sg.get('padding'):
@@ -218,13 +190,10 @@ def test_dashboards(dashboard_styles, sg):
                                         db_err_count += 1
                                     else:
                                         print(f'{Alerts.VALID_PADDING} {str(val):20s} found in {str(item + ".")}')
-                                        valid_db_styles_list.append(
-                                            ('background-color', str(val))
-                                        )
+                                        valid_db_styles_list.append({'padding': str(val)})
 
     err_msg(db_err_count)
-
-    return print(valid_db_styles_list)
+    return print(one_to_many_dict(valid_db_styles_list))
 
 
 def test_worksheets(worksheet_styles, sg):
@@ -241,7 +210,6 @@ def test_worksheets(worksheet_styles, sg):
         ws_name = worksheet_style
         for item in worksheet:
             styles = worksheet.get(item)
-            print('STYLES', styles)
             for style_dict in styles:
                 if isinstance(style_dict, dict):
                     for style in style_dict:
@@ -253,9 +221,7 @@ def test_worksheets(worksheet_styles, sg):
                                     ws_err_count += 1
                                 else:
                                     print(f'{Alerts.VALID_FONT_SIZE} {str(s + "pt"):20s} found in {str(item + ".")}')
-                                    valid_ws_styles_list.append(
-                                        ('font-size', str(s + "pt"))
-                                    )
+                                    valid_ws_styles_list.append({'font-size': str(s + "pt")})
 
                             if 'fontname' in style:
                                 if s not in sg.get('fonts'):
@@ -263,9 +229,7 @@ def test_worksheets(worksheet_styles, sg):
                                     ws_err_count += 1
                                 else:
                                     print(f'{Alerts.VALID_FONT_TYPE} {str(s):20s} found in {str(item + ".")}')
-                                    valid_ws_styles_list.append(
-                                        ('font-type', str(s))
-                                    )
+                                    valid_ws_styles_list.append({'font-type': str(s)})
 
                             if 'fontcolor' in style:
                                 if s.upper() not in sg.get('font-colors'):
@@ -273,13 +237,11 @@ def test_worksheets(worksheet_styles, sg):
                                     ws_err_count += 1
                                 else:
                                     print(f'{Alerts.VALID_FONT_COLOR} {str(s.upper()):20s} found in {str(item + ".")}')
-                                    valid_ws_styles_list.append(
-                                        ('font-color', str(s.upper()))
-                                    )
+                                    valid_ws_styles_list.append({'font-color': str(s.upper())})
 
     err_msg(ws_err_count)
 
-    return valid_ws_styles_list
+    return print(one_to_many_dict(valid_ws_styles_list))
 
 
 if __name__ == "__main__":

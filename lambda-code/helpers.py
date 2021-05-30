@@ -1,6 +1,7 @@
 import re
 import os
 import json
+import collections
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from colorama import init, Fore, Back, Style
@@ -167,6 +168,17 @@ def get_all_colors(xml_soup):
     hex_colors_used = ['#' + h for h in colors_used]
 
     return hex_colors_used
+
+
+def one_to_many_dict(list_of_style_dicts):
+    out_dict = collections.defaultdict(list)
+    for style_dict in list_of_style_dicts:
+        for k, v in style_dict.items():
+            out_dict[k].extend([v])
+    # print('Getting valid styles dict...')
+    # print('Input: ', list_of_style_dicts)
+    # print('Output: ', dict(out_dict.items()))
+    return dict(out_dict.items())
 
 
 # def convert_filetype():
