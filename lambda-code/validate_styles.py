@@ -1,10 +1,53 @@
+import os
+import json
 from textwrap import dedent
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 from parse_xml import get_tableau_styles
 from helpers import one_to_many_dict
 from alerts import Alerts, msg, err_msg
 
 
 def validate_styles(style_guide_json, workbook_file):
+    try:
+        # Connect to Slack
+        print("Talking to Slack...\n")
+        slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
+
+        # Construct "builder" and "attachments" json payloads.
+        blocks_json = [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "STYLES AND STYLES AND LIONS AND BEARS"
+                }
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "Want to see more? <https://www.tableau.com/ Insert Your Link to All Dashboards Here>"
+                    }
+                ]
+            }
+        ]
+
+        response = slack_client.chat_postMessage(
+            channel=os.getenv('SLACK_CHANNEL'),
+            # icon_url='https://i.imgur.com/WpMvRvn.jpg',
+            username='Tableau Style Validator',
+            blocks=json.dumps(blocks_json),
+            text='text'
+        )
+
+        # Out of the box Slack error handling
+    except SlackApiError as e:
+        assert e.response['ok'] is False
+        assert e.response['error']
+        print(f'Got an error: {e.response["error"]}')
+
     #
     # Parse styles from Tableau Workbook file
     #
