@@ -89,7 +89,7 @@ def get_all_colors(xml_soup):
     colors_used = []
     all_styles_list = xml_soup.findAll('style', recursive=True)
     for s in all_styles_list:
-        for line in s.string.split('\n'):
+        for line in str(s).split('\n'):
             if '#' in line.strip():
                 hex_num = line.split('#')[1][:6]
                 if hex_num not in colors_used and hex_num.isalnum():

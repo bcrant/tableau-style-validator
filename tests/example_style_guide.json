@@ -1,7 +1,7 @@
 {
     "_README": "PUT ALL STYLES IN DOUBLE QUOTES IN LISTS (SQUARE BRACKETS) AS BELOW",
     "fonts": ["Tableau Bold", "Tableau Book", "Tableau Light", "Arial"],
-    "font-sizes": ["28", "18", "9"],
+    "font-sizes": ["28", "18", "11", "9"],
     "font-colors": [
         "#333333", "#499894", "#59A14F", "#79706E", "#86BCB6", "#8769E3"
     ],

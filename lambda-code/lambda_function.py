@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from helpers import init_env
-from tableau_download_twb import download_workbook
+from download_workbook import download_workbook
 from validate_styles import validate_styles
 
 

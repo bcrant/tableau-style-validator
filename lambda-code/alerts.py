@@ -70,6 +70,8 @@ def err_msg(count):
 
 
 def msg(alert, value, pos=None, valid=True, level=None, kind=None):
+    # If you do not wish to see the valid statements,
+    # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
             return print(f'{alert} {str(value + "pt"):20s} found in {str(pos + ".")}')

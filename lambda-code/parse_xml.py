@@ -1,6 +1,6 @@
 import collections
 from bs4 import BeautifulSoup
-from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
+from helpers import get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
 
 def get_tableau_styles(workbook_file):
