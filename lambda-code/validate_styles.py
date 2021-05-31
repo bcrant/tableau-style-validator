@@ -1,17 +1,48 @@
 import os
 import json
+import pprint
 from textwrap import dedent
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from parse_xml import get_tableau_styles
-from helpers import one_to_many_dict
-from alerts import Alerts, msg, err_msg
+from helpers import one_to_many_dict, pp
+from alerts_local_fmt import PrintAlerts, msg, err_msg
+from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
 
 
 def validate_styles(style_guide_json, workbook_file):
+    #
+    # Parse styles from Tableau Workbook file
+    #
+    styles = get_tableau_styles(workbook_file)
+
+    # Workbook styles
+    wb_styles = styles.get('workbook_styles')
+    wb_response_dict = test_workbook(wb_styles, style_guide_json)
+
+    print(type(wb_response_dict))
+    print(pp(wb_response_dict))
+
+    # # Dashboard styles
+    # db_styles = styles.get('dashboard_styles')
+    # db_response_dict = test_dashboards(db_styles, style_guide_json)
+    #
+    # print(type(db_response_dict))
+    # pprint.pprint(db_response_dict)
+    #
+    # # Worksheet styles
+    # ws_styles = styles.get('worksheet_styles')
+    # ws_response_dict = test_worksheets(ws_styles, style_guide_json)
+    #
+    # print(type(ws_response_dict))
+    # pprint.pprint(ws_response_dict)
+
+    #
+    # Trigger Slack Bot to send a formatted message
+    #
     try:
         # Connect to Slack
-        print("Talking to Slack...\n")
+        print("Authenticating Slack Bot...")
         slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
 
         # Construct "builder" and "attachments" json payloads.
@@ -21,6 +52,56 @@ def validate_styles(style_guide_json, workbook_file):
                 "text": {
                     "type": "mrkdwn",
                     "text": "STYLES AND STYLES AND LIONS AND BEARS"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Response\n{}".format(wb_response_dict.get('response'))
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Invalid Styles\n{}".format(wb_response_dict.get('invalid_styles'))
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Valid Styles\n{}".format(wb_response_dict.get('valid_styles'))
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "This is a section block with an overflow menu."
+                },
+                "accessory": {
+                    "type": "overflow",
+                    "options": [
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "*this is plain_text text*",
+                                "emoji": True
+                            },
+                            "value": "value-0"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "*this is plain_text text*",
+                                "emoji": True
+                            },
+                            "value": "value-1"
+                        }
+                    ],
+                    "action_id": "overflow-action"
                 }
             },
             {
@@ -36,10 +117,10 @@ def validate_styles(style_guide_json, workbook_file):
 
         response = slack_client.chat_postMessage(
             channel=os.getenv('SLACK_CHANNEL'),
-            # icon_url='https://i.imgur.com/WpMvRvn.jpg',
+            icon_url='https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg',
             username='Tableau Style Validator',
             blocks=json.dumps(blocks_json),
-            text='text'
+            text='A workbook has been created/updated. See validation results...'
         )
 
         # Out of the box Slack error handling
@@ -47,23 +128,6 @@ def validate_styles(style_guide_json, workbook_file):
         assert e.response['ok'] is False
         assert e.response['error']
         print(f'Got an error: {e.response["error"]}')
-
-    #
-    # Parse styles from Tableau Workbook file
-    #
-    styles = get_tableau_styles(workbook_file)
-
-    # Workbook styles
-    wb_styles = styles.get('workbook_styles')
-    test_workbook(wb_styles, style_guide_json)
-
-    # Dashboard styles
-    db_styles = styles.get('dashboard_styles')
-    test_dashboards(db_styles, style_guide_json)
-
-    # Worksheet styles
-    ws_styles = styles.get('worksheet_styles')
-    test_worksheets(ws_styles, style_guide_json)
 
     return
 
@@ -76,6 +140,7 @@ def test_workbook(workbook_styles, sg):
         '''))
 
     valid_wb_styles_list = []
+    invalid_wb_styles_list = []
     wb_err_count = 0
 
     for item in workbook_styles:
@@ -98,15 +163,25 @@ def test_workbook(workbook_styles, sg):
                 if s is not None:
                     if 'font-size' in style:
                         if s not in sg.get('font-sizes'):
-                            msg(Alerts.INVALID_FONT_SIZE,
+                            invalid_wb_styles_list.append(
+                                slack_msg(SlackAlerts.INVALID_FONT_SIZE,
+                                          s,
+                                          item,
+                                          valid=False,
+                                          kind='font-size',
+                                          level='Workbook')
+                            )
+
+                            msg(PrintAlerts.INVALID_FONT_SIZE,
                                 s,
                                 item,
                                 valid=False,
                                 kind='font-size',
                                 level='Workbook')
+
                             wb_err_count += 1
                         else:
-                            msg(Alerts.VALID_FONT_SIZE,
+                            msg(PrintAlerts.VALID_FONT_SIZE,
                                 s,
                                 item,
                                 valid=True,
@@ -116,7 +191,7 @@ def test_workbook(workbook_styles, sg):
 
                     if 'font-family' in style:
                         if s not in sg.get('fonts'):
-                            msg(Alerts.INVALID_FONT_TYPE,
+                            msg(PrintAlerts.INVALID_FONT_TYPE,
                                 s,
                                 item,
                                 valid=False,
@@ -124,7 +199,7 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             wb_err_count += 1
                         else:
-                            msg(Alerts.VALID_FONT_TYPE,
+                            msg(PrintAlerts.VALID_FONT_TYPE,
                                 s,
                                 item,
                                 valid=True,
@@ -134,7 +209,7 @@ def test_workbook(workbook_styles, sg):
 
                     if 'color' in style:
                         if s.upper() not in sg.get('font-colors'):
-                            msg(Alerts.INVALID_FONT_COLOR,
+                            msg(PrintAlerts.INVALID_FONT_COLOR,
                                 s.upper(),
                                 item,
                                 valid=False,
@@ -142,7 +217,7 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             wb_err_count += 1
                         else:
-                            msg(Alerts.VALID_FONT_COLOR,
+                            msg(PrintAlerts.VALID_FONT_COLOR,
                                 s.upper(),
                                 item,
                                 valid=True,
@@ -150,9 +225,14 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             valid_wb_styles_list.append({'font-color': str(s.upper())})
 
-    err_msg(wb_err_count)
+    print('VALID WB STYLES: ', valid_wb_styles_list)
+    wb_response = {
+        'valid_styles': valid_wb_styles_list,
+        'invalid_styles': pp(invalid_wb_styles_list),
+        'response': err_msg(wb_err_count)
+    }
 
-    return print(one_to_many_dict(valid_wb_styles_list))
+    return wb_response
 
 
 def test_dashboards(dashboard_styles, sg):
@@ -163,6 +243,7 @@ def test_dashboards(dashboard_styles, sg):
     '''))
 
     valid_db_styles_list = []
+    invalid_db_styles_list = []
     db_err_count = 0
     for dashboard in dashboard_styles:
         dashboard_style = dashboard_styles.get(dashboard)
@@ -175,7 +256,16 @@ def test_dashboards(dashboard_styles, sg):
                     if s is not None:
                         if 'font-size' in style:
                             if s not in sg.get('font-sizes'):
-                                msg(Alerts.INVALID_FONT_SIZE,
+                                invalid_db_styles_list.append(
+                                    slack_msg(SlackAlerts.INVALID_FONT_SIZE,
+                                              s,
+                                              item,
+                                              valid=False,
+                                              kind='font-size',
+                                              level=db_name)
+                                )
+
+                                msg(PrintAlerts.INVALID_FONT_SIZE,
                                     s,
                                     item,
                                     valid=False,
@@ -183,7 +273,7 @@ def test_dashboards(dashboard_styles, sg):
                                     level=db_name)
                                 db_err_count += 1
                             else:
-                                msg(Alerts.VALID_FONT_SIZE,
+                                msg(PrintAlerts.VALID_FONT_SIZE,
                                     s,
                                     item,
                                     valid=True,
@@ -193,7 +283,7 @@ def test_dashboards(dashboard_styles, sg):
 
                         if 'font-family' in style:
                             if s not in sg.get('fonts'):
-                                msg(Alerts.INVALID_FONT_TYPE,
+                                msg(PrintAlerts.INVALID_FONT_TYPE,
                                     s,
                                     item,
                                     valid=False,
@@ -201,7 +291,7 @@ def test_dashboards(dashboard_styles, sg):
                                     level=db_name)
                                 db_err_count += 1
                             else:
-                                msg(Alerts.VALID_FONT_TYPE,
+                                msg(PrintAlerts.VALID_FONT_TYPE,
                                     s,
                                     item,
                                     valid=True,
@@ -213,7 +303,7 @@ def test_dashboards(dashboard_styles, sg):
                         if 'db_zone_styles' not in item:
                             if 'color' in style:
                                 if s.upper() not in sg.get('font-colors'):
-                                    msg(Alerts.INVALID_FONT_COLOR,
+                                    msg(PrintAlerts.INVALID_FONT_COLOR,
                                         s.upper(),
                                         item,
                                         valid=False,
@@ -221,7 +311,7 @@ def test_dashboards(dashboard_styles, sg):
                                         level=db_name)
                                     db_err_count += 1
                                 else:
-                                    msg(Alerts.VALID_FONT_COLOR,
+                                    msg(PrintAlerts.VALID_FONT_COLOR,
                                         s.upper(),
                                         item,
                                         valid=True,
@@ -240,7 +330,7 @@ def test_dashboards(dashboard_styles, sg):
                             for val in s:
                                 if 'border-color' in style:
                                     if val.upper() not in sg.get('border-colors'):
-                                        msg(Alerts.INVALID_BORDER_COLOR,
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
                                             val.upper(),
                                             item,
                                             valid=False,
@@ -248,7 +338,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_BORDER_COLOR,
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
                                             val.upper(),
                                             item,
                                             valid=True,
@@ -258,7 +348,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'border-width' in style:
                                     if val not in sg.get('border-width'):
-                                        msg(Alerts.INVALID_BORDER_COLOR,
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
                                             val,
                                             item,
                                             valid=False,
@@ -266,7 +356,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_BORDER_COLOR,
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
                                             val,
                                             item,
                                             valid=True,
@@ -276,7 +366,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'border-style' in style:
                                     if val not in sg.get('border-style'):
-                                        msg(Alerts.INVALID_BORDER_STYLE,
+                                        msg(PrintAlerts.INVALID_BORDER_STYLE,
                                             val,
                                             item,
                                             valid=False,
@@ -284,7 +374,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_BORDER_STYLE,
+                                        msg(PrintAlerts.VALID_BORDER_STYLE,
                                             val,
                                             item,
                                             valid=True,
@@ -294,7 +384,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'margin' in style:
                                     if val not in sg.get('margin'):
-                                        msg(Alerts.INVALID_MARGIN,
+                                        msg(PrintAlerts.INVALID_MARGIN,
                                             val,
                                             item,
                                             valid=False,
@@ -302,7 +392,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_MARGIN,
+                                        msg(PrintAlerts.VALID_MARGIN,
                                             val,
                                             item,
                                             valid=True,
@@ -312,7 +402,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'margin-top' in style:
                                     if val not in sg.get('margin-top'):
-                                        msg(Alerts.INVALID_MARGIN_TOP,
+                                        msg(PrintAlerts.INVALID_MARGIN_TOP,
                                             val,
                                             item,
                                             valid=False,
@@ -320,7 +410,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_MARGIN_TOP,
+                                        msg(PrintAlerts.VALID_MARGIN_TOP,
                                             val,
                                             item,
                                             valid=True,
@@ -330,7 +420,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'margin-bottom' in style:
                                     if val not in sg.get('margin-bottom'):
-                                        msg(Alerts.INVALID_MARGIN_BOTTOM,
+                                        msg(PrintAlerts.INVALID_MARGIN_BOTTOM,
                                             val,
                                             item,
                                             valid=False,
@@ -338,7 +428,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_MARGIN_BOTTOM,
+                                        msg(PrintAlerts.VALID_MARGIN_BOTTOM,
                                             val,
                                             item,
                                             valid=True,
@@ -348,7 +438,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'background-color' in style:
                                     if val.upper() not in sg.get('background-colors'):
-                                        msg(Alerts.INVALID_BACKGROUND_COLOR,
+                                        msg(PrintAlerts.INVALID_BACKGROUND_COLOR,
                                             val.upper(),
                                             item,
                                             valid=False,
@@ -356,7 +446,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_BACKGROUND_COLOR,
+                                        msg(PrintAlerts.VALID_BACKGROUND_COLOR,
                                             val.upper(),
                                             item,
                                             valid=True,
@@ -366,7 +456,7 @@ def test_dashboards(dashboard_styles, sg):
 
                                 if 'padding' in style:
                                     if val not in sg.get('padding'):
-                                        msg(Alerts.INVALID_PADDING,
+                                        msg(PrintAlerts.INVALID_PADDING,
                                             val,
                                             item,
                                             valid=False,
@@ -374,7 +464,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
-                                        msg(Alerts.VALID_PADDING,
+                                        msg(PrintAlerts.VALID_PADDING,
                                             val,
                                             item,
                                             valid=True,
@@ -382,8 +472,13 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         valid_db_styles_list.append({'padding': str(val)})
 
-    err_msg(db_err_count)
-    return print(one_to_many_dict(valid_db_styles_list))
+    db_response = {
+        'valid_styles': one_to_many_dict(valid_db_styles_list),
+        'invalid_styles': invalid_db_styles_list,
+        'response': err_msg(db_err_count)
+    }
+
+    return db_response
 
 
 def test_worksheets(worksheet_styles, sg):
@@ -394,6 +489,7 @@ def test_worksheets(worksheet_styles, sg):
     '''))
 
     valid_ws_styles_list = []
+    invalid_ws_styles_list = []
     ws_err_count = 0
     for worksheet_style in worksheet_styles:
         worksheet = worksheet_styles.get(worksheet_style)
@@ -407,7 +503,16 @@ def test_worksheets(worksheet_styles, sg):
                         if s is not None:
                             if 'fontsize' in style:
                                 if s not in sg.get('font-sizes'):
-                                    msg(Alerts.INVALID_FONT_SIZE,
+                                    invalid_ws_styles_list.append(
+                                        slack_msg(SlackAlerts.INVALID_FONT_SIZE,
+                                                  s,
+                                                  item,
+                                                  valid=False,
+                                                  kind='font-size',
+                                                  level=ws_name)
+                                    )
+
+                                    msg(PrintAlerts.INVALID_FONT_SIZE,
                                         s,
                                         item,
                                         valid=False,
@@ -415,7 +520,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
-                                    msg(Alerts.VALID_FONT_SIZE,
+                                    msg(PrintAlerts.VALID_FONT_SIZE,
                                         s,
                                         item,
                                         valid=True,
@@ -425,7 +530,7 @@ def test_worksheets(worksheet_styles, sg):
 
                             if 'fontname' in style:
                                 if s not in sg.get('fonts'):
-                                    msg(Alerts.INVALID_FONT_TYPE,
+                                    msg(PrintAlerts.INVALID_FONT_TYPE,
                                         s,
                                         item,
                                         valid=False,
@@ -433,7 +538,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
-                                    msg(Alerts.VALID_FONT_TYPE,
+                                    msg(PrintAlerts.VALID_FONT_TYPE,
                                         s,
                                         item,
                                         valid=True,
@@ -443,7 +548,7 @@ def test_worksheets(worksheet_styles, sg):
 
                             if 'fontcolor' in style:
                                 if s.upper() not in sg.get('font-colors'):
-                                    msg(Alerts.INVALID_FONT_COLOR,
+                                    msg(PrintAlerts.INVALID_FONT_COLOR,
                                         s.upper(),
                                         item,
                                         valid=False,
@@ -451,7 +556,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
-                                    msg(Alerts.VALID_FONT_COLOR,
+                                    msg(PrintAlerts.VALID_FONT_COLOR,
                                         s.upper(),
                                         item,
                                         valid=True,
@@ -459,6 +564,10 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     valid_ws_styles_list.append({'font-color': str(s.upper())})
 
-    err_msg(ws_err_count)
+    ws_response = {
+        'valid_styles': one_to_many_dict(valid_ws_styles_list),
+        'invalid_styles': invalid_ws_styles_list,
+        'response': err_msg(ws_err_count)
+    }
 
-    return print(one_to_many_dict(valid_ws_styles_list))
+    return ws_response

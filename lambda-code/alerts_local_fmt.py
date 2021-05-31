@@ -3,7 +3,7 @@ init(autoreset=True)
 
 
 #
-# Alert formatting
+# LOCAL PRINT Alert formatting
 #
 rm_fmt = Style.RESET_ALL
 pass_fmt_on = Back.BLACK + Style.BRIGHT
@@ -12,7 +12,7 @@ fail_fmt_on = Back.BLACK + Fore.LIGHTYELLOW_EX + Style.BRIGHT
 fail_fmt_off = Style.NORMAL + Fore.RESET
 
 
-class Alerts:
+class PrintAlerts:
     #
     # PASS
     #
@@ -64,9 +64,9 @@ class Alerts:
 
 def err_msg(count):
     if count == 0:
-        return print(f'{Alerts.PASS_TESTS}')
+        return print(str(f'{PrintAlerts.PASS_TESTS}'))
     else:
-        return print(f'{Alerts.FAIL_TESTS} {count} styles need revision.')
+        return print(str(f'{PrintAlerts.FAIL_TESTS} {count} styles need revision.'))
 
 
 def msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -74,12 +74,12 @@ def msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return print(f'{alert} {str(value + "pt"):20s} found in {str(pos + ".")}')
+            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos + ".")}'))
         else:
-            return print(f'{alert} {str(value):20s} found in {str(pos + ".")}')
+            return print(str(f'{alert} {str(value):20s} found in {str(pos + ".")}'))
 
     if not valid:
         if 'font-size' in kind:
-            return print(f'{alert} {str(value + "pt"):20s} found in {str(pos):20s} of dashboard {str(level + ".")}')
+            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos):20s} of dashboard {str(level + ".")}'))
         else:
-            return print(f'{alert} {str(value):20s} found in {str(pos):20s} of dashboard {str(level + ".")}')
+            return print(str(f'{alert} {str(value):20s} found in {str(pos):20s} of dashboard {str(level + ".")}'))

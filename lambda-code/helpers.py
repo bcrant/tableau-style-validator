@@ -104,12 +104,16 @@ def get_all_colors(xml_soup):
 def one_to_many_dict(list_of_style_dicts):
     out_dict = collections.defaultdict(list)
     for style_dict in list_of_style_dicts:
-        for k, v in style_dict.items():
-            out_dict[k].extend([v])
-    many_dict = dict(out_dict.items())
-    for kk, vv in many_dict.items():
-        many_dict[kk] = list(dict.fromkeys(vv))
-    # print('Getting valid styles dict...')
-    # print('Input: ', list_of_style_dicts)
-    # print('Output: ', many_dict)
-    return many_dict
+        if style_dict is not None:
+            for k, v in style_dict.items():
+                out_dict[k].extend([v])
+        many_dict = dict(out_dict.items())
+        for kk, vv in many_dict.items():
+            many_dict[kk] = list(dict.fromkeys(vv))
+
+        # print('Getting valid styles dict...')
+        # print('Input: ', list_of_style_dicts)
+        # print('Output: ', many_dict)
+        return many_dict
+
+
