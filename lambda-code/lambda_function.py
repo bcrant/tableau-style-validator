@@ -1,34 +1,35 @@
 import os
+import sys
 import json
-import pprint
-from dotenv import load_dotenv
-from tableau_download_twb import download_workbook
+from helpers import init_env
+from download_workbook import download_workbook
 from validate_styles import validate_styles
 
 
-def init_env():
-    # Determine whether running in Lambda or locally
-    if os.getenv('AWS_EXECUTION_ENV') is None:
-        print('Operating in local dev context, loading ./envs/.env file...')
-        load_dotenv('./envs/.env')
-    else:
-        print('Operating in Lambda context...')
-
-
 def lambda_handler(event, context):
-    print(event)
-    print(context)
+    print('LAMBDA HANDLER event: ', event)
+    print('LAMBDA HANDLER context: ', context)
 
-    init_env()
+    init_env(event)
+
+    print('os.environ: ', os.environ)
+    print('os.getcwd: ', os.getcwd())
+    print('sys.path: ', sys.path)
 
     # Get workbook
     tableau_workbook = download_workbook()
 
+    # Get path to style guide
+    sg_path = os.path.join(
+        os.getenv('TABLEAU_PATH')
+        + 'example_style_guide.json'
+    )
+
     # Get style guide
-    with open('./tests/sg_example.json') as sg:
+    with open(sg_path) as sg:
         style_guide = json.load(sg)
 
-    # Test workbook and style guide
+    # Test workbook against style guide
     validate_styles(style_guide, tableau_workbook)
 
     return

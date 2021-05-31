@@ -1,9 +1,10 @@
+import collections
 from bs4 import BeautifulSoup
-from helpers import pp, get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
+from helpers import get_style_rules, get_styles_from_dict, get_distinct_styles, get_all_colors
 
 
 def get_tableau_styles(workbook_file):
-    # Create Beautiful Soup XML object from .twb file and remove thumbnail hash
+    # Create Beautiful Soup XML object from .twb file
     wb_xml = BeautifulSoup(workbook_file, 'lxml')
 
     #
@@ -29,14 +30,13 @@ def parse_workbook_style(xml_soup):
     #
     if workbook_style is not None:
         wb_style_rules = get_style_rules(workbook_style)
-
         for k, v in wb_style_rules.items():
             wb[k] = v
 
-    # #
-    # # ALL COLORS IN WORKBOOK
-    # #
-    # wb['all_colors'] = get_all_colors(xml_soup)
+    #
+    # ALL COLORS IN WORKBOOK
+    #
+    wb['all_colors_in_wb'] = get_all_colors(xml_soup)
 
     return {'workbook_styles': wb}
 
@@ -51,7 +51,6 @@ def parse_worksheets(xml_soup):
         #
         # WORKSHEET NAME
         #
-
         ws = {
             'ws_name': worksheet['name']
         }
@@ -110,7 +109,8 @@ def parse_worksheets(xml_soup):
                     ws['ws_labels'] = get_distinct_styles(label_styles_list)
 
             # #
-            # # (Excluding until later iterations) TABLE STYLES
+            # # TABLE STYLES
+            # # (Excluding until later iterations)
             # #
             # table_elements = worksheet\
             #     .find('table')\
@@ -169,18 +169,56 @@ def parse_dashboards(xml_soup):
         #
         # DASHBOARD ELEMENT STYLES (EXCLUDING ZONES)
         #
-        # TODO: Need to parse Dashboard Zones to get all titles / text...
-        #       consider using foo.findAll('formatted-text') or wb_xml.findAll('run')
-        #       to search the entire document and make sure none are missed
         if dashboard.find('style') is not None and bool(dashboard.find('style').contents):
             db_style_rules = get_style_rules(dashboard.find('style'))
             for k, v in db_style_rules.items():
                 db[k] = v
 
+        #
+        # DASHBOARD ZONES
+        #
+        if dashboard.find('zones') is not None:
+            db_zones = dashboard.findAll('zones')
+
+            # Formatted Text Items
+            db_zones_text_styles = []
+            for z_text in db_zones:
+                db_text_style_attrs = get_styles_from_dict(z_text)
+                if bool(db_text_style_attrs):
+                    db_zones_text_styles += get_distinct_styles(db_text_style_attrs)
+
+            # Get all text item values per unique key
+            db_zones_text_styles_dict = collections.defaultdict(list)
+            for d in db_zones_text_styles:
+                for a, b in d.items():
+                    db_zones_text_styles_dict[a].extend([b])
+            db_text_styles = dict(db_zones_text_styles_dict.items())
+            for k, v in db_text_styles.items():
+                db_text_styles[k] = list(dict.fromkeys(v).keys())[0]
+
+            # Normalize the key names for validation
+            if db_text_styles.get('fontname') is not None:
+                db_text_styles['font-family'] = db_text_styles.pop('fontname')
+            if db_text_styles.get('fontsize') is not None:
+                db_text_styles['font-size'] = db_text_styles.pop('fontsize')
+            if db_text_styles.get('fontcolor') is not None:
+                db_text_styles['font-color'] = db_text_styles.pop('fontcolor')
+
+            db['db_text_styles'] = db_text_styles
+
+            # Zone Style Items
+            db_zone_styles = []
+            for z_style in db_zones:
+                z_style_list = [e.findAll('format') for e in z_style.findAll('zone-style')]
+                for z_list in z_style_list:
+                    db_zone_styles.extend([f.attrs for f in z_list])
+
+            db_zone_styles_dict = collections.defaultdict(list)
+            for z_style_pair in get_distinct_styles(db_zone_styles):
+                db_zone_styles_dict[z_style_pair.get('attr')].extend([z_style_pair.get('value')])
+
+            db['db_zone_styles'] = dict(db_zone_styles_dict.items())
+
         all_db_styles[db['db_name']] = db
 
     return {'dashboard_styles': all_db_styles}
-
-
-if __name__ == "__main__":
-    get_tableau_styles()
