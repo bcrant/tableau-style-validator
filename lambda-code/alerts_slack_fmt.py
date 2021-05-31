@@ -6,31 +6,31 @@ class SlackAlerts:
     #
     # PASS
     #
-    PASS_TESTS = str(' ✅\tVALID STYLES        ')
+    PASS_TESTS = str('  :white_check_mark:  *VALID STYLES*        ')
 
     # Fonts
-    VALID_FONT_TYPE = str(' ✅\tVALID ' + 'Font Type     ')
-    VALID_FONT_SIZE = str(' ✅\tVALID ' + 'Font Size     ')
-    VALID_FONT_COLOR = str(' ✅\tVALID ' + 'Font Color    ')
+    VALID_FONT_TYPE = str('  :white_check_mark:  ' + 'Font Type     ')
+    VALID_FONT_SIZE = str('  :white_check_mark:  ' + 'Font Size     ')
+    VALID_FONT_COLOR = str('  :white_check_mark:  ' + 'Font Color    ')
 
     # Borders
-    VALID_BORDER_STYLE = str(' ✅\tVALID ' + 'Border Style  ')
-    VALID_BORDER_WIDTH = str(' ✅\tVALID ' + 'Border Width  ')
-    VALID_BORDER_COLOR = str(' ✅\tVALID ' + 'Border Color  ')
+    VALID_BORDER_STYLE = str('  :white_check_mark:  ' + 'Border Style  ')
+    VALID_BORDER_WIDTH = str('  :white_check_mark:  ' + 'Border Width  ')
+    VALID_BORDER_COLOR = str('  :white_check_mark:  ' + 'Border Color  ')
 
     # Margins
-    VALID_MARGIN = str(' ✅\tVALID ' + 'Margin        ')
-    VALID_MARGIN_TOP = str(' ✅\tVALID ' + 'Margin Top    ')
-    VALID_MARGIN_BOTTOM = str(' ✅\tVALID ' + 'Margin Bottom ')
-    VALID_PADDING = str(' ✅\tVALID ' + 'Padding       ')
+    VALID_MARGIN = str('  :white_check_mark:  ' + 'Margin        ')
+    VALID_MARGIN_TOP = str('  :white_check_mark:  ' + 'Margin Top    ')
+    VALID_MARGIN_BOTTOM = str('  :white_check_mark:  ' + 'Margin Bottom ')
+    VALID_PADDING = str('  :white_check_mark:  ' + 'Padding       ')
 
     # Background Color
-    VALID_BACKGROUND_COLOR = str(' ✅\tVALID ' + 'BG Color      ')
+    VALID_BACKGROUND_COLOR = str('  :white_check_mark:  ' + 'BG Color      ')
 
     #
     # FAIL
     #
-    FAIL_TESTS = str(' :x: INVALID STYLES      ')
+    FAIL_TESTS = str('  :x:  *INVALID STYLES*   ')
 
     # Fonts
     INVALID_FONT_TYPE = str('  :warning:  *ALERT*  ' + 'Font Type     ')
@@ -56,7 +56,7 @@ def slack_err_msg(count):
     if count == 0:
         return str(f'{SlackAlerts.PASS_TESTS}')
     else:
-        return str(f'{SlackAlerts.FAIL_TESTS} {count} styles need revision.')
+        return str(f'{SlackAlerts.FAIL_TESTS}   {count} styles need revision.')
 
 
 def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -64,13 +64,13 @@ def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos + ".")}')
+            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos + "  ")}')
         else:
-            return str(f'{alert} {str(value):12s} found in {str(pos + ".")}')
+            return str(f'{alert} {str(value):12s} found in {str(pos + "  ")}')
 
     if not valid:
         if 'font-size' in kind:
-            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos)} of {str("*" + level + "*")}')
+            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos)} of {str("*" + level + "*  ")}')
         else:
-            return str(f'{alert} {str(value):12s} found in {str(pos)} of {str("*" + level + "*")}')
+            return str(f'{alert} {str(value):12s} found in {str(pos)} of {str("*" + level + "*  ")}')
 

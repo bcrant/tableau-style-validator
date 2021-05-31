@@ -24,6 +24,12 @@ def pp(json_dict):
     return json.dumps(json_dict, indent=4, sort_keys=True)
 
 
+def left_align_list(style_list):
+    # Format alerts items without double quote wraps and no left indents
+    return json.dumps(style_list, indent=0, sort_keys=True)
+
+
+
 def get_styles_from_dict(styles_soup):
 
     if styles_soup.find('formatted-text') is not None:
