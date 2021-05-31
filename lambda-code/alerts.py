@@ -68,3 +68,16 @@ def err_msg(count):
     else:
         return print(f'{Alerts.FAIL_TESTS} {count} styles need revision.')
 
+
+def msg(alert, value, pos=None, valid=True, level=None, kind=None):
+    if valid:
+        if 'font-size' in kind:
+            return print(f'{alert} {str(value + "pt"):20s} found in {str(pos + ".")}')
+        else:
+            return print(f'{alert} {str(value):20s} found in {str(pos + ".")}')
+
+    if not valid:
+        if 'font-size' in kind:
+            return print(f'{alert} {str(value + "pt"):20s} found in {str(pos):20s} of dashboard {str(level + ".")}')
+        else:
+            return print(f'{alert} {str(value):20s} found in {str(pos):20s} of dashboard {str(level + ".")}')
