@@ -14,6 +14,7 @@ def init_env(lambda_event):
     else:
         print('Operating in Lambda context...')
         os.environ['TABLEAU_PATH'] = '/tmp/'
+        os.environ['STYLE_GUIDE_PATH'] = './example_style_guide.json'
         if lambda_event.get('RESOURCE_LUID'):
             os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
 
