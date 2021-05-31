@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 from helpers import init_env
 from download_workbook import download_workbook
@@ -7,33 +6,34 @@ from validate_styles import validate_styles
 
 
 def lambda_handler(event, context):
-    print('LAMBDA HANDLER event: ', event)
-    print('LAMBDA HANDLER context: ', context)
+    try:
+        print('LAMBDA HANDLER event: ', event)
 
-    init_env(event)
+        init_env(event)
 
-    print('os.environ: ', os.environ)
-    print('os.getcwd: ', os.getcwd())
-    print('sys.path: ', sys.path)
+        # Get workbook
+        tableau_workbook = download_workbook()
 
-    # Get workbook
-    tableau_workbook = download_workbook()
+        # # Get path to style guide
+        # sg_path = os.path.join(
+        #     os.getenv('TABLEAU_PATH')
+        #     + 'example_style_guide.json'
+        # )
 
-    # # Get path to style guide
-    # sg_path = os.path.join(
-    #     os.getenv('TABLEAU_PATH')
-    #     + 'example_style_guide.json'
-    # )
+        # Get style guide
+        with open(os.getenv('STYLE_GUIDE_PATH')) as sg:
+            style_guide = json.load(sg)
 
-    # Get style guide
-    with open(os.getenv('STYLE_GUIDE_PATH')) as sg:
-        style_guide = json.load(sg)
+        # Test workbook against style guide
+        validate_styles(style_guide, tableau_workbook)
 
-    # Test workbook against style guide
-    validate_styles(style_guide, tableau_workbook)
-
-    return
+    except Exception as e:
+        print(e)
+        raise e
 
 
 if __name__ == '__main__':
-    lambda_handler({}, {})
+    if os.getenv('AWS_EXECUTION_ENV') is None:
+        lambda_handler({}, {})
+    else:
+        print('i am a little teapot.')
