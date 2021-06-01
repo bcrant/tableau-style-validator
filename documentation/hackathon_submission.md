@@ -1,11 +1,17 @@
-## Inspiration
-In my new role, I am working on customer facing dashboards, and part of my responsibility is to enforce the style standards where the dashboards are embedded onto the dashboards. 
+# Tableau Style Validator
+![Tableau Style Validator](https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg)
 
-As someone who sees colors slightly differently than others, I decided it was best to outsource this responsibility to a computer. In addition to colors, Tableau dashboards can include many hidden components that are easy to overlook or miss during code review / quality assurance.
+## Inspiration
+In my new role I am working on customer facing dashboards, and part of my responsibility is to enforce the style standards of the platform where the dashboards are embedded onto the dashboards.
+
+As someone who is colorblind, I decided it was best to outsource this responsibility to a computer. In addition, Tableau dashboards can include many hidden components that may go unnoticed in code review and quality assurance stages of release.
 
 ## What it does
-The Tableau Style Validator tests a Workbook for compliance with a given set of design style standards. 
-Company colors, specific fonts, font sizes are the primary scope here. I’m colorblind and thought it would be nice to QA my dashboards programmatically.
+The Tableau Style Validator tests a Workbook for compliance with a given set of design style standards. Company colors, specific fonts, font sizes are the primary scope, but dashboard styles like Borders, Margins, Padding, Backgrounds, etc are able to be tested as well.
+
+In the full cloud deployment of the project, Tableau Style Validator is triggered anytime a Tableau Workbook is created or updated on your Tableau Server and returns the validation as a Slack message via Slack Bot to a specified channel in your Slack Workspace. 
+
+It can also be run from the command line given a Tableau Workbook `.twb` and Style Guide (see `example_style_guide.json`).
 
 ## How we built it
 See [Tableau Style Validator Architecture](https://briancrant.com/wp-content/uploads/2021/06/TableauStyleValidatorArchitecture.pdf) for a breakdown of the projects inner-workings. 
@@ -31,6 +37,7 @@ I ended up having install Docker using Rosetta, a terminal able to translate dis
 Time permitting, I would love to have taken what I have learned about the structure of Tableau XML documents and expand the Tableau Document API to permit updates to workbooks based on the Style Validator.
 
 ## What's next for Tableau Style Validator
+- Refactor validate_styles... got messy rushing to add Slack functionality today
 - Add formatted Slack output for all style elements
   - Slack output is missing some of CLI features: Padding, Margins, Borders       
 - Add support for Mark colors
