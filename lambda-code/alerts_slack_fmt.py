@@ -9,9 +9,9 @@ class SlackAlerts:
     PASS_TESTS = str('  :white_check_mark:  *VALID STYLES*        ')
 
     # Fonts
-    VALID_FONT_TYPE = str('  :white_check_mark:  ' + 'Font Type     ')
-    VALID_FONT_SIZE = str('  :white_check_mark:  ' + 'Font Size     ')
-    VALID_FONT_COLOR = str('  :white_check_mark:  ' + 'Font Color    ')
+    VALID_FONT_TYPE = str('{:4s}  {:4s}  {:12}'.format(str(':white_check_mark:'), str('*VALID*'), str('Font Type')))
+    VALID_FONT_SIZE = str('{:4s}  {:4s}  {:12}'.format(str(':white_check_mark:'), str('*VALID*'), str('Font Size')))
+    VALID_FONT_COLOR = str('{:4s}  {:4s}  {:12}'.format(str(':white_check_mark:'), str('*VALID*'), str('Font Color')))
 
     # Borders
     VALID_BORDER_STYLE = str('  :white_check_mark:  ' + 'Border Style  ')
@@ -30,12 +30,12 @@ class SlackAlerts:
     #
     # FAIL
     #
-    FAIL_TESTS = str('  :x:  *INVALID STYLES*   ')
+    FAIL_TESTS = str('{:2s}  *{:16s}*'.format(str(':x:'), str('INVALID STYLES')))
 
     # Fonts
-    INVALID_FONT_TYPE = str('  :warning:  *ALERT*  ' + 'Font Type     ')
-    INVALID_FONT_SIZE = str('  :warning:  *ALERT*  ' + 'Font Size     ')
-    INVALID_FONT_COLOR = str('  :warning:  *ALERT*  ' + 'Font Color    ')
+    INVALID_FONT_TYPE = str('{:4s}  {:4s}  {:12}'.format(str(':warning:'), str('*ALERT*'), str('Font Type')))
+    INVALID_FONT_SIZE = str('{:4s}  {:4s}  {:12}'.format(str(':warning:'), str('*ALERT*'), str('Font Size')))
+    INVALID_FONT_COLOR = str('{:4s}  {:4s}  {:12}'.format(str(':warning:'), str('*ALERT*'), str('Font Color')))
 
     # Borders
     INVALID_BORDER_STYLE = str('  :warning:  *ALERT*  ' + 'Border Style  ')
@@ -64,13 +64,12 @@ def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos + "  ")}')
+            return str('{}  `{:16s}` found in {:16s}'.format(str(alert), str(value + "pt"), str(pos)))
         else:
-            return str(f'{alert} {str(value):12s} found in {str(pos + "  ")}')
+            return str('{}  `{:16s}` found in {:16s}'.format(str(alert), str(value), str(pos)))
 
     if not valid:
         if 'font-size' in kind:
-            return str(f'{alert} {str(value + "pt"):12s} found in {str(pos)} of {str("*" + level + "*  ")}')
+            return str('{}  `{:16s}` found in {:8s} of {}'.format(str(alert), str(value + "pt"), str(pos), str(level)))
         else:
-            return str(f'{alert} {str(value):12s} found in {str(pos)} of {str("*" + level + "*  ")}')
-
+            return str('{} `{:16s}` found in {:8s} of {}'.format(str(alert), str(value), str(pos), str(level)))

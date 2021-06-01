@@ -29,7 +29,6 @@ def left_align_list(style_list):
     return json.dumps(style_list, indent=0, sort_keys=True)
 
 
-
 def get_styles_from_dict(styles_soup):
 
     if styles_soup.find('formatted-text') is not None:

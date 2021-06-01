@@ -1,12 +1,10 @@
 import os
 import json
-import pprint
-import textwrap
 from textwrap import dedent
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from parse_xml import get_tableau_styles
-from helpers import one_to_many_dict, left_align_list, pp
+from helpers import left_align_list
 from alerts_local_fmt import PrintAlerts, msg, err_msg
 from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
 
@@ -21,120 +19,74 @@ def validate_styles(style_guide_json, workbook_file):
     wb_styles = styles.get('workbook_styles')
     wb_response = test_workbook(wb_styles, style_guide_json)
 
-    print(type(wb_response))
-    print(left_align_list(wb_response))
-
     # Dashboard styles
     db_styles = styles.get('dashboard_styles')
     db_response = test_dashboards(db_styles, style_guide_json)
-
-    print(type(db_response))
-    print(left_align_list(db_response))
 
     # Worksheet styles
     ws_styles = styles.get('worksheet_styles')
     ws_response = test_worksheets(ws_styles, style_guide_json)
 
-    print(type(ws_response))
-    print(left_align_list(ws_response))
-
     #
     # Trigger Slack Bot to send a formatted message
     #
-    try:
-        # Connect to Slack
-        print("Authenticating Slack Bot...")
-        slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
+    if os.getenv('AWS_EXECUTION_ENV') is not None:
+        try:
+            # Connect to Slack
+            print("Authenticating Slack Bot...")
+            slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
 
-        # Construct "builder" and "attachments" json payloads.
-        blocks_json = [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "STYLES AND STYLES AND LIONS AND BEARS"
-                }
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "\n\n\n\nValidating top-level WORKBOOK styles...{}".format(wb_response)
-                }
-            },
-            {
-                "type": "divider"
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "\n\n\n\nValidating each DASHBOARD in workbook...{}".format(db_response)
-                }
-            },
-            {
-                "type": "divider"
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "\n\n\n\nValidating each WORKSHEET in workbook...{}".format(ws_response)
-                }
-            },
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "This is a section block with an overflow menu."
-                },
-                "accessory": {
-                    "type": "overflow",
-                    "options": [
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "*this is plain_text text*",
-                                "emoji": True
-                            },
-                            "value": "value-0"
-                        },
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "*this is plain_text text*",
-                                "emoji": True
-                            },
-                            "value": "value-1"
-                        }
-                    ],
-                    "action_id": "overflow-action"
-                }
-            },
-            {
-                "type": "context",
-                "elements": [
-                    {
+            # Construct "builder" and "attachments" json payloads.
+            blocks_json = [
+                {
+                    "type": "section",
+                    "text": {
                         "type": "mrkdwn",
-                        "text": "Want to see more? <https://www.tableau.com/ Insert Your Link to All Dashboards Here>"
+                        "text": "{}".format('\n\n')
                     }
-                ]
-            }
-        ]
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Validating top-level WORKBOOK styles...{}".format(wb_response)
+                    }
+                },
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Validating each DASHBOARD in workbook...{}".format(db_response)
+                    }
+                },
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "Validating each WORKSHEET in workbook...{}".format(ws_response)
+                    }
+                }
+            ]
 
-        response = slack_client.chat_postMessage(
-            channel=os.getenv('SLACK_CHANNEL'),
-            icon_url='https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg',
-            username='Tableau Style Validator',
-            blocks=json.dumps(blocks_json),
-            text='A workbook has been created/updated. See validation results...'
-        )
+            response = slack_client.chat_postMessage(
+                channel=os.getenv('SLACK_CHANNEL'),
+                icon_url='https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg',
+                username='Tableau Style Validator',
+                blocks=json.dumps(blocks_json),
+                text='A workbook has been created/updated. See validation results...'
+            )
 
-        # Out of the box Slack error handling
-    except SlackApiError as e:
-        assert e.response['ok'] is False
-        assert e.response['error']
-        print(f'Got an error: {e.response["error"]}')
+            # Out of the box Slack error handling
+        except SlackApiError as e:
+            assert e.response['ok'] is False
+            assert e.response['error']
+            print(f'Got an error: {e.response["error"]}')
 
     return
 
@@ -295,7 +247,7 @@ Invalid Styles: {invalid}
 Valid Styles: {valid}
 
 '''.format(invalid=left_align_list(invalid_wb_styles_list) if invalid_wb_styles_list else None,
-           valid=valid_wb_styles_list if valid_wb_styles_list else None))
+           valid=left_align_list(valid_wb_styles_list) if valid_wb_styles_list else None))
 
 
 #
@@ -426,154 +378,154 @@ def test_dashboards(dashboard_styles, sg):
                         #
                         # NOTE: if you do not wish to test margins, padding, etc...
                         # you can comment out this entire else clause.
-                        # else:
-                        #     # Convert any singular string items to list before validating as lists
-                        #     if isinstance(s, str):
-                        #         s = list(s)
-                        #     for val in s:
-                        #         if 'border-color' in style:
-                        #             if val.upper() not in sg.get('border-colors'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-color',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_BORDER_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-color',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'border-color': str(val.upper())})
-                        #
-                        #         if 'border-width' in style:
-                        #             if val not in sg.get('border-width'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_COLOR,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-width',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_BORDER_COLOR,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-width',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'border-width': str(val)})
-                        #
-                        #         if 'border-style' in style:
-                        #             if val not in sg.get('border-style'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_STYLE,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-style',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_BORDER_STYLE,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-style',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'border-style': str(val)})
-                        #
-                        #         if 'margin' in style:
-                        #             if val not in sg.get('margin'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_MARGIN,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'margin': str(val)})
-                        #
-                        #         if 'margin-top' in style:
-                        #             if val not in sg.get('margin-top'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN_TOP,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin-top',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_MARGIN_TOP,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin-top',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'margin-top': str(val)})
-                        #
-                        #         if 'margin-bottom' in style:
-                        #             if val not in sg.get('margin-bottom'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN_BOTTOM,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin-bottom',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_MARGIN_BOTTOM,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin-bottom',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'margin-bottom': str(val)})
-                        #
-                        #         if 'background-color' in style:
-                        #             if val.upper() not in sg.get('background-colors'):
-                        #                 msg(PrintAlerts.INVALID_BACKGROUND_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='bg-color',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_BACKGROUND_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='bg-color',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'background-color': str(val.upper())})
-                        #
-                        #         if 'padding' in style:
-                        #             if val not in sg.get('padding'):
-                        #                 msg(PrintAlerts.INVALID_PADDING,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='padding',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 msg(PrintAlerts.VALID_PADDING,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='padding',
-                        #                     level=db_name)
-                        #                 valid_db_styles_list.append({'padding': str(val)})
+                        else:
+                            # Convert any singular string items to list before validating as lists
+                            if isinstance(s, str):
+                                s = list(s)
+                            for val in s:
+                                if 'border-color' in style:
+                                    if val.upper() not in sg.get('border-colors'):
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=False,
+                                            kind='border-color',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=True,
+                                            kind='border-color',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'border-color': str(val.upper())})
+
+                                if 'border-width' in style:
+                                    if val not in sg.get('border-width'):
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='border-width',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='border-width',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'border-width': str(val)})
+
+                                if 'border-style' in style:
+                                    if val not in sg.get('border-style'):
+                                        msg(PrintAlerts.INVALID_BORDER_STYLE,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='border-style',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_BORDER_STYLE,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='border-style',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'border-style': str(val)})
+
+                                if 'margin' in style:
+                                    if val not in sg.get('margin'):
+                                        msg(PrintAlerts.INVALID_MARGIN,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_MARGIN,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'margin': str(val)})
+
+                                if 'margin-top' in style:
+                                    if val not in sg.get('margin-top'):
+                                        msg(PrintAlerts.INVALID_MARGIN_TOP,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin-top',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_MARGIN_TOP,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin-top',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'margin-top': str(val)})
+
+                                if 'margin-bottom' in style:
+                                    if val not in sg.get('margin-bottom'):
+                                        msg(PrintAlerts.INVALID_MARGIN_BOTTOM,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin-bottom',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_MARGIN_BOTTOM,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin-bottom',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'margin-bottom': str(val)})
+
+                                if 'background-color' in style:
+                                    if val.upper() not in sg.get('background-colors'):
+                                        msg(PrintAlerts.INVALID_BACKGROUND_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=False,
+                                            kind='bg-color',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_BACKGROUND_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=True,
+                                            kind='bg-color',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'background-color': str(val.upper())})
+
+                                if 'padding' in style:
+                                    if val not in sg.get('padding'):
+                                        msg(PrintAlerts.INVALID_PADDING,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='padding',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        msg(PrintAlerts.VALID_PADDING,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='padding',
+                                            level=db_name)
+                                        valid_db_styles_list.append({'padding': str(val)})
 
     err_msg(db_err_count)
 
@@ -594,7 +546,7 @@ Invalid Styles: {invalid}
 Valid Styles: {valid}
 
 '''.format(invalid=left_align_list(invalid_db_styles_list) if invalid_db_styles_list else None,
-           valid=valid_db_styles_list if valid_db_styles_list else None))
+           valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None))
 
 
 #
@@ -739,4 +691,4 @@ Invalid Styles: {invalid}
 Valid Styles:   {valid}
 
 '''.format(invalid=left_align_list(invalid_ws_styles_list) if invalid_ws_styles_list else None,
-           valid=valid_ws_styles_list if valid_ws_styles_list else None)).lstrip()
+           valid=left_align_list(valid_ws_styles_list) if valid_ws_styles_list else None))

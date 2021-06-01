@@ -14,12 +14,6 @@ def lambda_handler(event, context):
         # Get workbook
         tableau_workbook = download_workbook()
 
-        # # Get path to style guide
-        # sg_path = os.path.join(
-        #     os.getenv('TABLEAU_PATH')
-        #     + 'example_style_guide.json'
-        # )
-
         # Get style guide
         with open(os.getenv('STYLE_GUIDE_PATH')) as sg:
             style_guide = json.load(sg)
