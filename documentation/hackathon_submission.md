@@ -14,6 +14,13 @@ In the full cloud deployment of the project, Tableau Style Validator is triggere
 It can also be run from the command line given a Tableau Workbook `.twb` and Style Guide (see `example_style_guide.json`).
 
 ## How we built it
+- Tableau Webhooks 
+    - workbook-created
+    - workbook-updated
+- Tableau Server Client Python library 
+    - authentication 
+    - download workbook
+
 See [Tableau Style Validator Architecture](https://briancrant.com/wp-content/uploads/2021/06/TableauStyleValidatorArchitecture.pdf) for a breakdown of the projects inner-workings. 
 
 ## Challenges we ran into
