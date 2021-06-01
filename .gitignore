@@ -3,9 +3,9 @@ envs/.env
 __pycache__/
 .idea
 .python-version
-lambda-*/*.zip
+lambda-code/*.zip
 lambda-*/python/**
-lambda-*/python/*.twb
-lambda-*/python/*.twbx
+lambda-*/*.twb
+lambda-*/*.twbx
 **/pip-**
 scratch
