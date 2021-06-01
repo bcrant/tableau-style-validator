@@ -3,6 +3,8 @@ Check dashboards for consistency with your organization's style standards.
 
 ![Tableau Style Validator](https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg)
 
+# [Watch Demo video](https://www.youtube.com/watch?v=4to2ln6pME8)
+
 ## Installation Preview / Summary
 1. Clone the Tableau Style Validator repository
 2. AWS steps…

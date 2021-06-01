@@ -157,7 +157,6 @@ def test_workbook(workbook_styles, sg):
                                 valid=True,
                                 kind='font-size',
                                 level='Workbook')
-                            valid_wb_styles_list.append({'font-size': str(s + "pt")})
 
                     if 'font-family' in style:
                         if s not in sg.get('fonts'):
@@ -193,7 +192,6 @@ def test_workbook(workbook_styles, sg):
                                 valid=True,
                                 kind='font-type',
                                 level='Workbook')
-                            valid_wb_styles_list.append({'font-type': str(s)})
 
                     if 'color' in style:
                         if s.upper() not in sg.get('font-colors'):
@@ -227,7 +225,6 @@ def test_workbook(workbook_styles, sg):
                                 valid=True,
                                 kind='font-color',
                                 level='Workbook')
-                            valid_wb_styles_list.append({'font-color': str(s.upper())})
 
     err_msg(wb_err_count)
 
@@ -372,7 +369,6 @@ def test_dashboards(dashboard_styles, sg):
                                         valid=True,
                                         kind='font-color',
                                         level=db_name)
-                                    valid_db_styles_list.append({'font-color': str(s.upper())})
                         #
                         # Dashboard Zone styles
                         #
@@ -399,7 +395,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='border-color',
                                             level=db_name)
-                                        valid_db_styles_list.append({'border-color': str(val.upper())})
 
                                 if 'border-width' in style:
                                     if val not in sg.get('border-width'):
@@ -417,7 +412,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='border-width',
                                             level=db_name)
-                                        valid_db_styles_list.append({'border-width': str(val)})
 
                                 if 'border-style' in style:
                                     if val not in sg.get('border-style'):
@@ -435,7 +429,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='border-style',
                                             level=db_name)
-                                        valid_db_styles_list.append({'border-style': str(val)})
 
                                 if 'margin' in style:
                                     if val not in sg.get('margin'):
@@ -453,7 +446,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='margin',
                                             level=db_name)
-                                        valid_db_styles_list.append({'margin': str(val)})
 
                                 if 'margin-top' in style:
                                     if val not in sg.get('margin-top'):
@@ -471,7 +463,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='margin-top',
                                             level=db_name)
-                                        valid_db_styles_list.append({'margin-top': str(val)})
 
                                 if 'margin-bottom' in style:
                                     if val not in sg.get('margin-bottom'):
@@ -489,7 +480,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='margin-bottom',
                                             level=db_name)
-                                        valid_db_styles_list.append({'margin-bottom': str(val)})
 
                                 if 'background-color' in style:
                                     if val.upper() not in sg.get('background-colors'):
@@ -507,7 +497,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='bg-color',
                                             level=db_name)
-                                        valid_db_styles_list.append({'background-color': str(val.upper())})
 
                                 if 'padding' in style:
                                     if val not in sg.get('padding'):
@@ -525,7 +514,6 @@ def test_dashboards(dashboard_styles, sg):
                                             valid=True,
                                             kind='padding',
                                             level=db_name)
-                                        valid_db_styles_list.append({'padding': str(val)})
 
     err_msg(db_err_count)
 
@@ -637,7 +625,6 @@ def test_worksheets(worksheet_styles, sg):
                                         valid=True,
                                         kind='font-name',
                                         level=ws_name)
-                                    valid_ws_styles_list.append({'font-type': str(s)})
 
                             if 'fontcolor' in style:
                                 if s.upper() not in sg.get('font-colors'):
@@ -671,7 +658,6 @@ def test_worksheets(worksheet_styles, sg):
                                         valid=True,
                                         kind='font-color',
                                         level=ws_name)
-                                    valid_ws_styles_list.append({'font-color': str(s.upper())})
 
     err_msg(ws_err_count)
 

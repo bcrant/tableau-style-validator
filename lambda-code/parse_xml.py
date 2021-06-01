@@ -28,7 +28,7 @@ def parse_workbook_style(xml_soup):
     #
     # WORKBOOK STYLE
     #
-    if workbook_style is not None:
+    if workbook_style is not None and bool(xml_soup.find('style').contents):
         wb_style_rules = get_style_rules(workbook_style)
         for k, v in wb_style_rules.items():
             wb[k] = v
