@@ -12,7 +12,7 @@ lxml
 python-dotenv
 requests
 six
-slackclient
+slack_sdk
 soupsieve
 tableauserverclient
 urllib3
