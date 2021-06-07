@@ -12,10 +12,15 @@ Monitor dashboards in realtime via [cloud deployment](lambda-code) or test files
 
 ### [Watch demo video on YouTube](https://www.youtube.com/watch?v=4to2ln6pME8)
 
+
+Quick start...  
+Run locally via command line...  
+Python environment  
+
 ## Installation Preview / Summary
 1. Clone the Tableau Style Validator repository
 2. AWS steps…
-    - Make account…
+    - Make account
     - Make Lambda Function with Python 3.8 runtime
     - Make S3 Bucket
 3. Zapier steps…
