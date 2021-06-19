@@ -8,14 +8,10 @@
 Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
 
 <br><br>
-
+<center><i>Receive alerts about invalid styles via Slack</i></center>
 [![Tableau Style Validator Slack](documentation/images/slack_alert.png)](https://www.youtube.com/watch?v=4to2ln6pME8)
-*Receive alerts about invalid styles via Slack*
 
-
-<a href="https://paypal.me/briancrant?locale.x=en_US"><img src="documentation/images/bmc-button.png" alt="Buy me a coffee" width="200"/></a>
-
-[comment]: <> (![[Buy me a coffee]&#40;https://paypal.me/briancrant?locale.x=en_US&#41;]&#40;./documentation/images/bmc-button.png&#41;)
+<a href="https://paypal.me/briancrant?locale.x=en_US"><img src="documentation/images/bmc-button.png" alt="Buy me a coffee" width="200"></img></a>
 
 # Quick Start
 All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
