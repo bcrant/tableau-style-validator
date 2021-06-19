@@ -30,4 +30,4 @@ if __name__ == '__main__':
     if os.getenv('AWS_EXECUTION_ENV') is None:
         lambda_handler({}, {})
     else:
-        print('i am a little teapot.')
+        print('I am a little teapot.')

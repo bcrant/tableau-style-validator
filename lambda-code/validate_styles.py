@@ -1,12 +1,10 @@
 import os
-import json
 from textwrap import dedent
-from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
 from parse_xml import get_tableau_styles
 from helpers import left_align_list
 from alerts_local_fmt import PrintAlerts, msg, err_msg
 from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
+from trigger_slack_bot import trigger_slack_bot
 
 
 def validate_styles(style_guide_json, workbook_file):
@@ -31,62 +29,10 @@ def validate_styles(style_guide_json, workbook_file):
     # Trigger Slack Bot to send a formatted message
     #
     if os.getenv('AWS_EXECUTION_ENV') is not None:
-        try:
-            # Connect to Slack
-            print("Authenticating Slack Bot...")
-            slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
-
-            # Construct "builder" and "attachments" json payloads.
-            blocks_json = [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "{}".format('\n\n')
-                    }
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Validating top-level WORKBOOK styles...{}".format(wb_response)
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Validating each DASHBOARD in workbook...{}".format(db_response)
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Validating each WORKSHEET in workbook...{}".format(ws_response)
-                    }
-                }
-            ]
-
-            response = slack_client.chat_postMessage(
-                channel=os.getenv('SLACK_CHANNEL'),
-                icon_url='https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg',
-                username='Tableau Style Validator',
-                blocks=json.dumps(blocks_json),
-                text='A workbook has been created/updated. See validation results...'
-            )
-
-            # Out of the box Slack error handling
-        except SlackApiError as e:
-            assert e.response['ok'] is False
-            assert e.response['error']
-            print(f'Got an error: {e.response["error"]}')
+        trigger_slack_bot(
+            workbook_output=wb_response,
+            dashboard_output=db_response,
+            worksheet_output=ws_response)
 
     return
 
