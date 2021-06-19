@@ -3,7 +3,7 @@
 ![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)  
 
 🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place
-<br><br>
+
 > Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
 
 <figure>
@@ -13,7 +13,7 @@
     <figcaption>Receive alerts about invalid styles via Slack</figcaption>
 </figure>
 
-<br><br>
+
 # Quick Start
 All instructions assume macOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
 
@@ -39,7 +39,6 @@ Create a virtual environment for this project using that Python version.
 - `$ pip install -r requirements-cli.txt`
 
 ### 3. Run Demo
-
 That's it! You can now run `validator_cli.py` using the example Style Guide and Workbook in the 
 ["tests" directory](./tests) of this repository using this command:
 
@@ -49,9 +48,7 @@ Here is a screenshot of the expected output of this command for reference...
 ![CLI Output](./documentation/images/CLI_Output.png)
 
 
-<br><br>
-# Usage 
-
+# Usage
 After completing step three of the Quick Start guide, you will be ready to use the Tableau Style Validator with your own files.
 
 First, create a copy of the [Example Style Guide](./tests/example_style_guide.json) and edit accordingly to your desired style standards. 
@@ -67,22 +64,22 @@ Boom! You're done. Just adjust the paths in this command to point to the files y
 
 `$ python validator_cli.py -s ./your_style_guide.json -w ./your_workbook.twb`
 
-<br><br>
+
 # Cloud Deployment
 View [SETUP.md](./documentation/SETUP.md) documentation for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
 
-<br><br>
+
 # Contributing  
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
 
-<br><br>
+
 # License  
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)  
 
-<br><br>
+
 # Authors
 Main authors:  
-Brian Crant < brian@briancrant.com > | [LinkedIn](https://www.linkedin.com/in/briancrant/)
+Brian Crant &emsp;|&emsp; < brian@briancrant.com > &emsp;|&emsp; [LinkedIn](https://www.linkedin.com/in/briancrant/)
 
 <br><br>
 <figure>
