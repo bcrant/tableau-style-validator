@@ -1,54 +1,76 @@
 # Tableau Style Validator
+
 ![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)
 
 🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place
 
-Check dashboards for consistency with your organization's style standards.
 
-Monitor dashboards in realtime via [cloud deployment](cloud-deployment/lambda-code) or test files locally via [command line interface](validator_cli.py).
+Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
 
-### [Watch demo video on YouTube](https://www.youtube.com/watch?v=4to2ln6pME8)
+<br><br>
 
 [![Tableau Style Validator Slack](documentation/images/slack_alert.png)](https://www.youtube.com/watch?v=4to2ln6pME8)
 *Receive alerts about invalid styles via Slack*
+
+
+<a href="https://paypal.me/briancrant?locale.x=en_US"><img src="documentation/images/bmc-button.png" alt="Buy me a coffee" width="200"/></a>
+
+[comment]: <> (![[Buy me a coffee]&#40;https://paypal.me/briancrant?locale.x=en_US&#41;]&#40;./documentation/images/bmc-button.png&#41;)
+
+# Quick Start
+All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
+
+See [documentation](./documentation) for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
+
+The below steps create an isolated Python environment to quickly test the program from your command line. 
+
+### 1. Clone Repository
+- `$ mkdir tableau-style-validator`
+- `$ cd tableau-style-validator`
+- `$ git clone https://github.com/bcrant/tableau-style-validator.git` 
+
+### 2. Prepare Python
+Install the Python version manager `pyenv`
+- `$ brew install pyenv`
+- `$ brew install pyenv-virtualenv`
+  
+Download the Python version used in this project.
+- `$ pyenv install 3.8.10`
+- `$ pyvenv local 3.8.10`
+
+Create a virtual environment for this project using that Python version.
+- `$ pyenv virtualenv 3.8.10 tableau_style_validator`
+- `$ pip install --upgrade pip`
+- `$ pip install -r requirements-cli.txt`
+
+### 3. Run Demo
+
+That's it! You can now run `validator_cli.py` using the example Style Guide and Workbook in the 
+["tests" directory](./tests) of this repository using this command:
+
+`$ python validator_cli.py -s ./tests/example_style_guide.json -w ./tests/example_workbook.twb`
+
+Here is a screenshot of the expected output of this command for reference...
+![CLI Output](./documentation/images/CLI_Output.png)
+
+# Usage 
+
+After completing step three of the Quick Start guide, you will be ready to use the Tableau Style Validator with your own files.
+
+First, create a copy of the [Example Style Guide](./tests/example_style_guide.json) and edit accordingly to your desired style standards. 
+  
+You can do this via command line from your project directory by running...
+
+`$ cp ./tests/example_style_guide.json ./your_style_guide.json`  
+`$ vim your_style_guide.json` or use your preferred text editor
+
+Next, you will just need to move any Tableau Workbook (.twb) or Packaged Workbook (.twbx) that you wish to test into your project directory.
+
+That's it! You're ready to rock.
+
+
+
 <br><br>
 
-Quick start...  
-Run locally via command line...  
-Python environment  
-
-### How Does the Cloud Deployment Work?
-![Tableau Style Validator Architecture](documentation/images/TableauStyleValidatorArchitecture.png)
-
-### Cloud Deployment Set Up / Prerequisites
-1. Clone the Tableau Style Validator repository
-2. AWS steps…
-    - Make account
-    - Make Lambda Function with Python 3.8 runtime
-    - Make S3 Bucket
-3. Zapier steps…
-    - Uses a “Premium Connection” (AWS Lambda)
-    - Start a free 7-day trial to test…
-    - Create a new “Zap”...
-
-  ![Zapier Config](documentation/images/zapier_zap.png)
-
-- Trigger: 1. Catch Hook
-    - Add “Custom Webhook URL” to .env
-    - Test Trigger (requires you to have webhooks installed on your server) (can do this by running the download_workbook.py script in repo.
-- Action: 2. Invoke Function in AWS Lambda
-    - will need to have made the (aws account) and lambda function
-    - Select function
-    - for arguments:
-        - RESOURCE_LUID
-    
-4. Slack steps…
-    - Create a new [Slack App for your workspace](https://api.slack.com/apps)
-    - Go to OAuth & Permissions —> Scopes —> Bot Token Scopes
-    - Add an OAuth Scope…
-        - chat:write
-        - chat:write.customize
-    - Install your Slack Bot to your workspace.
-        - Add the Slack Bot User OAuth Access Token to `.env`
-    - Add the channel you want to post to in `.env` (You can use a test one for now and change this later)
-    - IMPORTANT: Add the slack bot to the channel you will be posting to by running Slack command: `/invite @BOT_NAME`
+# How Does the Cloud Deployment Work?
+![Tableau Style Validator Architecture](./documentation/images/TableauStyleValidatorArchitecture.png)

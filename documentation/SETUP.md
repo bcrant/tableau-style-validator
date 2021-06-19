@@ -1,13 +1,7 @@
 # Tableau Style Validator Setup
-The below steps create an isolated Python environment to quickly test the program from your command line, and assumes to prior Python knowledge/ experience. 
+All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
 
-Afterwards, we will go in depth walking through the serverless deployment, hosted on all free tier AWS products.
-
-# Quick Start
-
-All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. 
-
-Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
+See [documentation](./documentation/) for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
 
 ### 1. Clone Repository
 - `$ mkdir tableau-style-validator`
@@ -28,19 +22,41 @@ Create a virtual environment for this project using that Python version.
 - `$ pip install --upgrade pip`
 - `$ pip install -r requirements-cli.txt`
 
-### 3. Run Demo
 
-That's it! You can now run `validator_cli.py` using the example Style Guide and Workbook in the ["tests" directory](../tests/) of this repository using this command:
+# Cloud Deployment Set Up / Prerequisites
+1. AWS steps…
+    - Make account
+    - Make Lambda Function with Python 3.8 runtime
+    - Make S3 Bucket
+2. Zapier steps…
+    - Uses a “Premium Connection” (AWS Lambda)
+    - Start a free 7-day trial to test…
+    - Create a new “Zap”...
 
-`$ python validator_cli.py -s ./tests/example_style_guide.json -w ./tests/example_workbook.twb`
+  ![Zapier Config](images/zapier_zap.png)
 
-Here is a screenshot of the expected output of this command for reference...
-![CLI Output](./images/CLI_Output.png)
+- Trigger: 1. Catch Hook
+    - Add “Custom Webhook URL” to .env
+    - Test Trigger (requires you to have webhooks installed on your server) (can do this by running the download_workbook.py script in repo.
+- Action: 2. Invoke Function in AWS Lambda
+    - will need to have made the (aws account) and lambda function
+    - Select function
+    - for arguments:
+        - RESOURCE_LUID
+    
+4. Slack steps…
+    - Create a new [Slack App for your workspace](https://api.slack.com/apps)
+    - Go to OAuth & Permissions —> Scopes —> Bot Token Scopes
+    - Add an OAuth Scope…
+        - chat:write
+        - chat:write.customize
+    - Install your Slack Bot to your workspace.
+        - Add the Slack Bot User OAuth Access Token to `.env`
+    - Add the channel you want to post to in `.env` (You can use a test one for now and change this later)
+    - IMPORTANT: Add the slack bot to the channel you will be posting to by running Slack command: `/invite @BOT_NAME`
 
 
-
-
-# Cloud Deployment
+## Cloud Deployment
 (Get AWS deps native to AWS Lambda Linux Server for local use)
 - `cd cloud-deployment && pip install -r ./requirements-aws-env.txt`
 
