@@ -1,23 +1,26 @@
 # Tableau Style Validator
-
 ![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)
+
+🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place
 
 Check dashboards for consistency with your organization's style standards.
 
 Monitor dashboards in realtime via [cloud deployment](lambda-code) or test files locally via [command line interface](validator_cli.py).
 
+### [Watch demo video on YouTube](https://www.youtube.com/watch?v=4to2ln6pME8)
+
 [![Tableau Style Validator Slack](documentation/images/slack_alert.png)](https://www.youtube.com/watch?v=4to2ln6pME8)
 *Receive alerts about invalid styles via Slack*
 <br><br>
-
-### [Watch demo video on YouTube](https://www.youtube.com/watch?v=4to2ln6pME8)
-
 
 Quick start...  
 Run locally via command line...  
 Python environment  
 
-## Installation Preview / Summary
+### How Does the Cloud Deployment Work?
+![Tableau Style Validator Architecture](documentation/images/TableauStyleValidatorArchitecture.png)
+
+### Cloud Deployment Set Up / Prerequisites
 1. Clone the Tableau Style Validator repository
 2. AWS steps…
     - Make account
