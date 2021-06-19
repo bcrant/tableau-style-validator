@@ -3,11 +3,11 @@
 ![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)  
 
 🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place  
-  
-  
-> Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)  
-  
-  
+
+
+> Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
+
+
 <figure>
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
         <img src="./documentation/images/slack_alert.png" alt="Tableau Style Validator Slack" />
@@ -50,6 +50,7 @@ That's it! You can now run `validator_cli.py` using the example Style Guide and 
 Here is a screenshot of the expected output of this command for reference...
 ![CLI Output](./documentation/images/CLI_Output.png)
 
+
 # Usage 
 
 After completing step three of the Quick Start guide, you will be ready to use the Tableau Style Validator with your own files.
@@ -67,14 +68,18 @@ Boom! You're done. Just adjust the paths in this command to point to the files y
 
 `$ python validator_cli.py -s ./your_style_guide.json -w ./your_workbook.twb`
 
+
 # Cloud Deployment
 View [SETUP.md](./documentation/SETUP.md) documentation for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
+
 
 # Contributing  
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
 
+
 # License  
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)  
+
 
 # Authors
 Main authors:  
@@ -85,5 +90,3 @@ Brian Crant < brian@briancrant.com > | [LinkedIn](https://www.linkedin.com/in/br
         <img src="./documentation/images/bmc-button.png" alt="Buy me a coffee" width="200" />
     </a>
 </figure>
-
-
