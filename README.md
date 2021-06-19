@@ -1,17 +1,28 @@
 # Tableau Style Validator
 
-![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)
+![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)  
 
-🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place
+🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place  
 
+> Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)  
 
-Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
+[comment]: <> (*Receive alerts about invalid styles via Slack*)
+[comment]: <> ([![Tableau Style Validator Slack]&#40;documentation/images/slack_alert.png&#41;]&#40;https://www.youtube.com/watch?v=4to2ln6pME8&#41;)
 
-<br><br>
-<center><i>Receive alerts about invalid styles via Slack</i></center>
-[![Tableau Style Validator Slack](documentation/images/slack_alert.png)](https://www.youtube.com/watch?v=4to2ln6pME8)
+<figure>
+    <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
+        <img src="documentation/images/slack_alert.png" alt="Tableau Style Validator Slack>
+        </img>
+    </a>
+    <figcaption>Receive alerts about invalid styles via Slack</figcaption>
+</figure>  
 
-<a href="https://paypal.me/briancrant?locale.x=en_US"><img src="documentation/images/bmc-button.png" alt="Buy me a coffee" width="200"></img></a>
+<figure>
+    <a href="https://paypal.me/briancrant?locale.x=en_US">
+        <img src="documentation/images/bmc-button.png" alt="Buy me a coffee" width="200">
+        </img>
+    </a>
+</figure>
 
 # Quick Start
 All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
