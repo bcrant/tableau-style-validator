@@ -1,8 +1,12 @@
-# Tableau Style Validator Setup
-All instructions assume MacOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
+# Tableau Style Validator Setup and Cloud Deployment
+All instructions assume macOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
 
-See [documentation](./documentation/) for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
+# Overview
+Before diving into the specifics, let's take a look at the project architecture...  
 
+![Tableau Style Validator Architecture](./images/TableauStyleValidatorArchitecture.png)
+
+# Setup
 ### 1. Clone Repository
 - `$ mkdir tableau-style-validator`
 - `$ cd tableau-style-validator`
@@ -22,14 +26,13 @@ Create a virtual environment for this project using that Python version.
 - `$ pip install --upgrade pip`
 - `$ pip install -r requirements-cli.txt`
 
-
-# Cloud Deployment Set Up / Prerequisites
+# Cloud Deployment Prerequisites / Setup
 1. AWS steps…
     - Make account
     - Make Lambda Function with Python 3.8 runtime
     - Make S3 Bucket
 2. Zapier steps…
-    - Uses a “Premium Connection” (AWS Lambda)
+    - Uses a paid “Premium Connection” (AWS Lambda)
     - Start a free 7-day trial to test…
     - Create a new “Zap”...
 

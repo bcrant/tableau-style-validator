@@ -4,10 +4,10 @@
 
 🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place  
   
-<br></br>  
-
+  
 > Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)  
-
+  
+  
 <figure>
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
         <img src="./documentation/images/slack_alert.png" alt="Tableau Style Validator Slack" />
@@ -18,8 +18,6 @@
 
 # Quick Start
 All instructions assume macOS and that you have [Homebrew](https://brew.sh/) and `git` installed and tries not to assume anything else. Let me know if I overlooked anything or if you run into any troubles getting set up using these instructions.
-
-See [documentation](./documentation) for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
 
 The below steps create an isolated Python environment to quickly test the program from your command line. 
 
@@ -65,20 +63,27 @@ You can do this via command line from your project directory by running...
 
 Next, you will just need to move any Tableau Workbook (.twb) or Packaged Workbook (.twbx) that you wish to test into your project directory.
 
-That's it! You're ready to rock.
+Boom! You're done. Just adjust the paths in this command to point to the files you've just added.
 
+`$ python validator_cli.py -s ./your_style_guide.json -w ./your_workbook.twb`
 
+# Cloud Deployment
+View [SETUP.md](./documentation/SETUP.md) documentation for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
 
-<br><br>
+# Contributing  
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
 
-# How Does the Cloud Deployment Work?
-![Tableau Style Validator Architecture](./documentation/images/TableauStyleValidatorArchitecture.png)  
+# License  
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)  
 
-
-<br></br>
+# Authors
+Main authors:  
+Brian Crant < brian@briancrant.com > | [LinkedIn](https://www.linkedin.com/in/briancrant/)
 
 <figure>
-    <a href="https://paypal.me/briancrant?locale.x=en_US">
+    <a href="https://paypal.me/briancrant?locale.x=en_US"> 
         <img src="./documentation/images/bmc-button.png" alt="Buy me a coffee" width="200" />
     </a>
 </figure>
+
+
