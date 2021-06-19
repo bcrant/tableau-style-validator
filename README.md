@@ -3,12 +3,8 @@
 ![img](https://img.shields.io/badge/Made%20with-Python-1f425f.svg) ![img](https://img.shields.io/badge/style-API-E97627?label=Tableau&logo=Tableau) ![img](https://img.shields.io/badge/style-API-4A154B?label=Slack&logo=Slack)  
 
 🏆 [Tableau #DataDev Hackathon](https://datadev-hackathon.devpost.com/project-gallery) Winner, Third Place
-
 <br><br>
-
 > Check dashboards for consistency with your organization's style standards. Monitor dashboards in realtime via cloud deployment or test files locally via command line interface. [Watch demo video on YouTube.](https://www.youtube.com/watch?v=4to2ln6pME8)
-
-<br><br>
 
 <figure>
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
@@ -88,6 +84,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Main authors:  
 Brian Crant < brian@briancrant.com > | [LinkedIn](https://www.linkedin.com/in/briancrant/)
 
+<br><br>
 <figure>
     <a href="https://paypal.me/briancrant?locale.x=en_US"> 
         <img src="./documentation/images/bmc-button.png" alt="Buy me a coffee" width="200" />
