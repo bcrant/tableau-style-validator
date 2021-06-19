@@ -1,11 +1,12 @@
 .DS_Store
-envs/.env
+.env
+cloud-deployment/envs/.env
 __pycache__/
 .idea
 .python-version
-lambda-code/*.zip
-lambda-*/python/**
-lambda-*/*.twb
-lambda-*/*.twbx
+cloud-deployment/lambda-code/*.zip
+cloud-deployment/lambda-*/python/**
+cloud-deployment/lambda-*/*.twb
+cloud-deployment/lambda-*/*.twbx
 **/pip-**
 scratch

@@ -1,0 +1,19 @@
+## requirements-deps.txt
+## Package versions not specified due to lxml conflicts depending on system architecture (Mac M1 / arm64)
+
+beautifulsoup4
+bs4
+certifi
+chardet
+colorama
+greenlet
+idna
+lxml
+python-dotenv
+requests
+six
+slack_sdk
+soupsieve
+tableauserverclient
+urllib3
+xmltodict

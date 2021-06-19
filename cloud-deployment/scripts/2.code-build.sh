@@ -1,8 +1,9 @@
 #!/bin/bash
 
-source envs/.env
-
 echo -e "BUILDING CODE IMAGE..."
+
+cp -R ../lib lambda-code
+source envs/.env
 cd lambda-code
 rm -rf code.zip
 

@@ -1,8 +1,8 @@
 import os
 import json
-from helpers import init_env
-from download_workbook import download_workbook
-from validate_styles import validate_styles
+from lib.helpers import init_env
+from lib.download_workbook import download_workbook
+from lib.validate_styles import validate_styles
 
 
 def lambda_handler(event, context):

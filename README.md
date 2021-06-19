@@ -5,7 +5,7 @@
 
 Check dashboards for consistency with your organization's style standards.
 
-Monitor dashboards in realtime via [cloud deployment](lambda-code) or test files locally via [command line interface](validator_cli.py).
+Monitor dashboards in realtime via [cloud deployment](cloud-deployment/lambda-code) or test files locally via [command line interface](validator_cli.py).
 
 ### [Watch demo video on YouTube](https://www.youtube.com/watch?v=4to2ln6pME8)
 

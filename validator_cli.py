@@ -1,7 +1,7 @@
-import sys; sys.path.append('lambda-code/')
+import sys; sys.path.append('lib/')
 import json
 import argparse
-from validate_styles import validate_styles
+from lib.validate_styles import validate_styles
 
 
 def validate_styles_local_cli():
