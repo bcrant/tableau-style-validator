@@ -2,7 +2,7 @@
 .env
 cloud-deployment/envs/.env
 __pycache__/
-.idea
+.idea/
 .python-version
 cloud-deployment/lambda-code/*.zip
 cloud-deployment/lambda-*/python/**
