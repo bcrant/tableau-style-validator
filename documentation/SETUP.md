@@ -213,21 +213,88 @@ ____
 
 # Deploying the Project
 
-You should now have a `.env` file with all the environment variables you need
-to get up and running. Time to run the build scripts.
+You should now have all of your third party tools configured and a `.env`file with all the 
+environment variables you need to get up and running. Time to run the build scripts.
 
-First we need to run two create a Lambda function 
-(If you already created a Lambda function using the AWS UI you can skip this step):
+I chain these together using `&&` but you can run individually if you prefer.
+
+Change Directory into your project directory's `cloud-directory`
+`$ cd ~/{project_directory}/cloud-deployment`
+
+If you skipped the Docker step and uploaded the included 
+[validator-deps.zip](../cloud-deployment/lambda-deps/validator-deps.zip) 
+to a Lambda Layer on your own AND added the corresponding
+environment variables (Lambda Layer Name and Lambda Layer ARN) to your `.env`, 
+then you can skip the steps that include `deps` scripts.
+
+1. First we need to run two create a Lambda function and Lambda Layer
+   (If you already created a Lambda function using the AWS UI you can skip this step):
 
 `$ ./scripts/4a.code-create.sh`
+`$ ./scripts/4a.deps-create.sh`
 
+2. Next we will build the code. These scripts spin up a Docker image 
+   replicating the AWS Lambda runtime to build any dependencies 
+   you may have added in `requirements-code.txt` (mainly used for development).
+   Then it packages up those dependencies and the code, uploads it to S3, 
+   and updates the Lambda function to use the S3 resource.
+   
+`$ ./scripts/2.code-build.sh && ./scripts/3.code-upload.sh && ./scripts/4.code-update.sh`
 
+3. I've separated the `deps` step here, it is essentially same as last step, 
+   but the bulk of the `deps` are packaged separately from the code and
+   uploaded as Lambda Layers. Then, we update the Lambda function to use the Layer.
+   For projects that include large dependencies like `numpy` or `pandas`,
+   this step is important to help minimize resource usage.
 
-`$ cd cloud-deployment`
-`$ ./scripts/2.code-build.sh 
-   && ./scripts/3.code-upload.sh
-   &&
-`
+`$ ./scripts/2.deps-build.sh && ./scripts/3.deps-upload.sh && ./scripts/4.deps-update.sh`
+
+4. Lastly, we update all configurations. Among other things, this step parses your
+   `.env` and makes your environment variables known to the Lambda runtime where
+   our function will be executed.
+   
+`$ ./scripts/5.update-configuration.sh`
 
 When you make changes to your `.env`, `your_style_guide.json`, 
-or any of the project's code, redeploy your 
+or any of the project's code, you will need to redeploy at least the code (Step 2 + Step 4).
+
+Here is the full sweep Cloud Deployment in one command chained together. 
+I have this saved as an alias in my `.zshrc`, but since you probably won't change the
+dependencies that frequently, Step 2 + Step 4 would suffice.
+
+```
+$ ./scripts/2.deps-build.sh \
+    && ./scripts/3.deps-upload.sh \
+    && ./scripts/4.deps-update.sh \
+    && ./scripts/2.code-build.sh \
+    && ./scripts/3.code-upload.sh \
+    && ./scripts/4.code-update.sh \
+    && ./scripts/5.update-configuration.sh
+```
+
+### Troubleshooting
+
+The best way to see how the function is executing remotely is by looking at the Lambda function's logs in 
+[AWS CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html).
+There is lots of information about CloudWatch so I will leave it at that.
+
+You can run `$ ./scripts/5.get-configuration.sh` to check that the correct resources (S3 & Lambda Layer)
+are known to your function and verify that all the environment variables are correct.
+
+If you suspect your problems are related to the Webhook & Zapier interaction, one way to test 
+that theory is by hard coding a `RESOURCE_LUID` to your function. This is the id of a workbook
+on your Tableau Server that Zapier receives from the Tableau webhook and passes along to Lambda.
+
+After updating the configuration (Step 4) with the hard coded id, you can invoke the Lambda function
+by running `$ ./scripts/6.run-test.sh`. The output of this function will be a live time stream of
+the Lambda function's Cloudwatch logs. If the function has been run within the last 5-10 minutes,
+the log may print the previous execution as soon as it is called. It will take a moment 
+to print the latest execution, so be sure to give it a few seconds. 
+You can kill this stream with `ctrl + c`.
+
+____
+
+I hope this guide was helpful! Shoot me a message if you have any questions or would like to learn more.
+
+Cheers,  
+Brian
