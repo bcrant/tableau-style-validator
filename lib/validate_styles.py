@@ -1,7 +1,7 @@
 import os
 from textwrap import dedent
 from parse_xml import get_tableau_styles
-from helpers import left_align_list
+from helpers import left_align_list, pp
 from alerts_local_fmt import PrintAlerts, msg, err_msg
 from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
 from trigger_slack_bot import trigger_slack_bot
@@ -50,6 +50,7 @@ def test_workbook(workbook_styles, sg):
     valid_wb_styles_list = []
     invalid_wb_styles_list = []
     wb_err_count = 0
+    wb_pass_count = 0
 
     for item in workbook_styles:
         styles = workbook_styles.get(item)
@@ -88,6 +89,7 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             wb_err_count += 1
                         else:
+                            wb_pass_count += 1
                             valid_wb_styles_list.append(
                                 slack_msg(SlackAlerts.VALID_FONT_SIZE,
                                           s,
@@ -123,8 +125,9 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             wb_err_count += 1
                         else:
+                            wb_pass_count += 1
                             valid_wb_styles_list.append(
-                                slack_msg(SlackAlerts.INVALID_FONT_TYPE,
+                                slack_msg(SlackAlerts.VALID_FONT_TYPE,
                                           s,
                                           item,
                                           valid=True,
@@ -157,6 +160,7 @@ def test_workbook(workbook_styles, sg):
                                 level='Workbook')
                             wb_err_count += 1
                         else:
+                            wb_pass_count += 1
                             valid_wb_styles_list.append(
                                 slack_msg(SlackAlerts.VALID_FONT_COLOR,
                                           s,
@@ -176,12 +180,18 @@ def test_workbook(workbook_styles, sg):
 
     if wb_err_count == 0:
         valid_wb_styles_list.append(
-            slack_err_msg(wb_err_count)
+            slack_err_msg(valid=wb_pass_count)
         )
     else:
         invalid_wb_styles_list.append(
-            slack_err_msg(wb_err_count)
+            slack_err_msg(invalid=wb_err_count)
         )
+
+    print('''
+    TEST TEST TEST
+    invalid_wb_styles_list: {}
+    valid_wb_styles_list: {}
+    '''.format(invalid_wb_styles_list, valid_wb_styles_list))
 
     return dedent('''
     
@@ -206,6 +216,7 @@ def test_dashboards(dashboard_styles, sg):
     valid_db_styles_list = []
     invalid_db_styles_list = []
     db_err_count = 0
+    db_pass_count = 0
     for dashboard in dashboard_styles:
         dashboard_style = dashboard_styles.get(dashboard)
         db_name = dashboard_style.get('db_name')
@@ -233,6 +244,7 @@ def test_dashboards(dashboard_styles, sg):
                                     level=db_name)
                                 db_err_count += 1
                             else:
+                                db_pass_count += 1
                                 valid_db_styles_list.append(
                                     slack_msg(SlackAlerts.VALID_FONT_SIZE,
                                               s,
@@ -266,8 +278,9 @@ def test_dashboards(dashboard_styles, sg):
                                     level=db_name)
                                 db_err_count += 1
                             else:
+                                db_pass_count += 1
                                 valid_db_styles_list.append(
-                                    slack_msg(SlackAlerts.INVALID_FONT_TYPE,
+                                    slack_msg(SlackAlerts.VALID_FONT_TYPE,
                                               s,
                                               item,
                                               valid=True,
@@ -301,8 +314,9 @@ def test_dashboards(dashboard_styles, sg):
                                         level=db_name)
                                     db_err_count += 1
                                 else:
+                                    db_pass_count += 1
                                     valid_db_styles_list.append(
-                                        slack_msg(SlackAlerts.INVALID_FONT_COLOR,
+                                        slack_msg(SlackAlerts.VALID_FONT_COLOR,
                                                   s,
                                                   item,
                                                   valid=True,
@@ -335,6 +349,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_BORDER_COLOR,
                                             val.upper(),
                                             item,
@@ -352,6 +367,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_BORDER_COLOR,
                                             val,
                                             item,
@@ -369,6 +385,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_BORDER_STYLE,
                                             val,
                                             item,
@@ -386,6 +403,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_MARGIN,
                                             val,
                                             item,
@@ -403,6 +421,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_MARGIN_TOP,
                                             val,
                                             item,
@@ -420,6 +439,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_MARGIN_BOTTOM,
                                             val,
                                             item,
@@ -437,6 +457,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_BACKGROUND_COLOR,
                                             val.upper(),
                                             item,
@@ -454,6 +475,7 @@ def test_dashboards(dashboard_styles, sg):
                                             level=db_name)
                                         db_err_count += 1
                                     else:
+                                        db_pass_count += 1
                                         msg(PrintAlerts.VALID_PADDING,
                                             val,
                                             item,
@@ -465,22 +487,26 @@ def test_dashboards(dashboard_styles, sg):
 
     if db_err_count == 0:
         valid_db_styles_list.append(
-            slack_err_msg(db_err_count)
+            slack_err_msg(valid=db_pass_count, invalid=db_err_count)
         )
-    else:
-        invalid_db_styles_list.append(
-            slack_err_msg(db_err_count)
-        )
-
-    return dedent('''
-
-Invalid Styles: {invalid}
-
+        return dedent('''
 
 Valid Styles: {valid}
 
-'''.format(invalid=left_align_list(invalid_db_styles_list) if invalid_db_styles_list else None,
-           valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None))
+'''.format(valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None))
+
+    else:
+        invalid_db_styles_list.append(
+            slack_err_msg(valid=db_pass_count, invalid=db_err_count)
+        )
+
+        return dedent('''
+
+Valid Styles: {valid}
+Invalid Styles: {invalid}
+
+'''.format(valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None,
+           invalid=left_align_list(invalid_db_styles_list) if invalid_db_styles_list else None))
 
 
 #
@@ -496,6 +522,7 @@ def test_worksheets(worksheet_styles, sg):
     valid_ws_styles_list = []
     invalid_ws_styles_list = []
     ws_err_count = 0
+    ws_pass_count = 0
     for worksheet_style in worksheet_styles:
         worksheet = worksheet_styles.get(worksheet_style)
         ws_name = worksheet_style
@@ -524,6 +551,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
+                                    ws_pass_count += 1
                                     valid_ws_styles_list.append(
                                         slack_msg(SlackAlerts.VALID_FONT_SIZE,
                                                   s,
@@ -557,6 +585,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
+                                    ws_pass_count += 1
                                     valid_ws_styles_list.append(
                                         slack_msg(SlackAlerts.VALID_FONT_TYPE,
                                                   s,
@@ -590,6 +619,7 @@ def test_worksheets(worksheet_styles, sg):
                                         level=ws_name)
                                     ws_err_count += 1
                                 else:
+                                    ws_pass_count += 1
                                     valid_ws_styles_list.append(
                                         slack_msg(SlackAlerts.VALID_FONT_SIZE,
                                                   s,
@@ -609,7 +639,7 @@ def test_worksheets(worksheet_styles, sg):
 
     if ws_err_count == 0:
         valid_ws_styles_list.append(
-            slack_err_msg(ws_err_count)
+            slack_err_msg(ws_pass_count)
         )
     else:
         invalid_ws_styles_list.append(

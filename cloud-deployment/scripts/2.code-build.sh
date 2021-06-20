@@ -18,3 +18,4 @@ docker run --rm -v $(pwd):/tmp -w /tmp lambci/lambda:build-${PYTHON_VERSION} bas
   && whoami"
 
 rm -rf python
+rm -rf lib

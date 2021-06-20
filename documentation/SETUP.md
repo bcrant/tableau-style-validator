@@ -201,11 +201,12 @@ we like if we both have the same _image_ of that playground.
 We will be using Docker on _our computers_ to build code and dependencies
 using an image of the AWS Lambda runtime.
 
-For the last four years or so [lambci/docker-lambda](https://github.com/lambci/docker-lambda)
-has been the best way to get images replicating the AWS Lambda runtimes.
+For the last four years or so, the open source 
+[lambci/docker-lambda](https://github.com/lambci/docker-lambda)
+project has been the best way to get images replicating the AWS Lambda runtimes.
 AWS recently released the Serverless Application Model Command Line Interface
 [AWS SAM CLI](https://aws.amazon.com/serverless/sam/) and this seems to be the way forward,
-but I haven't switched over yet so this project uses the lambci image. 
+but I haven't switched over yet, so this project uses the lambci image. 
 
 ...end detour
 ____
@@ -274,6 +275,17 @@ $ ./scripts/2.deps-build.sh \
 
 ### Troubleshooting
 
+__Style Guide__  
+When you package up your JSON style guide with your code, either name the file `example_style_guide.json` 
+or update the path your style guide file in the `init_env()` function of the [helpers.py](../lib/helpers.py) script.
+Here is the line you will need to change...  
+
+```
+os.environ['STYLE_GUIDE_PATH'] = './example_style_guide.json'
+```
+
+\
+__AWS Lambda__  
 The best way to see how the function is executing remotely is by looking at the Lambda function's logs in 
 [AWS CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html).
 There is lots of information about CloudWatch so I will leave it at that.
@@ -281,6 +293,8 @@ There is lots of information about CloudWatch so I will leave it at that.
 You can run `$ ./scripts/5.get-configuration.sh` to check that the correct resources (S3 & Lambda Layer)
 are known to your function and verify that all the environment variables are correct.
 
+\
+__Zapier/Webhooks__  
 If you suspect your problems are related to the Webhook & Zapier interaction, one way to test 
 that theory is by hard coding a `RESOURCE_LUID` to your function. This is the id of a workbook
 on your Tableau Server that Zapier receives from the Tableau webhook and passes along to Lambda.
@@ -293,7 +307,7 @@ to print the latest execution, so be sure to give it a few seconds.
 You can kill this stream with `ctrl + c`.
 
 ____
-
+\
 I hope this guide was helpful! Shoot me a message if you have any questions or would like to learn more.
 
 Cheers,  

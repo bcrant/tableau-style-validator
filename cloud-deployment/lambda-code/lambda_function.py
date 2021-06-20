@@ -1,3 +1,4 @@
+import sys; sys.path.append('lib/')
 import os
 import json
 from lib.helpers import init_env
