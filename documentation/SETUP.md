@@ -277,7 +277,7 @@ $ ./scripts/2.deps-build.sh \
 
 __Style Guide__  
 When you package up your JSON style guide with your code, either name the file `example_style_guide.json` 
-or update the path your style guide file in the `init_env()` function of the [helpers.py](../lib/helpers.py) script.
+or update the path your style guide file in the `init_env()` function of [helpers.py](../lib/helpers.py) script.
 Here is the line you will need to change...  
 
 ```
@@ -305,6 +305,20 @@ the Lambda function's Cloudwatch logs. If the function has been run within the l
 the log may print the previous execution as soon as it is called. It will take a moment 
 to print the latest execution, so be sure to give it a few seconds. 
 You can kill this stream with `ctrl + c`.
+
+\
+__Running Cloud Deployment Locally__  
+Not sure what I broke while refactoring -- but at time of writing this, 
+my local run configuration is not working. 
+So take this section with a grain of salt...
+
+To run the cloud deployment locally, you can set up a run configuration in PyCharm with the parameters 
+`lambda_handler({}, {})` and script path `~/lambda_function.py`.
+
+You will need to edit the build script `2.code-build.sh` and remove the line `rm -rf lib` 
+from the bottom then run the build script. I did not want to publish the repo with two identical 
+`lib` directories, but you will want to keep one in your `cloud-deployment` directory while running
+locally. Failure to do so will break your Python path. Adjust your Content and Sources Roots accordingly.wqq
 
 ____
 \

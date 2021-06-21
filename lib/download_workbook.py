@@ -4,6 +4,7 @@ import tableauserverclient as TSC
 
 
 def download_workbook():
+
     #
     # Import Tableau environment variables
     # For further explanation of Tableau environment variables visit:
@@ -18,8 +19,7 @@ def download_workbook():
 
     print('Signing into Tableau Server...')
     tableau_auth = TSC.TableauAuth(USERNAME, PASS, SITE_NAME)
-    server = TSC.Server(SERVER_URL)
-    server.use_server_version()
+    server = TSC.Server(SERVER_URL, use_server_version=True)
 
     with server.auth.sign_in(tableau_auth):
         #

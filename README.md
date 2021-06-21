@@ -16,7 +16,7 @@ The tool can also be used locally from the command line. This is a great way to 
 
 <figure>
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
-        <img src="./documentation/images/slack_alert.png" alt="Tableau Style Validator Slack" />
+        <img src="./documentation/images/slack_alert_redesign.png" alt="Tableau Style Validator Slack" />
     </a>
     <figcaption>Receive alerts about invalid styles via Slack</figcaption>
 </figure>
