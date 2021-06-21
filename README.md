@@ -11,10 +11,10 @@
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
         <img src="./documentation/images/slack_alert_redesign.png" alt="Tableau Style Validator Slack" />
     </a>
-    <figcaption><center>Receive alerts about invalid styles via Slack</center></center></figcaption>
+    <figcaption><center>Receive alerts about invalid styles via Slack</center></figcaption>
 </figure>  
   
-
+\
 The Tableau Style Validator tests a Tableau Workbook for compliance with a given set of design style standards. Company colors, specific fonts, font sizes are the primary scope, but dashboard styles like Borders, Margins, Padding, Backgrounds, etc are testable as well.
 
 In the full cloud deployment, Tableau Style Validator is triggered by a new Tableau Workbook being created 
