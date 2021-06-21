@@ -75,10 +75,20 @@ Adjust the paths in this command to point to the files you've just added, and yo
 `$ python validator_cli.py -s ./your_style_guide.json -w ./your_workbook.twb`
 
 
-
-
 # Cloud Deployment
 View [SETUP.md](./documentation/SETUP.md) documentation for an in depth walk through of the cloud deployment, hosted on all free tier AWS products.
+
+
+# Project To Do's:
+- Add Slack formatting to Dashboard Zones (borders, margins, padding)
+    - Update the SlackAlerts class string formatting in 
+      [alerts_slack_fmt.py](./lib/alerts_slack_fmt.py)
+    - Update code block beginning line 314 of 
+      [validate_styles.py](./lib/validate_styles.py) 
+- Worksheet styles do not appear to be deduping styles correctly
+- Add flags to enable / disable testing against certain elements (padding, margins, etc)
+    - Quick fix would be to use a placeholder word in `style_guide.json`
+      and add to conditional tests in [validate_styles.py](./lib/validate_styles.py)
 
 
 # Contributing  
