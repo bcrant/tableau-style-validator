@@ -177,16 +177,9 @@ def test_workbook(workbook_styles, sg):
 
     err_msg(wb_err_count)
 
-    if wb_err_count == 0:
-        valid_wb_styles_list.insert(
-            0,
-            slack_valid_msg(valid=wb_pass_count)
-        )
-    else:
-        invalid_wb_styles_list.insert(
-            0,
-            slack_err_msg(invalid=wb_err_count)
-        )
+    valid_wb_styles_list.insert(0, slack_valid_msg(wb_pass_count))
+
+    invalid_wb_styles_list.insert(0, slack_err_msg(wb_err_count))
 
     return fmt_slack_output(valid_styles=valid_wb_styles_list, invalid_styles=invalid_wb_styles_list)
 
@@ -473,16 +466,9 @@ def test_dashboards(dashboard_styles, sg):
 
     err_msg(db_err_count)
 
-    if db_err_count == 0:
-        valid_db_styles_list.insert(
-            0,
-            slack_valid_msg(valid=db_pass_count)
-        )
-    else:
-        invalid_db_styles_list.insert(
-            0,
-            slack_err_msg(invalid=db_err_count)
-        )
+    valid_db_styles_list.insert(0, slack_valid_msg(db_pass_count))
+
+    invalid_db_styles_list.insert(0, slack_err_msg(db_err_count))
 
     return fmt_slack_output(valid_styles=valid_db_styles_list, invalid_styles=invalid_db_styles_list)
 
@@ -615,15 +601,8 @@ def test_worksheets(worksheet_styles, sg):
 
     err_msg(ws_err_count)
 
-    if ws_err_count == 0:
-        valid_ws_styles_list.insert(
-            0,
-            slack_valid_msg(valid=ws_pass_count)
-        )
-    else:
-        invalid_ws_styles_list.insert(
-            0,
-            slack_err_msg(invalid=ws_err_count)
-        )
+    valid_ws_styles_list.insert(0, slack_valid_msg(ws_pass_count))
+
+    invalid_ws_styles_list.insert(0,slack_err_msg(ws_err_count))
 
     return fmt_slack_output(valid_styles=valid_ws_styles_list, invalid_styles=invalid_ws_styles_list)

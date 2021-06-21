@@ -55,14 +55,12 @@ class SlackAlerts:
     INVALID_BACKGROUND_COLOR = str('  :warning:  ALERT  ' + 'BG Color      ')
 
 
-def slack_err_msg(invalid=None):
-    if invalid is not 0 or None:
-        return str(f'  {SlackAlerts.FAIL_TESTS}   {invalid} styles need revision  ')
+def slack_err_msg(invalid_count):
+    return str(f'  {SlackAlerts.FAIL_TESTS}   {invalid_count} styles need revision  ')
 
 
-def slack_valid_msg(valid=None):
-    if valid is not None:
-        return str(f'  {SlackAlerts.PASS_TESTS}   {valid} valid styles found  ')
+def slack_valid_msg(valid_count):
+    return str(f'  {SlackAlerts.PASS_TESTS}   {valid_count} valid styles found  ')
 
 
 def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
