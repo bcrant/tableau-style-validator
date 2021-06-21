@@ -7,19 +7,19 @@
 
 
 # Overview
-The Tableau Style Validator tests a Tableau Workbook for compliance with a given set of design style standards. Company colors, specific fonts, font sizes are the primary scope, but dashboard styles like Borders, Margins, Padding, Backgrounds, etc are testable as well.
-
-In the full cloud deployment, Tableau Style Validator is triggered by a new Tableau Workbook being created 
-or updated on your Tableau Server. This returns the validation as a Slack message via Slack Bot to a specified channel in your Slack Workspace. 
-
-The tool can also be used locally from the command line. This is a great way to get started and see if it makes sense for you to set up the cloud deployment. Scroll down to the Quick Start section to try it out for yourself.
-
 <figure>
     <a href="https://www.youtube.com/watch?v=4to2ln6pME8">
         <img src="./documentation/images/slack_alert_redesign.png" alt="Tableau Style Validator Slack" />
     </a>
     <figcaption>Receive alerts about invalid styles via Slack</figcaption>
 </figure>
+
+The Tableau Style Validator tests a Tableau Workbook for compliance with a given set of design style standards. Company colors, specific fonts, font sizes are the primary scope, but dashboard styles like Borders, Margins, Padding, Backgrounds, etc are testable as well.
+
+In the full cloud deployment, Tableau Style Validator is triggered by a new Tableau Workbook being created 
+or updated on your Tableau Server. This returns the validation as a Slack message via Slack Bot to a specified channel in your Slack Workspace. 
+
+The tool can also be used locally from the command line. This is a great way to get started and see if it makes sense for you to set up the cloud deployment. Scroll down to the Quick Start section to try it out for yourself.
 
 
 # Quick Start
