@@ -2,7 +2,6 @@ import re
 import os
 import json
 import collections
-from textwrap import dedent
 from dotenv import load_dotenv
 
 
@@ -32,16 +31,6 @@ def pp(json_dict):
 
 def left_align_list(style_list):
     return '\n'.join(map(str, style_list))
-
-
-def fmt_output(valid_styles=None, invalid_styles=None):
-    return dedent('''
-{invalid}
-
-{valid}
-
-    '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
-               valid=left_align_list(valid_styles) if valid_styles else None))
 
 
 #

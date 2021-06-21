@@ -3,7 +3,7 @@ from textwrap import dedent
 from parse_xml import get_tableau_styles
 from helpers import fmt_output
 from alerts_local_fmt import PrintAlerts, msg, err_msg
-from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
+from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg, fmt_slack_output
 from trigger_slack_bot import trigger_slack_bot
 
 
@@ -189,7 +189,7 @@ def test_workbook(workbook_styles, sg):
             slack_err_msg(valid=wb_pass_count, invalid=wb_err_count)
         )
 
-    return fmt_output(valid_styles=valid_wb_styles_list, invalid_styles=invalid_wb_styles_list)
+    return fmt_slack_output(valid_styles=valid_wb_styles_list, invalid_styles=invalid_wb_styles_list)
 
 
 #
@@ -485,7 +485,7 @@ def test_dashboards(dashboard_styles, sg):
             slack_err_msg(valid=db_pass_count, invalid=db_err_count)
         )
 
-    return fmt_output(valid_styles=valid_db_styles_list, invalid_styles=invalid_db_styles_list)
+    return fmt_slack_output(valid_styles=valid_db_styles_list, invalid_styles=invalid_db_styles_list)
 
 
 #
@@ -627,12 +627,4 @@ def test_worksheets(worksheet_styles, sg):
             slack_err_msg(valid=ws_pass_count, invalid=ws_err_count)
         )
 
-    return fmt_output(valid_styles=valid_ws_styles_list, invalid_styles=invalid_ws_styles_list)
-
-#     return dedent('''
-# Invalid Styles: {invalid}
-#
-# Valid Styles:   {valid}
-#
-# '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
-#            valid=left_align_list(valid_styles) if valid_styles else None))
+    return fmt_slack_output(valid_styles=valid_ws_styles_list, invalid_styles=invalid_ws_styles_list)

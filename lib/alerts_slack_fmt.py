@@ -1,11 +1,6 @@
-def fmt_output(valid_styles=None, invalid_styles=None):
-    return dedent('''
-Invalid Styles: {invalid}
+from textwrap import dedent
+from helpers import left_align_list
 
-Valid Styles:   {valid}
-
-'''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
-           valid=left_align_list(valid_styles) if valid_styles else None))
 
 #
 # SLACK Alert formatting
@@ -81,3 +76,13 @@ def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
             return str('  {}  `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value + "pt"), str(pos), str(level)))
         else:
             return str('  {} `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value), str(pos), str(level)))
+
+
+def fmt_slack_output(valid_styles=None, invalid_styles=None):
+    return dedent('''
+{invalid}
+\n\n
+{valid}
+
+    '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
+               valid=left_align_list(valid_styles) if valid_styles else None))
