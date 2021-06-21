@@ -9,7 +9,7 @@ class SlackAlerts:
     #
     # PASS
     #
-    PASS_TESTS = str('{:2s}  {:16s}'.format(str(':white_check_mark:'), str('VALID STYLES')))
+    PASS_TESTS = str('{:2s}  *{:19s}*'.format(str(':white_check_mark:'), str('VALID STYLES')))
 
     # Fonts
     VALID_FONT_TYPE = str('{:4s}  {:4s}  {:12}'.format(str(':ballot_box_with_check:'), str('VALID'), str('Font Type')))
@@ -56,11 +56,17 @@ class SlackAlerts:
 
 
 def slack_err_msg(invalid_count):
-    return str(f'  {SlackAlerts.FAIL_TESTS}   {invalid_count} styles need revision  ')
+    if invalid_count > 0:
+        return str(f'  {SlackAlerts.FAIL_TESTS}   {invalid_count} styles need revision  ')
+    else:
+        return str(f'\n  :white_check_mark:  No invalid styles found in component  ')
 
 
 def slack_valid_msg(valid_count):
-    return str(f'  {SlackAlerts.PASS_TESTS}   {valid_count} valid styles found  ')
+    if valid_count > 0:
+        return str(f'  {SlackAlerts.PASS_TESTS}   {valid_count} valid styles found  ')
+    else:
+        return str(f'\n  :exclamation:  No valid styles found in component  ')
 
 
 def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -68,22 +74,28 @@ def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return str('  {}  `{:16s}`  found in _{}_  '.format(str(alert), str(value + "pt"), str(pos)))
+            return str('  {}  `{:16s}`  found in _{}_ of {}  '
+                       .format(str(alert), str(value + "pt"), str(pos), str(level)))
         else:
-            return str('  {}  `{:16s}`  found in _{}_  '.format(str(alert), str(value), str(pos)))
+            return str('  {}  `{:16s}`  found in _{}_ of {}  '
+                       .format(str(alert), str(value), str(pos), str(level)))
 
     if not valid:
         if 'font-size' in kind:
-            return str('  {}  `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value + "pt"), str(pos), str(level)))
+            return str('  {}  `{:16s}`  found in _{}_ of {}  '
+                       .format(str(alert), str(value + "pt"), str(pos), str(level)))
         else:
-            return str('  {} `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value), str(pos), str(level)))
+            return str('  {} `{:16s}`  found in _{}_ of {}  '
+                       .format(str(alert), str(value), str(pos), str(level)))
 
 
 def fmt_slack_output(valid_styles=None, invalid_styles=None):
     return dedent('''
+{spacer}
 {invalid}
-\n\n
+{spacer}
 {valid}
-
-    '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
+{spacer}
+    '''.format(spacer='\n\n',
+               invalid=left_align_list(invalid_styles) if invalid_styles else None,
                valid=left_align_list(valid_styles) if valid_styles else None))

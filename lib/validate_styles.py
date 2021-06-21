@@ -315,154 +315,154 @@ def test_dashboards(dashboard_styles, sg):
                         #
                         # NOTE: if you do not wish to test margins, padding, etc...
                         # you can comment out this entire else clause.
-                        # else:
-                        #     # Convert any singular string items to list before validating as lists
-                        #     if isinstance(s, str):
-                        #         s = list(s)
-                        #     for val in s:
-                        #         if 'border-color' in style:
-                        #             if val.upper() not in sg.get('border-colors'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-color',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_BORDER_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-color',
-                        #                     level=db_name)
-                        #
-                        #         if 'border-width' in style:
-                        #             if val not in sg.get('border-width'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_COLOR,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-width',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_BORDER_COLOR,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-width',
-                        #                     level=db_name)
-                        #
-                        #         if 'border-style' in style:
-                        #             if val not in sg.get('border-style'):
-                        #                 msg(PrintAlerts.INVALID_BORDER_STYLE,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='border-style',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_BORDER_STYLE,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='border-style',
-                        #                     level=db_name)
-                        #
-                        #         if 'margin' in style:
-                        #             if val not in sg.get('margin'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_MARGIN,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin',
-                        #                     level=db_name)
-                        #
-                        #         if 'margin-top' in style:
-                        #             if val not in sg.get('margin-top'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN_TOP,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin-top',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_MARGIN_TOP,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin-top',
-                        #                     level=db_name)
-                        #
-                        #         if 'margin-bottom' in style:
-                        #             if val not in sg.get('margin-bottom'):
-                        #                 msg(PrintAlerts.INVALID_MARGIN_BOTTOM,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='margin-bottom',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_MARGIN_BOTTOM,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='margin-bottom',
-                        #                     level=db_name)
-                        #
-                        #         if 'background-color' in style:
-                        #             if val.upper() not in sg.get('background-colors'):
-                        #                 msg(PrintAlerts.INVALID_BACKGROUND_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='bg-color',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_BACKGROUND_COLOR,
-                        #                     val.upper(),
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='bg-color',
-                        #                     level=db_name)
-                        #
-                        #         if 'padding' in style:
-                        #             if val not in sg.get('padding'):
-                        #                 msg(PrintAlerts.INVALID_PADDING,
-                        #                     val,
-                        #                     item,
-                        #                     valid=False,
-                        #                     kind='padding',
-                        #                     level=db_name)
-                        #                 db_err_count += 1
-                        #             else:
-                        #                 db_pass_count += 1
-                        #                 msg(PrintAlerts.VALID_PADDING,
-                        #                     val,
-                        #                     item,
-                        #                     valid=True,
-                        #                     kind='padding',
-                        #                     level=db_name)
+                        else:
+                            # Convert any singular string items to list before validating as lists
+                            if isinstance(s, str):
+                                s = list(s)
+                            for val in s:
+                                if 'border-color' in style:
+                                    if val.upper() not in sg.get('border-colors'):
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=False,
+                                            kind='border-color',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=True,
+                                            kind='border-color',
+                                            level=db_name)
+
+                                if 'border-width' in style:
+                                    if val not in sg.get('border-width'):
+                                        msg(PrintAlerts.INVALID_BORDER_COLOR,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='border-width',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_BORDER_COLOR,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='border-width',
+                                            level=db_name)
+
+                                if 'border-style' in style:
+                                    if val not in sg.get('border-style'):
+                                        msg(PrintAlerts.INVALID_BORDER_STYLE,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='border-style',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_BORDER_STYLE,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='border-style',
+                                            level=db_name)
+
+                                if 'margin' in style:
+                                    if val not in sg.get('margin'):
+                                        msg(PrintAlerts.INVALID_MARGIN,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_MARGIN,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin',
+                                            level=db_name)
+
+                                if 'margin-top' in style:
+                                    if val not in sg.get('margin-top'):
+                                        msg(PrintAlerts.INVALID_MARGIN_TOP,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin-top',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_MARGIN_TOP,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin-top',
+                                            level=db_name)
+
+                                if 'margin-bottom' in style:
+                                    if val not in sg.get('margin-bottom'):
+                                        msg(PrintAlerts.INVALID_MARGIN_BOTTOM,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='margin-bottom',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_MARGIN_BOTTOM,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='margin-bottom',
+                                            level=db_name)
+
+                                if 'background-color' in style:
+                                    if val.upper() not in sg.get('background-colors'):
+                                        msg(PrintAlerts.INVALID_BACKGROUND_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=False,
+                                            kind='bg-color',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_BACKGROUND_COLOR,
+                                            val.upper(),
+                                            item,
+                                            valid=True,
+                                            kind='bg-color',
+                                            level=db_name)
+
+                                if 'padding' in style:
+                                    if val not in sg.get('padding'):
+                                        msg(PrintAlerts.INVALID_PADDING,
+                                            val,
+                                            item,
+                                            valid=False,
+                                            kind='padding',
+                                            level=db_name)
+                                        db_err_count += 1
+                                    else:
+                                        db_pass_count += 1
+                                        msg(PrintAlerts.VALID_PADDING,
+                                            val,
+                                            item,
+                                            valid=True,
+                                            kind='padding',
+                                            level=db_name)
 
     err_msg(db_err_count)
 

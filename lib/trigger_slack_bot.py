@@ -20,7 +20,7 @@ def trigger_slack_bot(workbook_output, dashboard_output, worksheet_output):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "{}".format('\n\n')
+                    "text": "{}".format('\n\n\n')
                 }
             },
             {
