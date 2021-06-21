@@ -1,3 +1,11 @@
+def fmt_output(valid_styles=None, invalid_styles=None):
+    return dedent('''
+Invalid Styles: {invalid}
+
+Valid Styles:   {valid}
+
+'''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
+           valid=left_align_list(valid_styles) if valid_styles else None))
 
 #
 # SLACK Alert formatting
@@ -9,23 +17,23 @@ class SlackAlerts:
     PASS_TESTS = str('{:2s}  {:16s}'.format(str(':white_check_mark:'), str('VALID STYLES')))
 
     # Fonts
-    VALID_FONT_TYPE = str('{:4s}  {:4s}  {:12}'.format(str(':white_check_mark:'), str('VALID'), str('Font Type')))
-    VALID_FONT_SIZE = str('{:4s}  {:4s}  {:13}'.format(str(':white_check_mark:'), str('VALID'), str('Font Size')))
-    VALID_FONT_COLOR = str('{:4s}  {:4s}  {:12}'.format(str(':white_check_mark:'), str('VALID'), str('Font Color')))
+    VALID_FONT_TYPE = str('{:4s}  {:4s}  {:12}'.format(str(':ballot_box_with_check:'), str('VALID'), str('Font Type')))
+    VALID_FONT_SIZE = str('{:4s}  {:4s}  {:13}'.format(str(':ballot_box_with_check:'), str('VALID'), str('Font Size')))
+    VALID_FONT_COLOR = str('{:4s}  {:4s}  {:12}'.format(str(':ballot_box_with_check:'), str('VALID'), str('Font Color')))
 
     # Borders
-    VALID_BORDER_STYLE = str('  :white_check_mark:  ' + 'Border Style  ')
-    VALID_BORDER_WIDTH = str('  :white_check_mark:  ' + 'Border Width  ')
-    VALID_BORDER_COLOR = str('  :white_check_mark:  ' + 'Border Color  ')
+    VALID_BORDER_STYLE = str('  :ballot_box_with_check:  ' + 'Border Style  ')
+    VALID_BORDER_WIDTH = str('  :ballot_box_with_check:  ' + 'Border Width  ')
+    VALID_BORDER_COLOR = str('  :ballot_box_with_check:  ' + 'Border Color  ')
 
     # Margins
-    VALID_MARGIN = str('  :white_check_mark:  ' + 'Margin        ')
-    VALID_MARGIN_TOP = str('  :white_check_mark:  ' + 'Margin Top    ')
-    VALID_MARGIN_BOTTOM = str('  :white_check_mark:  ' + 'Margin Bottom ')
-    VALID_PADDING = str('  :white_check_mark:  ' + 'Padding       ')
+    VALID_MARGIN = str('  :ballot_box_with_check:  ' + 'Margin        ')
+    VALID_MARGIN_TOP = str('  :ballot_box_with_check:  ' + 'Margin Top    ')
+    VALID_MARGIN_BOTTOM = str('  :ballot_box_with_check:  ' + 'Margin Bottom ')
+    VALID_PADDING = str('  :ballot_box_with_check:  ' + 'Padding       ')
 
     # Background Color
-    VALID_BACKGROUND_COLOR = str('  :white_check_mark:  ' + 'BG Color      ')
+    VALID_BACKGROUND_COLOR = str('  :ballot_box_with_check:  ' + 'BG Color      ')
 
     #
     # FAIL
@@ -53,10 +61,10 @@ class SlackAlerts:
 
 
 def slack_err_msg(valid=None, invalid=None):
-    if invalid == 0:
-        return str(f'{SlackAlerts.PASS_TESTS}   {valid} valid styles found.')
-    else:
-        return str(f'{SlackAlerts.FAIL_TESTS}   {invalid} styles need revision.')
+    if invalid is not 0 or None:
+        return str(f'  {SlackAlerts.FAIL_TESTS}   {invalid} styles need revision  ')
+    if valid is not None:
+        return str(f'  {SlackAlerts.PASS_TESTS}   {valid} valid styles found  ')
 
 
 def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -64,12 +72,12 @@ def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return str('{}  `{:16s}`  found in {:8s}'.format(str(alert), str(value + "pt"), str(pos)))
+            return str('  {}  `{:16s}`  found in _{}_  '.format(str(alert), str(value + "pt"), str(pos)))
         else:
-            return str('{}  `{:16s}`  found in {:8s}'.format(str(alert), str(value), str(pos)))
+            return str('  {}  `{:16s}`  found in _{}_  '.format(str(alert), str(value), str(pos)))
 
     if not valid:
         if 'font-size' in kind:
-            return str('{}  `{:16s}`  found in {:8s}  of {}'.format(str(alert), str(value + "pt"), str(pos), str(level)))
+            return str('  {}  `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value + "pt"), str(pos), str(level)))
         else:
-            return str('{} `{:16s}`  found in {:8s}  of {}'.format(str(alert), str(value), str(pos), str(level)))
+            return str('  {} `{:16s}`  found in _{}_  of {}  '.format(str(alert), str(value), str(pos), str(level)))

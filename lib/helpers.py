@@ -2,10 +2,13 @@ import re
 import os
 import json
 import collections
-from bs4 import BeautifulSoup
+from textwrap import dedent
 from dotenv import load_dotenv
 
 
+#
+# Runtime specific environment variables
+#
 def init_env(lambda_event):
     # Determine whether running in remotely in AWS Lambda or locally. Load environment variables.
     if os.getenv('AWS_EXECUTION_ENV') is None:
@@ -19,16 +22,31 @@ def init_env(lambda_event):
             os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
 
 
+#
+# Print and output Formatters
+#
 def pp(json_dict):
     # I prefer this to pprint
     return json.dumps(json_dict, indent=4, sort_keys=True)
 
 
 def left_align_list(style_list):
-    # Format alerts items without double quote wraps and no left indents
-    return json.dumps(style_list, indent=0, sort_keys=True)
+    return '\n'.join(map(str, style_list))
 
 
+def fmt_output(valid_styles=None, invalid_styles=None):
+    return dedent('''
+{invalid}
+
+{valid}
+
+    '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
+               valid=left_align_list(valid_styles) if valid_styles else None))
+
+
+#
+# Parsing patterns
+#
 def get_styles_from_dict(styles_soup):
 
     if styles_soup.find('formatted-text') is not None:
@@ -121,5 +139,3 @@ def one_to_many_dict(list_of_style_dicts):
         # print('Input: ', list_of_style_dicts)
         # print('Output: ', many_dict)
         return many_dict
-
-

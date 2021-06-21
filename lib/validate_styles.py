@@ -1,7 +1,7 @@
 import os
 from textwrap import dedent
 from parse_xml import get_tableau_styles
-from helpers import left_align_list, pp
+from helpers import fmt_output
 from alerts_local_fmt import PrintAlerts, msg, err_msg
 from alerts_slack_fmt import SlackAlerts, slack_msg, slack_err_msg
 from trigger_slack_bot import trigger_slack_bot
@@ -179,28 +179,17 @@ def test_workbook(workbook_styles, sg):
     err_msg(wb_err_count)
 
     if wb_err_count == 0:
-        valid_wb_styles_list.append(
-            slack_err_msg(valid=wb_pass_count)
+        valid_wb_styles_list.insert(
+            0,
+            slack_err_msg(valid=wb_pass_count, invalid=wb_err_count)
         )
     else:
-        invalid_wb_styles_list.append(
-            slack_err_msg(invalid=wb_err_count)
+        invalid_wb_styles_list.insert(
+            0,
+            slack_err_msg(valid=wb_pass_count, invalid=wb_err_count)
         )
 
-    print('''
-    TEST TEST TEST
-    invalid_wb_styles_list: {}
-    valid_wb_styles_list: {}
-    '''.format(invalid_wb_styles_list, valid_wb_styles_list))
-
-    return dedent('''
-    
-Invalid Styles: {invalid}
-                
-Valid Styles: {valid}
-
-'''.format(invalid=left_align_list(invalid_wb_styles_list) if invalid_wb_styles_list else None,
-           valid=left_align_list(valid_wb_styles_list) if valid_wb_styles_list else None))
+    return fmt_output(valid_styles=valid_wb_styles_list, invalid_styles=invalid_wb_styles_list)
 
 
 #
@@ -486,27 +475,17 @@ def test_dashboards(dashboard_styles, sg):
     err_msg(db_err_count)
 
     if db_err_count == 0:
-        valid_db_styles_list.append(
+        valid_db_styles_list.insert(
+            0,
             slack_err_msg(valid=db_pass_count, invalid=db_err_count)
         )
-        return dedent('''
-
-Valid Styles: {valid}
-
-'''.format(valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None))
-
     else:
-        invalid_db_styles_list.append(
+        invalid_db_styles_list.insert(
+            0,
             slack_err_msg(valid=db_pass_count, invalid=db_err_count)
         )
 
-        return dedent('''
-
-Valid Styles: {valid}
-Invalid Styles: {invalid}
-
-'''.format(valid=left_align_list(valid_db_styles_list) if valid_db_styles_list else None,
-           invalid=left_align_list(invalid_db_styles_list) if invalid_db_styles_list else None))
+    return fmt_output(valid_styles=valid_db_styles_list, invalid_styles=invalid_db_styles_list)
 
 
 #
@@ -638,19 +617,22 @@ def test_worksheets(worksheet_styles, sg):
     err_msg(ws_err_count)
 
     if ws_err_count == 0:
-        valid_ws_styles_list.append(
-            slack_err_msg(ws_pass_count)
+        valid_ws_styles_list.insert(
+            0,
+            slack_err_msg(valid=ws_pass_count, invalid=ws_err_count)
         )
     else:
-        invalid_ws_styles_list.append(
-            slack_err_msg(ws_err_count)
+        invalid_ws_styles_list.insert(
+            0,
+            slack_err_msg(valid=ws_pass_count, invalid=ws_err_count)
         )
 
-    return dedent('''    
+    return fmt_output(valid_styles=valid_ws_styles_list, invalid_styles=invalid_ws_styles_list)
 
-Invalid Styles: {invalid}
-
-Valid Styles:   {valid}
-
-'''.format(invalid=left_align_list(invalid_ws_styles_list) if invalid_ws_styles_list else None,
-           valid=left_align_list(valid_ws_styles_list) if valid_ws_styles_list else None))
+#     return dedent('''
+# Invalid Styles: {invalid}
+#
+# Valid Styles:   {valid}
+#
+# '''.format(invalid=left_align_list(invalid_styles) if invalid_styles else None,
+#            valid=left_align_list(valid_styles) if valid_styles else None))

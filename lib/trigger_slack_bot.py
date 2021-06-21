@@ -14,6 +14,7 @@ def trigger_slack_bot(workbook_output, dashboard_output, worksheet_output):
         slack_client = WebClient(token=os.getenv('SLACK_TOKEN'))
 
         # Construct "builder" and "attachments" json payloads.
+        print("Preparing message...")
         blocks_json = [
             {
                 "type": "section",
@@ -51,6 +52,7 @@ def trigger_slack_bot(workbook_output, dashboard_output, worksheet_output):
             }
         ]
 
+        print("Sending message...")
         response = slack_client.chat_postMessage(
             channel=os.getenv('SLACK_CHANNEL'),
             icon_url='https://briancrant.com/wp-content/uploads/2021/05/magnifyingglass.jpg',
@@ -58,6 +60,8 @@ def trigger_slack_bot(workbook_output, dashboard_output, worksheet_output):
             blocks=json.dumps(blocks_json),
             text='A workbook has been created/updated. See validation results...'
         )
+
+        print("Finished posting message to Slack. Goodbye.")
 
         # Out of the box Slack error handling
     except SlackApiError as e:

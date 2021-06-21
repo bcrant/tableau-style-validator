@@ -66,7 +66,7 @@ def err_msg(count):
     if count == 0:
         return print(str(f'{PrintAlerts.PASS_TESTS}'))
     else:
-        return print(str(f'{PrintAlerts.FAIL_TESTS} {count} styles need revision.'))
+        return print(str(f'{PrintAlerts.FAIL_TESTS} {count} styles need revision'))
 
 
 def msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -74,12 +74,12 @@ def msg(alert, value, pos=None, valid=True, level=None, kind=None):
     # you can comment this first "if valid" clause out.
     if valid:
         if 'font-size' in kind:
-            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos + ".")}'))
+            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos)}'))
         else:
-            return print(str(f'{alert} {str(value):20s} found in {str(pos + ".")}'))
+            return print(str(f'{alert} {str(value):20s} found in {str(pos)}'))
 
     if not valid:
         if 'font-size' in kind:
-            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos):20s} of dashboard {str(level + ".")}'))
+            return print(str(f'{alert} {str(value + "pt"):20s} found in {str(pos):20s} of dashboard {str(level)}'))
         else:
-            return print(str(f'{alert} {str(value):20s} found in {str(pos):20s} of dashboard {str(level + ".")}'))
+            return print(str(f'{alert} {str(value):20s} found in {str(pos):20s} of dashboard {str(level)}'))
