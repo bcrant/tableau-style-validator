@@ -20,34 +20,76 @@ def trigger_slack_bot(workbook_output, dashboard_output, worksheet_output):
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "{}".format('\n\n\n')
+                    "text": "{}".format('\n')
+                }
+            },
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Workbook Styles"
                 }
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Validating top-level WORKBOOK styles...{}".format(workbook_output)
+                    "text": "{}".format(workbook_output)
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "{}".format('\n\n')
                 }
             },
             {
                 "type": "divider"
             },
             {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Dashboard Styles"
+                }
+            },
+            {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Validating each DASHBOARD in workbook...{}".format(dashboard_output)
+                    "text": "{}".format(dashboard_output)
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "{}".format('\n\n')
                 }
             },
             {
                 "type": "divider"
             },
             {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Worksheet Styles"
+                }
+            },
+            {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "Validating each WORKSHEET in workbook...{}".format(worksheet_output)
+                    "text": "{}".format(worksheet_output)
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "{}".format('\n\n')
                 }
             }
         ]

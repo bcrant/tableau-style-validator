@@ -66,7 +66,7 @@ def slack_valid_msg(valid_count):
     if valid_count > 0:
         return str(f'  {SlackAlerts.PASS_TESTS}   {valid_count} valid styles found  ')
     else:
-        return str(f'\n  :exclamation:  No valid styles found in component  ')
+        return str(f'\n  :bangbang:  No valid styles found in component  ')
 
 
 def slack_msg(alert, value, pos=None, valid=True, level=None, kind=None):
@@ -96,6 +96,6 @@ def fmt_slack_output(valid_styles=None, invalid_styles=None):
 {spacer}
 {valid}
 {spacer}
-    '''.format(spacer='\n\n',
+    '''.format(spacer='\n',
                invalid=left_align_list(invalid_styles) if invalid_styles else None,
                valid=left_align_list(valid_styles) if valid_styles else None))
