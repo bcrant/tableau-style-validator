@@ -1,4 +1,6 @@
-import sys; sys.path.append('lib/')
+import sys
+
+sys.path.append("lib/")
 import json
 import argparse
 from lib.validate_styles import validate_styles
@@ -22,7 +24,7 @@ def validate_styles_local_cli():
 
     # Style Guide
     sg_json = ingest_style_guide(input_files)
-    sg_json.pop('_README')
+    sg_json.pop("_README")
 
     # Tableau Workbook
     wb_file = ingest_tableau_workbook(input_files)
@@ -44,18 +46,24 @@ def get_cli_input():
     parser = argparse.ArgumentParser()
 
     # Style Guide
-    parser.add_argument('-s', '--style-guide',
-                        required=True,
-                        help='''
+    parser.add_argument(
+        "-s",
+        "--style-guide",
+        required=True,
+        help="""
                         JSON Style Guide (.json) filepath containing style standards to test against Tableau file.
-                        ''',
-                        type=str)
+                        """,
+        type=str,
+    )
 
     # Tableau Workbook
-    parser.add_argument('-w', '--tableau-workbook',
-                        required=True,
-                        help="Tableau Workbook (.twb) file to test for style guide compliance.",
-                        type=str)
+    parser.add_argument(
+        "-w",
+        "--tableau-workbook",
+        required=True,
+        help="Tableau Workbook (.twb) file to test for style guide compliance.",
+        type=str,
+    )
 
     arguments = parser.parse_args()
 
@@ -71,8 +79,10 @@ def ingest_style_guide(args):
             style_guide_json = json.load(style_guide_infile)
 
         except json.JSONDecodeError:
-            print('Invalid JSON format. \n'
-                  'Check for double quotes and matching brackets.')
+            print(
+                "Invalid JSON format. \n"
+                "Check for double quotes and matching brackets."
+            )
 
     return style_guide_json
 
@@ -87,5 +97,5 @@ def ingest_tableau_workbook(args):
     return tableau_workbook_file
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     validate_styles_local_cli()

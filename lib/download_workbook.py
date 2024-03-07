@@ -10,14 +10,18 @@ def download_workbook():
     # For further explanation of Tableau environment variables visit:
     # https://tableau.github.io/server-client-python/docs/api-ref#tableauauth-class
     #                                               # EXAMPLE VALUES:
-    USERNAME = os.getenv('TABLEAU_USER')            # you@email.com
-    PASS = os.getenv('TABLEAU_PASS')                # password
-    SITE_NAME = os.getenv('TABLEAU_SITE_NAME')      # site-name AKA content-url
-    SERVER_URL = os.getenv('TABLEAU_SERVER_URL')    # https://10ay.online.tableau.com
-    RESOURCE_LUID = os.getenv('RESOURCE_LUID')      # Hard coded for local, get from Webhook payload remote Lambda)
-    FPATH = os.getenv('TABLEAU_PATH')               # filepath to write workbook. (must be /tmp/ for remote Lambda)
+    USERNAME = os.getenv("TABLEAU_USER")  # you@email.com
+    PASS = os.getenv("TABLEAU_PASS")  # password
+    SITE_NAME = os.getenv("TABLEAU_SITE_NAME")  # site-name AKA content-url
+    SERVER_URL = os.getenv("TABLEAU_SERVER_URL")  # https://10ay.online.tableau.com
+    RESOURCE_LUID = os.getenv(
+        "RESOURCE_LUID"
+    )  # Hard coded for local, get from Webhook payload remote Lambda)
+    FPATH = os.getenv(
+        "TABLEAU_PATH"
+    )  # filepath to write workbook. (must be /tmp/ for remote Lambda)
 
-    print('Signing into Tableau Server...')
+    print("Signing into Tableau Server...")
     tableau_auth = TSC.TableauAuth(USERNAME, PASS, SITE_NAME)
     server = TSC.Server(SERVER_URL, use_server_version=True)
 
@@ -27,7 +31,7 @@ def download_workbook():
         #
         hooks = server.webhooks.get()
 
-        print('Checking for webhooks and installing if they do not exist...')
+        print("Checking for webhooks and installing if they do not exist...")
         if check_webhooks_for_wb_created(hooks) is not True:
             create_webhook_for_wb_created(server)
 
@@ -40,13 +44,15 @@ def download_workbook():
         wb = server.workbooks.get_by_id(RESOURCE_LUID)
 
         print(f'Downloading "{wb.name}" from Tableau Server...')
-        zipped_wb_path = server.workbooks.download(wb.id, filepath=FPATH, include_extract=True)
+        zipped_wb_path = server.workbooks.download(
+            wb.id, filepath=FPATH, include_extract=True
+        )
 
         # Packaged Workbook (.twbx) files are zipped archives. Here we extract the Workbook (.twb) only.
         unzipped_wb_path = None
         with zipfile.ZipFile(zipped_wb_path) as packaged_workbook:
             for wb_file in packaged_workbook.namelist():
-                if '.twb' in wb_file:
+                if ".twb" in wb_file:
                     unzipped_wb_path = packaged_workbook.extract(wb_file, FPATH)
                     print(f'Extracting "{wb_file}" from "{wb.name}"...')
                 else:
@@ -62,37 +68,49 @@ def download_workbook():
 def check_webhooks_for_wb_created(tsc_webhook_items):
     if tsc_webhook_items is not None:
         for hook in tsc_webhook_items[0]:
-            if 'workbook-created' in hook.event:
-                print(f'Found webhook "{hook.name}" on Tableau Server for "{hook.event}" event.')
+            if "workbook-created" in hook.event:
+                print(
+                    f'Found webhook "{hook.name}" on Tableau Server for "{hook.event}" event.'
+                )
                 return True
 
 
 def create_webhook_for_wb_created(tsc_server_obj):
     # Create webhook for Workbook Created events
     c_webhook = TSC.WebhookItem()
-    c_webhook.name = os.getenv('WB_CREATED_WEBHOOK_NAME')
-    c_webhook.event = os.getenv('WB_CREATED_WEBHOOK_EVENT')
-    c_webhook.url = os.getenv('TABLEAU_WEBHOOK_URL')
+    c_webhook.name = os.getenv("WB_CREATED_WEBHOOK_NAME")
+    c_webhook.event = os.getenv("WB_CREATED_WEBHOOK_EVENT")
+    c_webhook.url = os.getenv("TABLEAU_WEBHOOK_URL")
     c_webhook = tsc_server_obj.webhooks.create(c_webhook)
-    print('Installed missing webhook for workbook-created event. Webhook ID: {}'.format(c_webhook.id))
+    print(
+        "Installed missing webhook for workbook-created event. Webhook ID: {}".format(
+            c_webhook.id
+        )
+    )
 
 
 def check_webhooks_for_wb_updated(tsc_webhook_items):
     if tsc_webhook_items is not None:
         for hook in tsc_webhook_items[0]:
-            if 'workbook-updated' in hook.event:
-                print(f'Found webhook "{hook.name}" on Tableau Server for "{hook.event}" event.')
+            if "workbook-updated" in hook.event:
+                print(
+                    f'Found webhook "{hook.name}" on Tableau Server for "{hook.event}" event.'
+                )
                 return True
 
 
 def create_webhook_for_wb_updated(tsc_server_obj):
     # Create webhook for Workbook Updated events
     u_webhook = TSC.WebhookItem()
-    u_webhook.name = os.getenv('WB_UPDATED_WEBHOOK_NAME')
-    u_webhook.event = os.getenv('WB_UPDATED_WEBHOOK_EVENT')
-    u_webhook.url = os.getenv('TABLEAU_WEBHOOK_URL')
+    u_webhook.name = os.getenv("WB_UPDATED_WEBHOOK_NAME")
+    u_webhook.event = os.getenv("WB_UPDATED_WEBHOOK_EVENT")
+    u_webhook.url = os.getenv("TABLEAU_WEBHOOK_URL")
     u_webhook = tsc_server_obj.webhooks.create(u_webhook)
-    print('Installed missing webhook for workbook-updated event. Webhook ID: {}'.format(u_webhook.id))
+    print(
+        "Installed missing webhook for workbook-updated event. Webhook ID: {}".format(
+            u_webhook.id
+        )
+    )
 
 
 if __name__ == "__main__":

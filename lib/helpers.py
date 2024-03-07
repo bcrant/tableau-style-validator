@@ -10,15 +10,15 @@ from dotenv import load_dotenv
 #
 def init_env(lambda_event):
     # Determine whether running in remotely in AWS Lambda or locally. Load environment variables.
-    if os.getenv('AWS_EXECUTION_ENV') is None:
-        print('Operating in local dev context, loading ./envs/.env file...')
-        load_dotenv('./envs/.env')
+    if os.getenv("AWS_EXECUTION_ENV") is None:
+        print("Operating in local dev context, loading ./envs/.env file...")
+        load_dotenv("./envs/.env")
     else:
-        print('Operating in Lambda context...')
-        os.environ['TABLEAU_PATH'] = '/tmp/'
-        os.environ['STYLE_GUIDE_PATH'] = './example_style_guide.json'
-        if lambda_event.get('RESOURCE_LUID'):
-            os.environ['RESOURCE_LUID'] = lambda_event.get('RESOURCE_LUID')
+        print("Operating in Lambda context...")
+        os.environ["TABLEAU_PATH"] = "/tmp/"
+        os.environ["STYLE_GUIDE_PATH"] = "./example_style_guide.json"
+        if lambda_event.get("RESOURCE_LUID"):
+            os.environ["RESOURCE_LUID"] = lambda_event.get("RESOURCE_LUID")
 
 
 #
@@ -30,7 +30,7 @@ def pp(json_dict):
 
 
 def left_align_list(style_list):
-    return '\n'.join(map(str, style_list))
+    return "\n".join(map(str, style_list))
 
 
 #
@@ -38,17 +38,13 @@ def left_align_list(style_list):
 #
 def get_styles_from_dict(styles_soup):
 
-    if styles_soup.find('formatted-text') is not None:
+    if styles_soup.find("formatted-text") is not None:
 
         # Get formatted text styles from customized label or tooltip
-        style_runs = styles_soup\
-            .find('formatted-text')\
-            .findAll('run')
+        style_runs = styles_soup.find("formatted-text").findAll("run")
 
         styles_list = [
-            style_run.attrs
-            for style_run in style_runs
-            if bool(style_run.attrs)
+            style_run.attrs for style_run in style_runs if bool(style_run.attrs)
         ]
         # print('Getting styles from dict...')
         # print('Input: ', styles_soup)
@@ -68,29 +64,27 @@ def get_style_rules(parent_node_soup):
     node_dict = {}
 
     if parent_node_soup.contents:
-        node_styles = parent_node_soup\
-            .contents[0]\
-            .split('<style-rule element=\'')
+        node_styles = parent_node_soup.contents[0].split("<style-rule element='")
 
         list_elements = [i.strip() for i in node_styles if i.strip()]
 
         for element in list_elements:
-            element_name = element.split('\'')[0]
+            element_name = element.split("'")[0]
             # TODO: Add support for Mark colors
-            if 'mark' not in element_name:
-                element_style = [i.strip() for i in element.split('\n')][1:]
+            if "mark" not in element_name:
+                element_style = [i.strip() for i in element.split("\n")][1:]
                 element_style_dict = {}
                 for s in element_style:
-                    s_attrs = s.strip('<format').strip(' />').split(' ', 1)
+                    s_attrs = s.strip("<format").strip(" />").split(" ", 1)
 
                     tmp_dict = {}
                     for item in s_attrs:
-                        pairs = re.sub("\'", '', item).split('=')
+                        pairs = re.sub("'", "", item).split("=")
                         it = iter(pairs)
                         pair_dict = dict(zip(it, it))
                         for k, v in pair_dict.items():
                             tmp_dict[k] = v
-                    element_style_dict[tmp_dict.get('attr')] = tmp_dict.get('value')
+                    element_style_dict[tmp_dict.get("attr")] = tmp_dict.get("value")
 
                 node_dict[element_name] = element_style_dict
         # print('Getting style rules...')
@@ -101,15 +95,15 @@ def get_style_rules(parent_node_soup):
 
 def get_all_colors(xml_soup):
     colors_used = []
-    all_styles_list = xml_soup.findAll('style', recursive=True)
+    all_styles_list = xml_soup.findAll("style", recursive=True)
     for s in all_styles_list:
-        for line in str(s).split('\n'):
-            if '#' in line.strip():
-                hex_num = line.split('#')[1][:6]
+        for line in str(s).split("\n"):
+            if "#" in line.strip():
+                hex_num = line.split("#")[1][:6]
                 if hex_num not in colors_used and hex_num.isalnum():
                     colors_used.append(hex_num)
 
-    hex_colors_used = ['#' + h for h in colors_used]
+    hex_colors_used = ["#" + h for h in colors_used]
 
     return hex_colors_used
 

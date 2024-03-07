@@ -1,4 +1,6 @@
-import sys; sys.path.append('lib/')
+import sys
+
+sys.path.append("lib/")
 import os
 import json
 from lib.helpers import init_env
@@ -8,7 +10,7 @@ from lib.validate_styles import validate_styles
 
 def lambda_handler(event, context):
     try:
-        print('LAMBDA HANDLER event: ', event)
+        print("LAMBDA HANDLER event: ", event)
 
         init_env(event)
 
@@ -16,7 +18,7 @@ def lambda_handler(event, context):
         tableau_workbook = download_workbook()
 
         # Get style guide
-        with open(os.getenv('STYLE_GUIDE_PATH')) as sg:
+        with open(os.getenv("STYLE_GUIDE_PATH")) as sg:
             style_guide = json.load(sg)
 
         # Test workbook against style guide
@@ -27,8 +29,8 @@ def lambda_handler(event, context):
         raise e
 
 
-if __name__ == '__main__':
-    if os.getenv('AWS_EXECUTION_ENV') is None:
+if __name__ == "__main__":
+    if os.getenv("AWS_EXECUTION_ENV") is None:
         lambda_handler({}, {})
     else:
-        print('I am a little teapot.')
+        print("I am a little teapot.")
